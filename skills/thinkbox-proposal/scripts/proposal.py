@@ -381,6 +381,20 @@ def save_proposal(slug: str, doc: str, data: dict) -> tuple[Path, Path]:
     json_path = PROPOSAL_DIR / f"{slug}-proposal.json"
     md_path.write_text(doc, encoding="utf-8")
     json_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    # Also save a browser-ready HTML version
+    try:
+        import importlib.util
+        _spec = importlib.util.spec_from_file_location(
+            "html_export",
+            Path(__file__).parent.parent.parent / "thinkbox" / "scripts" / "html_export.py"
+        )
+        _mod = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(_mod)
+        _mod.save_html(md_path, doc)
+    except Exception:
+        pass  # HTML export is optional — never block the main flow
+
     return md_path, json_path
 
 
@@ -425,11 +439,15 @@ def cmd_generate(from_audit: str | None, regenerate: str | None) -> None:
     print("=" * 60)
     print(f"\n  Client:    {data['profile']['name']}")
     print(f"  Tier:      {PRICING[data['recommended_tier']]['label']} ({PRICING[data['recommended_tier']]['range']})")
-    print(f"\n  Proposal (send this to the client):")
+    html_path = md_path.with_suffix(".html")
+    print(f"\n  Proposal files:")
     print(f"    {md_path}")
-    print(f"\n  To convert to PDF:")
-    print(f"    pandoc {md_path} -o ~/.thinkbox/proposals/{slug}-proposal.pdf")
-    print(f"\n  Or open in any Markdown viewer and print to PDF.")
+    if html_path.exists():
+        print(f"    {html_path}")
+        print(f"\n  To share with client:")
+        print(f"    1. Double-click the .html file — opens in Chrome/Edge")
+        print(f"    2. Press Ctrl+P → change destination to 'Save as PDF'")
+        print(f"    3. Send the PDF")
     print("\n" + "=" * 60 + "\n")
 
 

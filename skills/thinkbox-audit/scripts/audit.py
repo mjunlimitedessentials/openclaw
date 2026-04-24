@@ -325,6 +325,19 @@ def save_report(slug: str, md: str, data: dict) -> tuple[Path, Path]:
     md_path.write_text(md, encoding="utf-8")
     json_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    # Also save a browser-ready HTML version
+    try:
+        import sys, importlib.util
+        _spec = importlib.util.spec_from_file_location(
+            "html_export",
+            Path(__file__).parent.parent.parent / "thinkbox" / "scripts" / "html_export.py"
+        )
+        _mod = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(_mod)
+        _mod.save_html(md_path, md)
+    except Exception:
+        pass  # HTML export is optional — never block the main flow
+
     return md_path, json_path
 
 
@@ -377,10 +390,11 @@ def main() -> None:
     print("  AUDIT COMPLETE")
     print("=" * 60)
     print(f"\n  Score: {data['total_score']}/50 — {data['band']}")
-    print(f"\n  Report (share with client):")
+    html_path = md_path.with_suffix(".html")
+    print(f"\n  Report files:")
     print(f"    {md_path}")
-    print(f"\n  Data file (used by Case Study tracker):")
-    print(f"    {json_path}")
+    if html_path.exists():
+        print(f"    {html_path}  ← Open this in Chrome/Edge to share with client")
     print(f"\n  Phase 2 recommendation:")
     print(f"    {data['phase2_rec']}")
     print("\n" + "=" * 60 + "\n")
