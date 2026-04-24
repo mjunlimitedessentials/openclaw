@@ -1,0 +1,62 @@
+[
+  {
+    "q": "What are your service times?",
+    "a": "We hold services on Sundays at 9:00 AM and 11:00 AM, and Wednesday Bible study at 7:00 PM. All services are held at our main campus unless otherwise announced."
+  },
+  {
+    "q": "Where are you located?",
+    "a": "We are located at [ADDRESS]. Free parking is available in the lot adjacent to the main building."
+  },
+  {
+    "q": "How do I become a member?",
+    "a": "We offer a New Members class on the first Sunday of each month. You can register by replying here, calling the church office, or visiting our website. Classes run for 4 weeks and cover our beliefs, vision, and how to get connected."
+  },
+  {
+    "q": "How can I submit a prayer request?",
+    "a": "You can submit a prayer request by replying to this message, filling out a prayer card at Sunday service, or calling the church office. All requests are kept confidential and prayed over by our pastoral team."
+  },
+  {
+    "q": "Do you offer counseling services?",
+    "a": "Yes, pastoral counseling is available by appointment. Please contact the church office or reply here and we will connect you with our pastoral care team."
+  },
+  {
+    "q": "How do I get baptized?",
+    "a": "We hold baptism services regularly. To sign up, speak with a pastor after service, reply to this message, or call the church office. We will walk you through what to expect."
+  },
+  {
+    "q": "Does the church have children's ministry?",
+    "a": "Yes! We offer nursery care for infants and toddlers, and children's church (ages 3–12) during both Sunday morning services. Children check in at the Children's Wing entrance."
+  },
+  {
+    "q": "How do I volunteer or serve?",
+    "a": "We would love to have you serve! We have teams in worship, hospitality, children's ministry, media, and outreach. Reply here or visit the Connections table after service to find the right fit."
+  },
+  {
+    "q": "How do I give or donate?",
+    "a": "You can give online at [GIVING_URL], via the church app, by text to [GIVING_NUMBER], or in person at Sunday service. All giving is tax-deductible and a receipt will be emailed to you."
+  },
+  {
+    "q": "Are there small groups or Bible studies?",
+    "a": "Yes, we have small groups meeting throughout the week in various neighborhoods and online. Reply here with your zip code and we will find a group near you."
+  },
+  {
+    "q": "How do I report a facility rental or event request?",
+    "a": "To rent our facility or request space for an event, please contact the church office at [PHONE] or email [EMAIL]. Availability and pricing information will be provided by our events coordinator."
+  },
+  {
+    "q": "Is there a food pantry or benevolence assistance?",
+    "a": "Yes, our benevolence ministry provides food assistance and emergency support to community members in need. Please call the church office or reply here to speak with our outreach team confidentially."
+  },
+  {
+    "q": "How do I transfer my membership?",
+    "a": "If you are transferring from another church, please contact our membership coordinator at [EMAIL]. We will reach out to your previous church and complete the transfer within a few weeks."
+  },
+  {
+    "q": "What is the church's stance on [topic]?",
+    "a": "For questions about our beliefs and doctrine, I recommend speaking directly with one of our pastors. You can request a meeting by replying here or calling the church office."
+  },
+  {
+    "q": "How do I contact the pastor?",
+    "a": "You can reach the pastoral team by calling the church office at [PHONE] or emailing [EMAIL]. For urgent pastoral care, our on-call pastor can be reached at [EMERGENCY_CONTACT]."
+  }
+]

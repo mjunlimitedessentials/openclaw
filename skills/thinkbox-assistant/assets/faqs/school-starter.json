@@ -1,0 +1,62 @@
+[
+  {
+    "q": "How do I enroll my child?",
+    "a": "Enrollment is open during [ENROLLMENT_PERIOD]. You can start the process online at [ENROLLMENT_URL], by calling [PHONE], or by visiting the main office. Required documents include [DOCUMENTS_LIST]."
+  },
+  {
+    "q": "What are the school hours?",
+    "a": "School hours are [START_TIME] to [END_TIME], Monday through Friday. Early drop-off begins at [EARLY_DROPOFF_TIME] and after-care runs until [AFTERCARE_END_TIME]."
+  },
+  {
+    "q": "Who do I contact if my child will be absent?",
+    "a": "Please call the attendance line at [ATTENDANCE_PHONE] or email [ATTENDANCE_EMAIL] before [CUTOFF_TIME] on the day of the absence. You can also report absences through the [SCHOOL_APP] app."
+  },
+  {
+    "q": "How do I reach my child's teacher?",
+    "a": "Teachers can be reached via the [PLATFORM] messaging system or by email at [TEACHER_EMAIL_FORMAT]. Teachers typically respond within 1–2 business days. For urgent matters, call the main office at [PHONE]."
+  },
+  {
+    "q": "When is the next parent-teacher conference?",
+    "a": "Parent-teacher conferences are scheduled for [CONFERENCE_DATES]. You can sign up for a time slot at [SIGNUP_URL] or by contacting your child's teacher directly."
+  },
+  {
+    "q": "What is the school's homework or grading policy?",
+    "a": "Our homework and grading guidelines are outlined in the [STUDENT_HANDBOOK_URL]. For grade-specific questions, please contact the classroom teacher."
+  },
+  {
+    "q": "Does the school offer special education or IEP services?",
+    "a": "Yes. Our special education coordinator is [SPED_CONTACT] and can be reached at [SPED_EMAIL]. To initiate an evaluation or discuss an existing IEP, please contact them directly."
+  },
+  {
+    "q": "How do I pay school fees or lunch accounts?",
+    "a": "Payments can be made online at [PAYMENT_URL], by check made out to [SCHOOL_NAME], or cash at the main office. Lunch accounts can be funded through [LUNCH_SYSTEM]."
+  },
+  {
+    "q": "What extracurricular activities are available?",
+    "a": "We offer [EXTRACURRICULAR_LIST]. Sign-up information is sent at the start of each semester and posted on our website at [WEBSITE]."
+  },
+  {
+    "q": "Is there a school calendar I can access?",
+    "a": "Yes! The full school calendar is available at [CALENDAR_URL]. Key dates include [HIGHLIGHT_DATES]. You can also subscribe to have it sync with your phone's calendar."
+  },
+  {
+    "q": "How is the school handling a current emergency or weather closure?",
+    "a": "Closures and emergencies are communicated via [ALERT_SYSTEM], email, and text message. Always check [WEBSITE] or [SOCIAL_MEDIA] for the latest updates. Sign up for alerts at [ALERT_SIGNUP_URL]."
+  },
+  {
+    "q": "How do I report a bullying or safety concern?",
+    "a": "The safety and well-being of every student is our top priority. Please contact [COUNSELOR_NAME] at [COUNSELOR_EMAIL] or call the main office at [PHONE]. Reports can also be made anonymously at [ANONYMOUS_REPORT_URL]."
+  },
+  {
+    "q": "What immunizations are required for enrollment?",
+    "a": "Required immunizations follow [STATE] state guidelines. A current immunization record must be on file before the first day of school. For exemptions, contact [NURSE_CONTACT]."
+  },
+  {
+    "q": "Is there a school uniform or dress code?",
+    "a": "Our dress code policy is detailed in the [STUDENT_HANDBOOK_URL]. Uniforms can be purchased at [UNIFORM_VENDOR]. For questions, contact the main office."
+  },
+  {
+    "q": "How do I speak with someone in the main office?",
+    "a": "The main office is available by phone at [PHONE] during school hours, or by email at [OFFICE_EMAIL]. Walk-ins are welcome during [OFFICE_HOURS]."
+  }
+]
