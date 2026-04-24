@@ -37,23 +37,8 @@ pause
 exit /b 1
 
 :run
-:: Set the folder where openclaw lives
-set OPENCLAW=%USERPROFILE%\openclaw
-
-:: Check the folder exists
-if not exist "%OPENCLAW%\skills\thinkbox\scripts\thinkbox.py" (
-    echo   ERROR: openclaw folder not found at:
-    echo   %OPENCLAW%
-    echo.
-    echo   Steps to fix:
-    echo     1. Open PowerShell (press Windows key, type PowerShell, press Enter)
-    echo     2. Type:  cd ~
-    echo     3. Type:  git clone https://github.com/mjunlimitedessentials/openclaw
-    echo     4. Close PowerShell and double-click this icon again
-    echo.
-    pause
-    exit /b 1
-)
+:: Locate openclaw from the bat file's own location (tools\thinkbox.bat -> parent = openclaw)
+set OPENCLAW=%~dp0..
 
 :: Run ThinkBox
 %PYTHON% "%OPENCLAW%\skills\thinkbox\scripts\thinkbox.py"
