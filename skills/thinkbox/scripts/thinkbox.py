@@ -4,11 +4,12 @@ ThinkBox AI Operation Systems — Command Launcher
 MJUEM AI Operations System™
 
 Single entry point for all ThinkBox tools.
-Run: python3 thinkbox.py
+Works on Mac, Windows (HP/Dell/etc), and Linux.
 
-Or add to your shell profile:
+Mac/Linux — add shortcut to shell profile:
     alias thinkbox='python3 ~/openclaw/skills/thinkbox/scripts/thinkbox.py'
-Then just type: thinkbox
+
+Windows — double-click tools/thinkbox.bat on your Desktop
 """
 
 import json
@@ -16,6 +17,14 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+
+# Windows: fix console to display box-drawing characters correctly
+if sys.platform == "win32":
+    import ctypes
+    try:
+        ctypes.windll.kernel32.SetConsoleOutputCP(65001)  # UTF-8
+    except Exception:
+        pass
 
 
 # ---------------------------------------------------------------------------
@@ -39,19 +48,19 @@ ASSISTANT_DIR  = Path.home() / ".thinkbox" / "assistants"
 # ---------------------------------------------------------------------------
 
 def clear():
-    os.system("clear" if os.name != "nt" else "cls")
+    os.system("cls" if os.name == "nt" else "clear")
 
 
-def divider(char="─", width=58) -> str:
+def divider(char="-", width=58) -> str:
     return char * width
 
 
 def banner():
     print()
-    print("  ╔══════════════════════════════════════════════════════╗")
-    print("  ║       ThinkBox AI Operation Systems                  ║")
-    print("  ║       MJUEM AI Operations System™                    ║")
-    print("  ╚══════════════════════════════════════════════════════╝")
+    print("  +======================================================+")
+    print("  |       ThinkBox AI Operation Systems                  |")
+    print("  |       MJUEM AI Operations System (TM)                |")
+    print("  +======================================================+")
     print()
 
 
@@ -65,7 +74,9 @@ def pause():
 def prompt(question: str, default: str = "") -> str:
     hint = f" [{default}]" if default else ""
     try:
-        val = input(f"\n  {question}{hint}: ").strip()
+        sys.stdout.write(f"\n  {question}{hint}: ")
+        sys.stdout.flush()
+        val = sys.stdin.readline().strip()
     except (KeyboardInterrupt, EOFError):
         return default
     return val if val else default
@@ -382,7 +393,7 @@ MENU = [
     ("Start tracking a new client",            action_new_engagement),
     ("Generate case study",                    action_case_study),
     ("View full engagement dashboard",         action_dashboard),
-    ("─" * 38,                                 None),
+    ("-" * 38,                                 None),
     ("Preview a generated proposal",           action_preview_proposal),
     ("Preview a deployed assistant",           action_preview_assistant),
 ]
