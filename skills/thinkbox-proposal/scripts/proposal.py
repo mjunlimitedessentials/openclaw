@@ -161,17 +161,21 @@ def enrich_interactive(data: dict) -> dict:
     )
     data["location"] = data.get("location") or prompt("City, State", "")
     data["thinkbox_contact"] = prompt(
-        "Your name and title (as ThinkBox representative)",
+        "Your name, title, phone, and email (shown at bottom of proposal)",
         "ThinkBox AI Operation Systems",
     )
+    data["thinkbox_phone"] = prompt("Your phone number", "")
+    data["thinkbox_email"] = prompt("Your email address", "")
     data["recommended_tier"] = prompt_choice(
         "Recommended pricing tier for this client",
         ["starter", "standard", "enterprise"],
     )
-    data["custom_note"] = prompt(
-        "Any custom note to include in the Executive Summary? (optional)",
+    raw_note = prompt(
+        "Any custom note to include in the Executive Summary? (optional — press Enter to skip)",
         "",
     )
+    # Only save the note if it's meaningful — ignore "no", "n", "none", blank
+    data["custom_note"] = raw_note if raw_note.lower() not in ("", "no", "n", "none", "skip") else ""
     return data
 
 
@@ -186,6 +190,8 @@ def build_proposal(data: dict) -> str:
     location     = data.get("location", "")
     contact      = data.get("contact", "Leadership Team")
     tb_contact   = data.get("thinkbox_contact", "ThinkBox AI Operation Systems")
+    tb_phone     = data.get("thinkbox_phone", "")
+    tb_email     = data.get("thinkbox_email", "")
     tier_key     = data.get("recommended_tier", "standard")
     tier         = PRICING[tier_key]
     pain_points  = data.get("pain_points", [])
@@ -360,8 +366,8 @@ To move forward, we recommend:
 **To schedule your call or ask questions, contact:**
 
 > {tb_contact}
-> ThinkBox AI Operation Systems
-> *(Add your contact info here before sending)*
+{f'> {tb_phone}' if tb_phone else ''}
+{f'> {tb_email}' if tb_email else ''}
 
 ---
 
