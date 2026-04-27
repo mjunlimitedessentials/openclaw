@@ -13,6 +13,7 @@ body {
   line-height: 1.7;
   color: #222;
   background: #eef0f5;
+  scroll-behavior: smooth;
 }
 
 /* ── Brand bar ── */
@@ -387,15 +388,89 @@ body {
 }
 .footer strong { color: #6b7280; }
 
+/* ── Mobile sticky contact bar ── */
+.mobile-bar {
+  display: none;
+}
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-bar {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
 /* ── Responsive ── */
 @media (max-width: 720px) {
-  .hero h1 { font-size: 28px; }
+  /* Give room for the sticky bar at the bottom */
+  body { padding-bottom: 72px; }
+
+  .hero { padding: 60px 20px 52px; }
+  .hero h1 { font-size: 30px; }
   .hero-sub { font-size: 15px; }
+  .hero-note { font-size: 12px; }
+
+  .btn-gold { padding: 18px 28px; font-size: 15px; width: 100%; text-align: center; }
+
   .cards-3, .phases-grid, .who-cards, .why-grid {
     grid-template-columns: 1fr;
   }
+
+  .nav { padding: 12px 16px; }
   .nav-logo { font-size: 13px; }
-  .section { padding: 52px 18px; }
+  .nav-cta { font-size: 11px; padding: 8px 14px; }
+
+  .section { padding: 48px 18px; }
+  .section-title { font-size: 22px; }
+  .section-lead { font-size: 15px; margin-bottom: 32px; }
+
+  .problem-intro { font-size: 15px; }
+
+  .cta-section { padding: 56px 20px; }
+  .cta-section h2 { font-size: 24px; }
+  .cta-section p { font-size: 15px; }
+  /* Hide the small contact line in CTA on mobile — the sticky bar handles it */
+  .cta-contact { display: none; }
+
+  .quote-text { font-size: 16px; }
+
+  /* Sticky tap-to-action bar — shows only on mobile */
+  .mobile-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: #1a2744;
+    border-top: 2px solid #c9a227;
+    box-shadow: 0 -3px 16px rgba(0,0,0,0.25);
+  }
+  .mobile-bar a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    gap: 4px;
+    min-height: 60px;
+  }
+  .mobile-bar a:first-child {
+    background: #c9a227;
+    color: #1a2744;
+    border-right: 1px solid rgba(26,39,68,0.3);
+  }
+  .mobile-bar a:last-child {
+    color: #c9a227;
+    border-left: 1px solid rgba(201,162,39,0.15);
+  }
+  .mobile-bar .bar-icon {
+    font-size: 20px;
+  }
 }
 
 /* ── Print ── */
@@ -422,6 +497,8 @@ body {
   .card, .phase-card, .why-item { page-break-inside: avoid; }
   h2, h3 { page-break-after: avoid; }
   .btn-gold { display: none; }
+  .mobile-bar { display: none !important; }
+  body { padding-bottom: 0 !important; }
 }
 </style>
 </head>
@@ -718,6 +795,21 @@ body {
   MJUEM AI Operations System&trade; &nbsp;&mdash;&nbsp; Prepared by ThinkBox AI Operation Systems<br>
   All client data stored locally &mdash; not shared externally without consent.
 </footer>
+
+<!-- ═══════════════════════════════════════
+     MOBILE STICKY BAR (iPhone / Android)
+     Only visible on screens under 720px
+════════════════════════════════════════ -->
+<div class="mobile-bar">
+  <a href="tel:+12039433579">
+    <span class="bar-icon">📞</span>
+    Call Now
+  </a>
+  <a href="mailto:ThinkBoxAIStudios@gmail.com?subject=Free%20AI%20Readiness%20Audit%20Request">
+    <span class="bar-icon">✉️</span>
+    Email Us
+  </a>
+</div>
 
 </body>
 </html>
