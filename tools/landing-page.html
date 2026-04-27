@@ -2,10 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ThinkBox AI Operation Systems — MJUEM AI Operations System™</title>
+
+<!-- Android: color the browser chrome bar navy -->
+<meta name="theme-color" content="#1a2744">
+
+<!-- iOS: full-screen mode when saved to home screen -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ThinkBox AI">
+
+<!-- Android: full-screen mode when added to home screen -->
+<meta name="mobile-web-app-capable" content="yes">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Remove Android Chrome blue tap flash on links/buttons */
+a, button { -webkit-tap-highlight-color: transparent; }
+
+/* Eliminate 300ms tap delay on Android (and older iOS) */
+a, button { touch-action: manipulation; }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -392,15 +409,20 @@ body {
 .mobile-bar {
   display: none;
 }
+/* iOS notch / home indicator + Android gesture bar — both use the same env() API.
+   viewport-fit=cover (in the meta tag) is required to unlock this on both platforms. */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .mobile-bar {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+  @media (max-width: 720px) {
+    body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
   }
 }
 
 /* ── Responsive ── */
 @media (max-width: 720px) {
-  /* Give room for the sticky bar at the bottom */
+  /* Fallback for browsers without env() support */
   body { padding-bottom: 72px; }
 
   .hero { padding: 60px 20px 52px; }
