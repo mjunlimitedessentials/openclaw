@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThinkBox AI Operation Systems — MJUEM AI Operations System™</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #222;
+  background: #eef0f5;
+}
+
+/* ── Brand bar ── */
+.brand-bar {
+  background: #1a2744;
+  color: #c9a227;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 11px 24px;
+  text-align: center;
+}
+
+/* ── Nav ── */
+.nav {
+  background: #fff;
+  border-bottom: 1px solid #dde2f0;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.nav-logo {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1a2744;
+  letter-spacing: 0.3px;
+}
+.nav-logo span { color: #c9a227; }
+.nav-cta {
+  background: #c9a227;
+  color: #1a2744;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border-radius: 3px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: #b8901f; }
+
+/* ── Sections wrapper ── */
+.section {
+  padding: 72px 24px;
+}
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, #1a2744 0%, #243560 60%, #1a2744 100%);
+  color: #fff;
+  text-align: center;
+  padding: 90px 24px 80px;
+}
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #c9a227;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.hero h1 em {
+  font-style: normal;
+  color: #c9a227;
+}
+.hero-sub {
+  font-size: 18px;
+  color: #b8c4df;
+  max-width: 620px;
+  margin: 0 auto 36px;
+  line-height: 1.6;
+}
+.btn-gold {
+  display: inline-block;
+  background: #c9a227;
+  color: #1a2744;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.btn-gold:hover { background: #b8901f; }
+.hero-note {
+  margin-top: 18px;
+  font-size: 12px;
+  color: #7a8fbc;
+}
+
+/* ── Section headings ── */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #c9a227;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: 28px;
+  color: #1a2744;
+  font-weight: bold;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+.section-lead {
+  font-size: 16px;
+  color: #555;
+  max-width: 640px;
+  margin-bottom: 48px;
+  line-height: 1.7;
+}
+
+/* ── Problem ── */
+.problem { background: #fff; }
+.problem-intro {
+  font-size: 17px;
+  color: #444;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  max-width: 740px;
+  border-left: 4px solid #c9a227;
+  padding-left: 24px;
+}
+.cards-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.card {
+  background: #f4f6fb;
+  border-radius: 6px;
+  padding: 28px 24px;
+  border-top: 4px solid #c9a227;
+}
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+.card h3 {
+  font-size: 15px;
+  color: #1a2744;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.card p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ── MJUEM phases ── */
+.phases { background: #eef0f5; }
+.phases-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 8px;
+}
+.phase-card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 32px 22px;
+  border-top: 5px solid #1a2744;
+  position: relative;
+}
+.phase-num {
+  position: absolute;
+  top: -1px;
+  right: 20px;
+  background: #c9a227;
+  color: #1a2744;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 2px 10px;
+  border-radius: 0 0 4px 4px;
+}
+.phase-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+  display: block;
+}
+.phase-name {
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c9a227;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+.phase-title {
+  font-size: 17px;
+  font-weight: bold;
+  color: #1a2744;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.phase-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.phase-detail {
+  list-style: none;
+  padding: 0;
+}
+.phase-detail li {
+  font-size: 12px;
+  color: #666;
+  padding: 3px 0 3px 16px;
+  position: relative;
+}
+.phase-detail li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #c9a227;
+  font-weight: bold;
+}
+
+/* ── Who it's for ── */
+.who { background: #1a2744; }
+.who .section-label { color: #c9a227; }
+.who .section-title { color: #fff; }
+.who .section-lead { color: #b8c4df; }
+.who-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.who-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(201,162,39,0.3);
+  border-radius: 6px;
+  padding: 32px 24px;
+  text-align: center;
+}
+.who-icon {
+  font-size: 44px;
+  margin-bottom: 16px;
+  display: block;
+}
+.who-card h3 {
+  font-size: 17px;
+  font-weight: bold;
+  color: #c9a227;
+  margin-bottom: 10px;
+}
+.who-card p {
+  font-size: 14px;
+  color: #b8c4df;
+  line-height: 1.65;
+}
+
+/* ── Why ThinkBox ── */
+.why { background: #fff; }
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.why-item {
+  padding: 28px 24px;
+  border-left: 4px solid #c9a227;
+}
+.why-icon {
+  font-size: 30px;
+  margin-bottom: 12px;
+  display: block;
+}
+.why-item h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a2744;
+  margin-bottom: 8px;
+}
+.why-item p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.65;
+}
+
+/* ── Testimonial / quote ── */
+.quote-section { background: #f4f6fb; }
+.quote-block {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+.quote-mark {
+  font-size: 60px;
+  color: #c9a227;
+  line-height: 0.5;
+  display: block;
+  margin-bottom: 24px;
+}
+.quote-text {
+  font-size: 20px;
+  color: #1a2744;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.quote-attr {
+  font-size: 13px;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+/* ── CTA ── */
+.cta-section {
+  background: linear-gradient(135deg, #1a2744 0%, #243560 100%);
+  text-align: center;
+  padding: 80px 24px;
+}
+.cta-section h2 {
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 14px;
+  font-weight: bold;
+}
+.cta-section p {
+  font-size: 17px;
+  color: #b8c4df;
+  max-width: 560px;
+  margin: 0 auto 36px;
+  line-height: 1.65;
+}
+.cta-contact {
+  margin-top: 28px;
+  font-size: 14px;
+  color: #7a8fbc;
+}
+.cta-contact a {
+  color: #c9a227;
+  text-decoration: none;
+}
+.cta-contact a:hover { text-decoration: underline; }
+.cta-divider { margin: 0 10px; }
+
+/* ── Footer ── */
+.footer {
+  background: #111827;
+  color: #4b5563;
+  text-align: center;
+  padding: 28px 24px;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+.footer strong { color: #6b7280; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .hero h1 { font-size: 28px; }
+  .hero-sub { font-size: 15px; }
+  .cards-3, .phases-grid, .who-cards, .why-grid {
+    grid-template-columns: 1fr;
+  }
+  .nav-logo { font-size: 13px; }
+  .section { padding: 52px 18px; }
+}
+
+/* ── Print ── */
+@media print {
+  body { background: #fff; font-size: 13px; }
+  .brand-bar, .nav { display: block; position: static; }
+  .nav { box-shadow: none; border-bottom: 1px solid #dde2f0; }
+  .nav-cta { display: none; }
+  .hero {
+    background: #1a2744 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .who {
+    background: #1a2744 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cta-section {
+    background: #1a2744 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .card, .phase-card, .why-item { page-break-inside: avoid; }
+  h2, h3 { page-break-after: avoid; }
+  .btn-gold { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Brand bar -->
+<div class="brand-bar">
+  ThinkBox AI Operation Systems &nbsp;&mdash;&nbsp; MJUEM AI Operations System&trade;
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-logo">ThinkBox <span>AI</span> Operation Systems</div>
+  <a href="#contact" class="nav-cta">Free Audit &rarr;</a>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-eyebrow">MJUEM AI Operations System&trade;</div>
+  <h1>We Don&rsquo;t Teach AI.<br><em>We Install It.</em></h1>
+  <p class="hero-sub">
+    A done-for-you AI operations system built specifically for
+    churches, nonprofits, and small businesses &mdash;
+    so your team can focus on people, not paperwork.
+  </p>
+  <a href="#contact" class="btn-gold">Request Your Free Audit &rarr;</a>
+  <p class="hero-note">15-minute conversation. No tech background required.</p>
+</section>
+
+<!-- ═══════════════════════════════════════
+     THE PROBLEM
+════════════════════════════════════════ -->
+<section class="section problem">
+  <div class="section-inner">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">Your Team Is Doing Too Much by Hand</h2>
+
+    <p class="problem-intro">
+      You&rsquo;re running a ministry, an organization, or a business &mdash; and your team is
+      spending hours every week answering the same questions, chasing down information,
+      and managing communication across too many channels. You know something needs to change,
+      but you don&rsquo;t know where to start with AI.
+    </p>
+
+    <div class="cards-3">
+      <div class="card">
+        <span class="card-icon">⏳</span>
+        <h3>Time Is Being Wasted</h3>
+        <p>Staff spend 10&ndash;20 hours per week on tasks a system could handle automatically &mdash; answering FAQs, routing calls, sending follow-ups.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">📬</span>
+        <h3>Inquiries Fall Through the Cracks</h3>
+        <p>Members, donors, and customers reach out and never hear back. Leads are lost. People feel ignored &mdash; not because you don&rsquo;t care, but because there&rsquo;s no system.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🗂️</span>
+        <h3>No Operational Structure</h3>
+        <p>Information lives in inboxes, WhatsApp threads, and memory. There&rsquo;s no single source of truth. When someone leaves, the knowledge walks out with them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     THE MJUEM SYSTEM
+════════════════════════════════════════ -->
+<section class="section phases">
+  <div class="section-inner">
+    <div class="section-label">Our Process</div>
+    <h2 class="section-title">The MJUEM System&trade; &mdash; Four Phases, Built Around You</h2>
+    <p class="section-lead">
+      MJUEM is not software you buy and figure out yourself. It is a hands-on,
+      done-for-you process where we assess, build, connect, and grow your AI
+      operations from the ground up.
+    </p>
+
+    <div class="phases-grid">
+
+      <!-- Phase 1 -->
+      <div class="phase-card">
+        <span class="phase-num">PHASE 1</span>
+        <span class="phase-icon">🔍</span>
+        <div class="phase-name">Audit</div>
+        <div class="phase-title">We Assess Where You Are</div>
+        <p class="phase-desc">
+          Before we build anything, we learn your organization. In a 15-minute
+          conversation, we score your AI readiness and identify exactly where
+          your team is losing time and energy.
+        </p>
+        <ul class="phase-detail">
+          <li>AI Readiness Score (0&ndash;50)</li>
+          <li>Pain point discovery</li>
+          <li>Written readiness report</li>
+          <li>Phase 2 recommendation</li>
+        </ul>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-card">
+        <span class="phase-num">PHASE 2</span>
+        <span class="phase-icon">🤖</span>
+        <div class="phase-name">Build</div>
+        <div class="phase-title">We Build Your AI Assistant</div>
+        <p class="phase-desc">
+          We create a custom AI assistant trained specifically on your
+          organization &mdash; your FAQs, your tone, your services. It answers
+          questions, collects information, and handles inquiries 24/7.
+        </p>
+        <ul class="phase-detail">
+          <li>Custom AI assistant</li>
+          <li>Trained on your content</li>
+          <li>Handles top 15&ndash;50 inquiries</li>
+          <li>Deployed to your channels</li>
+        </ul>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-card">
+        <span class="phase-num">PHASE 3</span>
+        <span class="phase-icon">⚙️</span>
+        <div class="phase-name">Automate</div>
+        <div class="phase-title">We Connect Your Systems</div>
+        <p class="phase-desc">
+          We wire your AI assistant into your existing tools &mdash; email,
+          scheduling, forms, social channels. Repetitive tasks run on their own.
+          Your team stops being the bottleneck.
+        </p>
+        <ul class="phase-detail">
+          <li>Auto-replies &amp; routing</li>
+          <li>Appointment scheduling</li>
+          <li>Follow-up sequences</li>
+          <li>Workflow integration</li>
+        </ul>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-card">
+        <span class="phase-num">PHASE 4</span>
+        <span class="phase-icon">📈</span>
+        <div class="phase-name">Scale</div>
+        <div class="phase-title">We Measure and Grow</div>
+        <p class="phase-desc">
+          At 30, 60, and 90 days we check in, measure results, and document
+          the impact. You receive a case study showing exactly what changed
+          &mdash; time saved, inquiries handled, ROI generated.
+        </p>
+        <ul class="phase-detail">
+          <li>30/60/90-day check-ins</li>
+          <li>Hours saved tracking</li>
+          <li>ROI documentation</li>
+          <li>Publishable case study</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     WHO IT'S FOR
+════════════════════════════════════════ -->
+<section class="section who">
+  <div class="section-inner">
+    <div class="section-label">Who We Serve</div>
+    <h2 class="section-title">Built for Organizations That Serve People</h2>
+    <p class="section-lead">
+      We specialize in organizations where the mission is bigger than the budget &mdash;
+      and where every hour of staff time matters.
+    </p>
+
+    <div class="who-cards">
+      <div class="who-card">
+        <span class="who-icon">&#x26EA;</span>
+        <h3>Churches &amp; Ministries</h3>
+        <p>
+          Answer member questions around the clock. Handle prayer requests,
+          event registrations, and giving inquiries automatically &mdash;
+          so your team can focus on ministry.
+        </p>
+      </div>
+      <div class="who-card">
+        <span class="who-icon">🤝</span>
+        <h3>Nonprofits &amp; Faith-Based Orgs</h3>
+        <p>
+          Manage donor communication, volunteer coordination, and grant research
+          without burning out your staff. Let AI handle the volume while you
+          focus on your mission.
+        </p>
+      </div>
+      <div class="who-card">
+        <span class="who-icon">🏢</span>
+        <h3>Small Businesses</h3>
+        <p>
+          Convert more leads, answer customer questions 24/7, and run your
+          operations like a larger company &mdash; without hiring a larger team.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     WHY THINKBOX
+════════════════════════════════════════ -->
+<section class="section why">
+  <div class="section-inner">
+    <div class="section-label">Why ThinkBox</div>
+    <h2 class="section-title">This Is Not a Course. This Is a System.</h2>
+    <p class="section-lead">
+      There is no shortage of AI tools, tutorials, and training programs. ThinkBox is different.
+      We do the work. You get the results.
+    </p>
+
+    <div class="why-grid">
+      <div class="why-item">
+        <span class="why-icon">🔧</span>
+        <h3>Done For You</h3>
+        <p>
+          We don&rsquo;t hand you a tool and walk away. We build, configure,
+          and deploy your AI system. Your team learns how to use it &mdash;
+          not how to build it.
+        </p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">🎯</span>
+        <h3>Built Around Your Organization</h3>
+        <p>
+          Everything we build is trained on your content, your voice, and
+          your workflows. There are no generic templates. Your AI assistant
+          sounds like you.
+        </p>
+      </div>
+      <div class="why-item">
+        <span class="why-icon">📋</span>
+        <h3>A Proven Process</h3>
+        <p>
+          The MJUEM framework is a structured, four-phase methodology with
+          checkpoints, reporting, and accountability built in &mdash; so you
+          always know where you are and what comes next.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     QUOTE
+════════════════════════════════════════ -->
+<section class="section quote-section">
+  <div class="section-inner">
+    <div class="quote-block">
+      <span class="quote-mark">&ldquo;</span>
+      <p class="quote-text">
+        AI is no longer just for large corporations with big tech budgets.
+        The organizations that will thrive in the next decade are the ones
+        that build operational systems today &mdash; while others are still
+        doing everything by hand.
+      </p>
+      <p class="quote-attr">
+        &mdash; Mona Jackson-Ham, CEO &nbsp;&bull;&nbsp; ThinkBox AI Operation Systems
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CALL TO ACTION
+════════════════════════════════════════ -->
+<section class="cta-section" id="contact">
+  <h2>Ready to Find Out If You&rsquo;re AI-Ready?</h2>
+  <p>
+    Book a free 15-minute AI Readiness Audit. We&rsquo;ll score your organization,
+    identify your biggest opportunity, and tell you exactly what to do next.
+    No tech knowledge required.
+  </p>
+  <a href="mailto:ThinkBoxAIStudios@gmail.com?subject=Free%20AI%20Readiness%20Audit%20Request" class="btn-gold">
+    Request Your Free Audit &rarr;
+  </a>
+  <p class="cta-contact">
+    <a href="mailto:ThinkBoxAIStudios@gmail.com">ThinkBoxAIStudios@gmail.com</a>
+    <span class="cta-divider">&nbsp;&bull;&nbsp;</span>
+    <a href="tel:+12039433579">+1 (203) 943-3579</a>
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer class="footer">
+  <strong>&copy; 2025 ThinkBox AI Operation Systems. All rights reserved.</strong><br>
+  MJUEM AI Operations System&trade; &nbsp;&mdash;&nbsp; Prepared by ThinkBox AI Operation Systems<br>
+  All client data stored locally &mdash; not shared externally without consent.
+</footer>
+
+</body>
+</html>
