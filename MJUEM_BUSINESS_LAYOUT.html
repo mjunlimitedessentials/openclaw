@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MJUEM AI Operations Systems — Infrastructure Business Layout</title>
+<style>
+  :root {
+    --bg: #0b1020;
+    --bg-2: #11182f;
+    --panel: #161f3d;
+    --panel-2: #1c2750;
+    --border: #2a3766;
+    --ink: #e6ecff;
+    --ink-dim: #aab4d4;
+    --gold: #f5c860;
+    --teal: #46e0c8;
+    --violet: #a98bff;
+    --rose: #ff7aa2;
+    --green: #6bf0a0;
+    --red: #ff6b6b;
+    --shadow: 0 10px 40px rgba(0,0,0,.45);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(169,139,255,.18), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(70,224,200,.14), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* HEADER */
+  .hero {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: -1px;
+    background: linear-gradient(135deg, rgba(245,200,96,.4), transparent 30%, rgba(70,224,200,.35) 70%, transparent);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    padding: 1px;
+    border-radius: 16px;
+    pointer-events: none;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold);
+    padding: 4px 10px; border: 1px solid rgba(245,200,96,.4);
+    border-radius: 999px; background: rgba(245,200,96,.08);
+  }
+  h1 {
+    font-size: 28px; margin: 14px 0 6px; letter-spacing: .02em;
+    color: var(--ink);
+  }
+  h1 .tm { color: var(--gold); font-size: 16px; vertical-align: super; margin-left: 2px; }
+  .sub { color: var(--ink-dim); font-size: 14px; margin: 0; }
+  .contact {
+    margin-top: 12px;
+    display: flex; flex-wrap: wrap; gap: 14px;
+    color: var(--ink-dim); font-size: 13px;
+  }
+  .contact span::before { content: "▸ "; color: var(--teal); }
+
+  /* SECTION */
+  section { margin-top: 28px; }
+  .panel {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
+    padding: 22px 26px;
+    box-shadow: var(--shadow);
+  }
+  h2 {
+    font-size: 16px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold); margin: 0 0 14px;
+  }
+  h2 .hash { color: var(--teal); margin-right: 8px; }
+  h3 {
+    font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--violet); margin: 0 0 8px;
+  }
+  ul.clean { list-style: none; padding: 0; margin: 0; }
+  ul.clean li {
+    padding: 8px 0 8px 22px; position: relative; color: var(--ink);
+    border-bottom: 1px dashed rgba(255,255,255,.06);
+    font-size: 14px;
+  }
+  ul.clean li:last-child { border-bottom: none; }
+  ul.clean li::before {
+    content: "—"; position: absolute; left: 0; color: var(--teal);
+  }
+  .pill {
+    display: inline-block; font-size: 11px;
+    padding: 2px 8px; border-radius: 999px;
+    background: rgba(245,200,96,.12); color: var(--gold);
+    border: 1px solid rgba(245,200,96,.25);
+    margin-left: 6px;
+  }
+  .pill.teal { background: rgba(70,224,200,.1); color: var(--teal); border-color: rgba(70,224,200,.3); }
+  .pill.violet { background: rgba(169,139,255,.12); color: var(--violet); border-color: rgba(169,139,255,.3); }
+
+  /* PHASE FLOW */
+  .phases {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-top: 14px;
+  }
+  .phase {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    background: var(--panel-2);
+    position: relative;
+  }
+  .phase .num {
+    font-size: 11px; color: var(--gold); letter-spacing: .2em;
+  }
+  .phase .name {
+    font-size: 18px; margin-top: 4px; color: var(--ink);
+    letter-spacing: .04em;
+  }
+  .phase .desc {
+    font-size: 12px; color: var(--ink-dim); margin-top: 8px;
+  }
+  .phase::after {
+    content: "›"; position: absolute; right: -12px; top: 50%;
+    transform: translateY(-50%); color: var(--teal); font-size: 22px;
+    text-shadow: 0 0 8px rgba(70,224,200,.5);
+  }
+  .phase:last-child::after { content: ""; }
+
+  /* COMPARE TABLE */
+  .table-wrap { overflow-x: auto; margin-top: 8px; }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    min-width: 720px;
+  }
+  th, td {
+    text-align: left; padding: 12px 14px; vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    color: var(--ink-dim);
+    font-weight: 600;
+    text-transform: uppercase; letter-spacing: .1em; font-size: 11px;
+    background: rgba(255,255,255,.02);
+  }
+  td.peer { color: var(--ink-dim); }
+  td.mjuem { color: var(--ink); font-weight: 500; }
+  td.mjuem strong { color: var(--gold); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .card {
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; background: var(--panel-2);
+  }
+  .card .label {
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 6px;
+  }
+  .card .title { font-size: 15px; color: var(--ink); margin-bottom: 6px; }
+  .card .body { font-size: 13px; color: var(--ink-dim); }
+
+  /* RULES */
+  .rules {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .rule {
+    padding: 12px 14px; border: 1px solid var(--border);
+    border-radius: 10px; background: rgba(255,255,255,.02);
+    font-size: 13px; color: var(--ink);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .rule .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); margin-top: 7px;
+    box-shadow: 0 0 8px rgba(107,240,160,.6);
+    flex-shrink: 0;
+  }
+
+  /* RISK */
+  .risk-row { display: grid; grid-template-columns: 1fr 90px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px dashed rgba(255,255,255,.07); font-size: 13px; }
+  .risk-row:last-child { border-bottom: none; }
+  .sev { font-size: 11px; padding: 3px 8px; border-radius: 999px; text-align: center; font-weight: 600; letter-spacing: .08em; }
+  .sev.high { background: rgba(255,107,107,.12); color: var(--red); border: 1px solid rgba(255,107,107,.3); }
+  .sev.med { background: rgba(245,200,96,.12); color: var(--gold); border: 1px solid rgba(245,200,96,.3); }
+  .sev.low { background: rgba(107,240,160,.12); color: var(--green); border: 1px solid rgba(107,240,160,.3); }
+
+  /* SKUs */
+  .sku-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 8px; }
+  .sku {
+    border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px; background: var(--panel-2);
+    position: relative; overflow: hidden;
+  }
+  .sku.pro { border-color: rgba(245,200,96,.4); background: linear-gradient(180deg, rgba(245,200,96,.06), var(--panel-2)); }
+  .sku .name { font-size: 16px; color: var(--ink); letter-spacing: .04em; }
+  .sku .ribbon {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 10px; letter-spacing: .2em; color: var(--gold);
+  }
+  .sku ul { padding-left: 18px; font-size: 13px; color: var(--ink-dim); margin: 10px 0 0; }
+  .sku ul li { margin: 4px 0; }
+
+  /* METRICS */
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+  .metric {
+    border: 1px solid var(--border); border-radius: 10px; padding: 14px;
+    background: rgba(255,255,255,.02);
+  }
+  .metric .v { font-size: 22px; color: var(--gold); }
+  .metric .k { font-size: 11px; color: var(--ink-dim); letter-spacing: .1em; text-transform: uppercase; margin-top: 4px; }
+
+  /* TIMELINE */
+  .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .lane {
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px; background: var(--panel-2);
+  }
+  .lane h4 { margin: 0 0 10px; font-size: 12px; color: var(--teal); letter-spacing: .15em; text-transform: uppercase; }
+  .lane ol { padding-left: 18px; margin: 0; font-size: 13px; color: var(--ink); }
+  .lane ol li { margin: 6px 0; }
+
+  /* FOOTER */
+  footer {
+    margin-top: 30px; padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--ink-dim);
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between;
+  }
+  footer .quote { color: var(--gold); font-style: italic; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .phases, .sku-grid, .timeline, .grid-2, .grid-4 { grid-template-columns: 1fr; }
+    .phase::after { display: none; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="hero">
+    <span class="tag">Infrastructure Business Layout · US Only</span>
+    <h1>MJUEM AI OPERATIONS SYSTEMS<span class="tm">™</span></h1>
+    <p class="sub">ThinkBox AI Operation Systems · Mona Jackson-Ham, CEO</p>
+    <div class="contact">
+      <span>ThinkBoxAIStudios@gmail.com</span>
+      <span>(203) 943-3579</span>
+      <span>MJUnlimited Essential Marketing Co.</span>
+    </div>
+  </header>
+
+  <!-- 4-PHASE METHODOLOGY -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> MJUEM AI Operations System<span class="pill">™</span></h2>
+      <p class="sub">A named, sequenced, culturally-anchored 4-phase engagement methodology — peers sell hours, MJUEM sells a system.</p>
+      <div class="phases">
+        <div class="phase">
+          <div class="num">PHASE 01</div>
+          <div class="name">AUDIT</div>
+          <div class="desc">Readiness Score™, discovery intake, data &amp; compliance baseline.</div>
+        </div>
+        <div class="phase">
+          <div class="num">PHASE 02</div>
+          <div class="name">BUILD</div>
+          <div class="desc">RCTF prompts, Agent 508 voice pipeline, multi-file deployments.</div>
+        </div>
+        <div class="phase">
+          <div class="num">PHASE 03</div>
+          <div class="name">AUTOMATE</div>
+          <div class="desc">Workflows, telemetry, compliance auto-audits, dashboards.</div>
+        </div>
+        <div class="phase">
+          <div class="num">PHASE 04</div>
+          <div class="name">SCALE</div>
+          <div class="desc">Productized SKUs, partner channels, retainers, certification.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPRIETARY FRAMEWORKS -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Proprietary Frameworks — Do Not Replicate Externally</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Methodology</div>
+          <div class="title">MJUEM AI Operations System™</div>
+          <div class="body">4-phase: Audit › Build › Automate › Scale.</div>
+        </div>
+        <div class="card">
+          <div class="label">Prompt System</div>
+          <div class="title">RCTF Prompt Framework™</div>
+          <div class="body">Role · Context · Task · Format.</div>
+        </div>
+        <div class="card">
+          <div class="label">Voice AI</div>
+          <div class="title">Agent 508™</div>
+          <div class="body">TCPA-compliant voice AI agent system with human escalation built in.</div>
+        </div>
+        <div class="card">
+          <div class="label">Client Layer</div>
+          <div class="title">ThinkBox Onboarding PWA</div>
+          <div class="body">3-screen mobile web app feeding the AI Implementation Proposal generator.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFRASTRUCTURE BUILT -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Infrastructure Built — Continue From Here</h2>
+      <ul class="clean">
+        <li>ThinkBox Welcome Onboarding PWA <span class="pill teal">3-screen mobile</span></li>
+        <li>AI Implementation Proposal system <span class="pill violet">client-specific generation</span></li>
+        <li>Agent 508 voice AI pipeline and client intake bot</li>
+        <li>ThinkBox dashboards, automation workflows, multi-file builds</li>
+        <li>Legal/compliance docs: Terms · Privacy · TCPA · IP Notice</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- OPERATING RULES -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Operating Rules</h2>
+      <div class="rules">
+        <div class="rule"><span class="dot"></span>All IP belongs to Mona Jackson-Ham / MJUEM Co.</div>
+        <div class="rule"><span class="dot"></span>Client data stays local — never shared externally without consent.</div>
+        <div class="rule"><span class="dot"></span>AI always identifies itself as AI in client-facing systems.</div>
+        <div class="rule"><span class="dot"></span>Human escalation is always available in all deployed agents.</div>
+        <div class="rule"><span class="dot"></span>Faith-first, community-first, culture-first approach always.</div>
+        <div class="rule"><span class="dot"></span>Never skip phases in the MJUEM methodology.</div>
+        <div class="rule"><span class="dot"></span>Security standards: data stays within controlled US infrastructure.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEER COMPARISON -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Peer Benchmark — US AI Implementation Agency Archetype</h2>
+      <p class="sub">Reference peer: "RelayOps AI Studio" — mid-market US agency ($5K–$50K USD engagements, SMB / mid-market US clients).</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Peer (RelayOps AI Studio)</th>
+              <th>MJUEM AI Operations Systems</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Methodology</td><td class="peer">Generic Discovery › Build › Handoff</td><td class="mjuem"><strong>MJUEM 4-phase</strong>: Audit › Build › Automate › Scale</td></tr>
+            <tr><td>Prompt framework</td><td class="peer">Ad-hoc / vendor defaults</td><td class="mjuem"><strong>RCTF Prompt Framework™</strong></td></tr>
+            <tr><td>Voice AI</td><td class="peer">Twilio + ElevenLabs glue, no compliance layer</td><td class="mjuem"><strong>Agent 508™</strong> — TCPA-compliant</td></tr>
+            <tr><td>Client onboarding</td><td class="peer">Calendly + intake form</td><td class="mjuem"><strong>ThinkBox Onboarding PWA</strong> (3-screen)</td></tr>
+            <tr><td>Proposal generation</td><td class="peer">Manual decks</td><td class="mjuem"><strong>AI Implementation Proposal system</strong></td></tr>
+            <tr><td>Compliance / legal</td><td class="peer">Standard MSA + boilerplate</td><td class="mjuem"><strong>TCPA + Terms + Privacy + IP</strong> baked in</td></tr>
+            <tr><td>Cultural positioning</td><td class="peer">Neutral / horizontal</td><td class="mjuem"><strong>Faith-, community-, culture-first</strong></td></tr>
+            <tr><td>IP ownership</td><td class="peer">Vendor-locked tooling</td><td class="mjuem"><strong>All IP retained by MJUEM Co.</strong></td></tr>
+            <tr><td>Data residency</td><td class="peer">SaaS-default vendor cloud</td><td class="mjuem"><strong>US-only, controlled infrastructure</strong></td></tr>
+            <tr><td>Pricing model</td><td class="peer">Hourly + retainer</td><td class="mjuem">Project-based → moving to tiered SKUs</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- UPGRADE AREAS -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Upgrade Areas — Map to the 4 Phases</h2>
+      <div class="grid-4">
+        <div class="card">
+          <div class="label">Audit</div>
+          <div class="title">AI Readiness Score™</div>
+          <div class="body">Numeric rubric (data, process, team, compliance, ROI) → shareable PDF feeding the Proposal generator.</div>
+        </div>
+        <div class="card">
+          <div class="label">Build</div>
+          <div class="title">RCTF Prompt Library + Agent 508 SDK</div>
+          <div class="body">Version-controlled prompt catalog, reusable TCPA voice SDK, client-branded starter kits in &lt;1 day.</div>
+        </div>
+        <div class="card">
+          <div class="label">Automate</div>
+          <div class="title">Telemetry + Compliance Auto-Audit</div>
+          <div class="body">Weekly ROI metrics; scheduled checks for TCPA logs, FTC disclosures, CA / CO / UT / NY AI laws.</div>
+        </div>
+        <div class="card">
+          <div class="label">Scale</div>
+          <div class="title">SKUs, Partners, Retainers, Certification</div>
+          <div class="body">Three productized tiers, US-only referral channel, managed-services ARR, methodology licensing.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKUs -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Productized SKUs — ThinkBox Tiers</h2>
+      <div class="sku-grid">
+        <div class="sku">
+          <div class="name">ThinkBox Starter</div>
+          <ul>
+            <li>Onboarding PWA</li>
+            <li>1 deployed agent</li>
+            <li>Readiness Score audit</li>
+          </ul>
+        </div>
+        <div class="sku pro">
+          <div class="ribbon">RECOMMENDED</div>
+          <div class="name">ThinkBox Pro</div>
+          <ul>
+            <li>Full Agent 508 voice AI</li>
+            <li>Dashboards + automations</li>
+            <li>Quarterly RCTF refresh</li>
+          </ul>
+        </div>
+        <div class="sku">
+          <div class="name">ThinkBox Enterprise</div>
+          <ul>
+            <li>Multi-agent custom builds</li>
+            <li>SLA + dedicated ops lead</li>
+            <li>Compliance auto-audit + retainer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISK -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Risk &amp; Gap Register</h2>
+      <div class="risk-row"><div>Trademarks (™) not yet registered with USPTO</div><div class="sev high">HIGH</div><div>File MJUEM, RCTF, Agent 508, ThinkBox with USPTO.</div></div>
+      <div class="risk-row"><div>Single-founder key-person dependency</div><div class="sev high">HIGH</div><div>Document SOPs per phase; cross-train one US-based ops lead.</div></div>
+      <div class="risk-row"><div>No public case studies / outcome metrics</div><div class="sev med">MED</div><div>Capture before/after KPIs on next 3 US engagements.</div></div>
+      <div class="risk-row"><div>US compliance posture claimed but not certified</div><div class="sev med">MED</div><div>Pursue SOC 2 Type I + TCPA legal opinion from US counsel.</div></div>
+      <div class="risk-row"><div>Pricing leaks margin (project-based scope creep)</div><div class="sev med">MED</div><div>Move to tiered SKUs with change-order clauses.</div></div>
+      <div class="risk-row"><div>US data-residency claim needs infra proof</div><div class="sev low">LOW</div><div>Publish a US-region architecture diagram for clients.</div></div>
+      <div class="risk-row"><div>Out-of-scope international leads consume capacity</div><div class="sev low">LOW</div><div>Geo-gate intake forms — US-only clients in v1.</div></div>
+    </div>
+  </section>
+
+  <!-- 90-DAY PLAN -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> 90-Day Action Plan</h2>
+      <div class="timeline">
+        <div class="lane">
+          <h4>Days 0–30 · Refine</h4>
+          <ol>
+            <li>USPTO trademark filings initiated.</li>
+            <li>AI Readiness Score™ live in Onboarding PWA.</li>
+            <li>RCTF Prompt Library v1 stood up.</li>
+          </ol>
+        </div>
+        <div class="lane">
+          <h4>Days 31–60 · Productize</h4>
+          <ol>
+            <li>3 ThinkBox SKUs with fixed-fee pricing pages.</li>
+            <li>Agent 508 SDK extracted as reusable module.</li>
+            <li>Telemetry shipped on pilot client.</li>
+          </ol>
+        </div>
+        <div class="lane">
+          <h4>Days 61–90 · Scale</h4>
+          <ol>
+            <li>Managed-services retainer offered to existing clients.</li>
+            <li>US partner referral program (3 founding partners).</li>
+            <li>MJUEM Methodology certification waitlist opened.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Success Metrics</h2>
+      <div class="metrics">
+        <div class="metric"><div class="v">+25%</div><div class="k">Proposal close rate</div></div>
+        <div class="metric"><div class="v">−40%</div><div class="k">Build cycle time</div></div>
+        <div class="metric"><div class="v">35%</div><div class="k">Recurring revenue mix</div></div>
+        <div class="metric"><div class="v">0</div><div class="k">Compliance incidents</div></div>
+        <div class="metric"><div class="v">20%</div><div class="k">Partner-sourced pipeline</div></div>
+        <div class="metric"><div class="v">100%</div><div class="k">US client geo (v1)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© MJUnlimited Essential Marketing Co. (MJUEM Co.) · All IP retained by Mona Jackson-Ham.</div>
+    <div class="quote">"Never skip phases in the MJUEM methodology."</div>
+  </footer>
+</div>
+</body>
+</html>
