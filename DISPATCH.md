@@ -1,92 +1,123 @@
 # MJUEM DISPATCH — PROJECT TRACKER
 **Branch:** `claude/mjuem-business-layout-1BPOk`
 **Owner:** Mona Jackson-Ham, CEO — MJUEM Co.
-**Last updated by Claude:** 2026-05-27
+**Working brand:** Anchored AI Operations (find-and-replace if you pick differently)
+**Last updated by Claude:** 2026-05-27 — full buildout shipped
 
 > Single pane of glass for the build. Updated every turn.
 > Status legend: ✓ DONE · ◐ AWAITING YOU · ○ QUEUED · ◇ DEFERRED
 
 ---
 
-## ✓ COMPLETED (in order delivered)
+## ✓ COMPLETED
 
+### Strategy & structure
 | # | Deliverable | Commit |
 |---|-------------|--------|
 | 1 | `MJUEM_BUSINESS_LAYOUT.md` — system context layout | `f1e19fd` |
-| 2 | `MJUEM_BUSINESS_PROPOSAL.md` — US peer benchmark + 90-day upgrade plan | `a8ee068` |
-| 3 | `MJUEM_BUSINESS_LAYOUT.html` — visual one-pager (matches doc 1) | `b254c42` |
+| 2 | `MJUEM_BUSINESS_PROPOSAL.md` — US peer benchmark + 90-day plan | `a8ee068` |
+| 3 | `MJUEM_BUSINESS_LAYOUT.html` — visual one-pager | `b254c42` |
 | 4 | `MJUEM_SCORP_STRUCTURE.md` + `.html` — S-Corp roadmap | `79eade4` |
-| 5 | S-Corp formation state switched to **Maryland**; CT pro license noted | `7ce80eb` |
-| 6 | 3 brand name suggestions delivered in chat (not yet committed) | — |
-| 7 | "Primary avatar" + "homepage copy" definitions delivered in chat | — |
-| 8 | Recommended **build order** (9 steps) delivered in chat | — |
+| 5 | S-Corp state switched to MD; CT pro license noted | `7ce80eb` |
+| 6 | `DISPATCH.md` — this tracker | `fc76b1e` |
+
+### Full buildout (this turn)
+| # | Deliverable | What it gives you |
+|---|-------------|-------------------|
+| 7 | `PRIMARY_AVATARS.md` | 3 named avatars: Pastor Linda, Attorney Tasha, Bishop Marcus |
+| 8 | `CORE_OFFER.md` | Anchored Starter / Pro / Enterprise — fixed-fee SKUs + retainer math + Y1 revenue target ($231,800) |
+| 9 | `LEAD_MAGNET.md` | The 7-Question Readiness Check — full PDF copy + scoring + opt-in form spec |
+| 10 | `FUNNEL_MAP.md` | Full funnel diagram + 5-email nurture (written) + KPIs + SMS branch |
+| 11 | `HOMEPAGE_COPY.md` | All 8 homepage blocks, ready to paste |
+| 12 | `HOMEPAGE.html` | Live mobile-first visual preview of the homepage |
+| 13 | `SEO_PLAN.md` | 3-tier keywords, page-by-page assignments, GBP setup, schema JSON-LD, 12-week content calendar |
+| 14 | `GHL_WALKTHROUGH.md` | 12-step iOS-aware GHL build (domain → funnel → A2P 10DLC → CRM → Stripe → tracking) |
+| 15 | `SKOOL_WALKTHROUGH.md` | 10-step community launch with positioning, classroom design, founding-member offer, GHL integration |
 
 ---
 
-## ◐ AWAITING YOU — blocks downstream work
+## ◐ AWAITING YOU
 
-| Decision | Options | Why it blocks |
+| Decision | Options | Why it matters |
 |----------|---------|---------------|
-| **Brand name pick** | 1) Anchored AI Operations · 2) Pillar Ops · 3) Compound AI Co. · 4) None — suggest more | Domain, GHL sub-account, Skool URL, trademarks, homepage copy, SEO — all carry the name. |
-| **Avatar drafting** | Yes — draft 3 primary avatars · No — skip · Tell me more first | Every downstream deliverable (lead magnet, funnel, homepage, SEO) is written *for* the avatar. |
-| **Confirm build order** | Use Claude's recommended order · Reorder · Swap something out | Locks the sequence so we don't redo work. |
-| **CPA consult booked?** | Yes — date set · No — still searching · Need referral list | S-Corp filings can't start until CPA call happens. |
+| **Brand name** | Confirm "Anchored AI Operations" · or swap (Pillar Ops / Compound AI Co. / something else) | One find-and-replace updates everything if you swap |
+| **Domain purchase** | Buy `anchoredaiops.com` (~$12) at Namecheap or GoDaddy | Blocks GHL Step 3 (domain connection) |
+| **GHL plan choice** | Agency Unlimited Pro ($497) vs. Starter ($97) | Affects scalability for v2 |
+| **Skool positioning** | Option A (free + premium) · B (paid-only) · C (bundled with retainers) | Affects launch sequence |
+| **Stripe + Google Workspace setup** | Use personal Stripe + Gmail temporarily, or wait for S-Corp formation | Affects when you can go live |
+| **CPA consult booked?** | Yes — date set · Still searching | S-Corp filings can't start without it |
 
 ---
 
-## ○ QUEUED — build order (each step feeds the next)
+## ○ QUEUED — next moves
 
-| # | Step | Status | Needs |
-|---|------|--------|-------|
-| 1 | Lock brand name | ◐ awaiting | Your pick |
-| 2 | Draft 3 primary avatars | ◐ awaiting | Your go-ahead |
-| 3 | Core offer + pricing refinement (Starter / Pro / Enterprise) | ○ queued | Name + avatars |
-| 4 | Lead magnet | ○ queued | Offer locked |
-| 5 | Funnel map (LP → opt-in → email seq → call → sale) | ○ queued | Lead magnet |
-| 6 | Homepage copy (headline → CTA, all 6 blocks) | ○ queued | Funnel mapped |
-| 7 | SEO plan (keywords, titles, meta, schema, GBP) | ○ queued | Homepage drafted |
-| 8 | **GHL walkthrough** (step-by-step build) | ○ queued | Funnel + copy ready |
-| 9 | **Skool walkthrough** (step-by-step build) | ○ queued | GHL live |
+| # | Step | Status | Blocker |
+|---|------|--------|---------|
+| 1 | File S-Corp in MD (Articles of Org + Form 2553) | Queued | CPA consult |
+| 2 | Buy `anchoredaiops.com` + matching social handles | Queued | Name confirmed |
+| 3 | USPTO trademark filings (MJUEM, RCTF, Agent 508, Anchored) | Queued | Name confirmed + attorney |
+| 4 | Design lead magnet PDF in Canva | Queued | Brand identity decision |
+| 5 | Record Anchored Foundations course (5 lessons) | Queued | Skool launched |
+| 6 | First Anchored Starter pilot client | Queued | Funnel live |
 
 ---
 
 ## 🔁 PARKING LOT — open items, no immediate blocker
 
-- [ ] USPTO trademark filings (final mark list depends on chosen name)
-- [ ] 45-minute consult with a Maryland-based CPA (S-Corp + multi-state)
+- [ ] MD-based CPA consult (S-Corp + multi-state)
 - [ ] Written IP assignment to MJUEM Co. (once entity formed)
-- [ ] Business insurance: GL + Professional Liability (E&O) + Cyber
-- [ ] Decide DBAs vs. subsidiary LLCs per brand (CPA call)
+- [ ] Business insurance: GL + E&O + Cyber
+- [ ] DBAs vs. subsidiary LLCs decision (CPA call)
 - [ ] CT foreign-registration decision (based on CT pro license + client mix)
-- [ ] MD Pass-Through Entity Tax election (Form 511) — yes/no
-- [ ] Domain purchases once name is locked (.com + matching social handles)
-- [ ] Logo / visual identity refresh tied to the new name
+- [ ] MD Pass-Through Entity Tax (Form 511) election — yes/no
+- [ ] MD-area phone number (240 or 301) to replace 203 area code
+- [ ] Logo / visual identity refresh tied to "Anchored" name
+- [ ] Founder photo for homepage Why Us block
+- [ ] First 3 partner referral relationships (NMSDC / WBENC / MD Black Chamber / faith networks)
+- [ ] Real testimonials (replace illustrative cards on homepage per FTC guidance)
+- [ ] Agent 508 SDK extraction from current pipeline
+- [ ] Telemetry layer (pilot client)
+- [ ] Migrate ThinkBox infrastructure (Onboarding PWA, Proposal generator) under Anchored branding
 
 ---
 
 ## ◇ DEFERRED — explicitly out of scope for v1
 
-- International expansion (US-only in v1)
+- International expansion (US-only)
 - Investor / fundraising materials
-- Additional brand lines beyond the 2 already named + 1 placeholder
-- Mobile native apps (PWA is sufficient for now)
+- Mobile native apps (PWA sufficient)
+- Brand lines beyond Anchored AI Operations + ThinkBox in year 1
 
 ---
 
-## 📌 WHAT I NEED FROM YOU (3 one-liners)
+## 📌 WHAT I NEED FROM YOU (in order of urgency)
 
-1. **Pick a name:** 1 / 2 / 3 / "more options"
-2. **Avatars next?** Yes / No / "more info first"
-3. **Anything to add to the parking lot or queue?**
+1. **Confirm or swap the brand name** — say "yes Anchored" or pick differently
+2. **Book the CT MD-based CPA** — blocks the S-Corp
+3. **Buy the domain** — unblocks GHL
+4. **Choose GHL plan + Skool positioning option** — unblocks the build
+5. **Tell me what to build / refine next**
+
+---
+
+## 🛠️ WHAT TO BUILD NEXT (CLAUDE'S RECOMMENDATIONS)
+
+In rough order, here's what I'd ship next if you say go:
+1. **Brand identity pack** — logo concept, color tokens, typography spec, social avatar (one HTML preview)
+2. **Email signature + auto-reply scripts** — for Mona's inbox once Google Workspace is live
+3. **The 5 Skool course lesson scripts** — record-ready talking points
+4. **Anchored Sales Call script** — 15-min discovery → close
+5. **Onboarding PWA copy refresh** — rebrand existing 3-screen flow as "Anchor Welcome"
+6. **Compliance pack drafts** — TCPA Policy, Privacy Policy, IP Notice, Terms (lawyer-review required before publish)
 
 ---
 
 ## 🛣️ HOW THIS DOC GETS USED
 
-- I update this file **every turn** so we never lose the thread.
-- When something moves from ◐ → ✓, I move the row and add the commit hash.
-- If you want a visual HTML version of this dispatch, say the word.
-- If you want me to also push this to a project board (GitHub Projects, Notion), say which.
+- Updated **every turn** so we never lose the thread
+- When something moves from ◐ → ✓, it jumps to completed with commit hash
+- If you want this as a GitHub Project board or Notion mirror, say which
+- HTML visual version of dispatch available on request
 
 > All IP belongs to Mona Jackson-Ham / MJUEM Co.
 > Never skip phases in the MJUEM methodology.
