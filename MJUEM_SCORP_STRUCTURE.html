@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MJUEM S-Corp Structure — Roadmap</title>
+<style>
+  :root {
+    --bg: #0b1020;
+    --bg-2: #11182f;
+    --panel: #161f3d;
+    --panel-2: #1c2750;
+    --border: #2a3766;
+    --ink: #e6ecff;
+    --ink-dim: #aab4d4;
+    --gold: #f5c860;
+    --teal: #46e0c8;
+    --violet: #a98bff;
+    --green: #6bf0a0;
+    --red: #ff6b6b;
+    --shadow: 0 10px 40px rgba(0,0,0,.45);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(169,139,255,.18), transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, rgba(70,224,200,.14), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .hero {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold);
+    padding: 4px 10px; border: 1px solid rgba(245,200,96,.4);
+    border-radius: 999px; background: rgba(245,200,96,.08);
+  }
+  h1 { font-size: 26px; margin: 14px 0 6px; }
+  .sub { color: var(--ink-dim); font-size: 14px; margin: 0; }
+
+  .disclaimer {
+    margin-top: 14px; padding: 12px 14px;
+    border: 1px solid rgba(255,107,107,.35);
+    background: rgba(255,107,107,.06);
+    border-radius: 10px;
+    font-size: 13px; color: var(--ink);
+  }
+  .disclaimer b { color: var(--red); }
+
+  section { margin-top: 28px; }
+  .panel {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
+    padding: 22px 26px;
+    box-shadow: var(--shadow);
+  }
+  h2 {
+    font-size: 16px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gold); margin: 0 0 14px;
+  }
+  h2 .hash { color: var(--teal); margin-right: 8px; }
+  h3 {
+    font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--violet); margin: 0 0 8px;
+  }
+
+  /* ORG CHART */
+  .org { display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
+  .parent {
+    border: 2px solid var(--gold);
+    background: linear-gradient(180deg, rgba(245,200,96,.12), var(--panel-2));
+    border-radius: 14px; padding: 18px 22px; text-align: center;
+    max-width: 420px; width: 100%;
+    box-shadow: 0 0 24px rgba(245,200,96,.18);
+  }
+  .parent .label { font-size: 10px; color: var(--gold); letter-spacing: .25em; text-transform: uppercase; }
+  .parent .name { font-size: 18px; color: var(--ink); margin-top: 4px; }
+  .parent .meta { font-size: 12px; color: var(--ink-dim); margin-top: 6px; }
+  .vline { width: 2px; height: 30px; background: var(--teal); }
+  .hline-wrap { width: 100%; display: flex; justify-content: center; }
+  .hline {
+    width: 78%; height: 2px; background: var(--teal); position: relative;
+  }
+  .hline::before, .hline::after {
+    content: ""; position: absolute; top: 0; width: 2px; height: 30px; background: var(--teal);
+  }
+  .hline::before { left: 0; }
+  .hline::after { right: 0; }
+  .hline .mid {
+    position: absolute; left: 50%; top: 0; width: 2px; height: 30px;
+    background: var(--teal); transform: translateX(-50%);
+  }
+  .children {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    width: 100%; margin-top: 30px;
+  }
+  .child {
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    border-radius: 12px; padding: 14px 16px; text-align: center;
+  }
+  .child .label { font-size: 10px; color: var(--teal); letter-spacing: .2em; text-transform: uppercase; }
+  .child .name { font-size: 14px; color: var(--ink); margin-top: 4px; }
+  .child .kind { font-size: 11px; color: var(--ink-dim); margin-top: 4px; }
+  .child.future { border-style: dashed; opacity: .75; }
+
+  /* OPTIONS */
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .option {
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--panel-2); padding: 18px;
+  }
+  .option.recommended { border-color: rgba(245,200,96,.45); background: linear-gradient(180deg, rgba(245,200,96,.06), var(--panel-2)); }
+  .option .badge {
+    font-size: 10px; color: var(--gold); letter-spacing: .25em; text-transform: uppercase;
+  }
+  .option .t { font-size: 16px; color: var(--ink); margin: 6px 0; }
+  .option ul { margin: 10px 0 0; padding-left: 18px; font-size: 13px; color: var(--ink-dim); }
+  .option ul li { margin: 4px 0; }
+  .option .tradeoff { font-size: 12px; color: var(--ink-dim); margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.1); }
+  .option .tradeoff b { color: var(--red); }
+
+  /* CHECKLIST PHASES */
+  .checklist-phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .check-phase {
+    border: 1px solid var(--border); border-radius: 12px;
+    background: var(--panel-2); padding: 14px;
+  }
+  .check-phase h4 {
+    margin: 0 0 10px; font-size: 12px; color: var(--teal);
+    letter-spacing: .15em; text-transform: uppercase;
+  }
+  .check-phase ul { padding: 0; margin: 0; list-style: none; }
+  .check-phase li {
+    padding: 6px 0 6px 22px; position: relative; font-size: 13px; color: var(--ink);
+    border-bottom: 1px dashed rgba(255,255,255,.06);
+  }
+  .check-phase li:last-child { border-bottom: none; }
+  .check-phase li::before {
+    content: "▢"; position: absolute; left: 0; color: var(--teal); font-size: 14px;
+  }
+
+  /* RISK */
+  .risks { display: grid; gap: 10px; }
+  .risk {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: rgba(255,107,107,.04); padding: 12px 14px;
+    font-size: 13px; color: var(--ink);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .risk .icon {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: rgba(255,107,107,.15); color: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; flex-shrink: 0;
+  }
+  .risk b { color: var(--red); }
+
+  /* QUESTIONS */
+  .qs { columns: 2; column-gap: 24px; }
+  .qs ol { margin: 0; padding-left: 20px; }
+  .qs li { font-size: 13px; color: var(--ink); margin: 0 0 8px; break-inside: avoid; }
+  .qs li::marker { color: var(--gold); }
+
+  /* PHASE MAP */
+  .phase-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .pm {
+    border: 1px solid var(--border); background: var(--panel-2);
+    border-radius: 12px; padding: 14px;
+  }
+  .pm .n { font-size: 10px; color: var(--gold); letter-spacing: .25em; }
+  .pm .name { font-size: 15px; color: var(--ink); margin: 4px 0 6px; }
+  .pm .desc { font-size: 12px; color: var(--ink-dim); }
+
+  /* CTA */
+  .cta {
+    border: 1px solid rgba(245,200,96,.4);
+    background: linear-gradient(135deg, rgba(245,200,96,.08), rgba(70,224,200,.08));
+    border-radius: 14px;
+    padding: 22px 26px;
+    text-align: center;
+  }
+  .cta .small { font-size: 11px; color: var(--gold); letter-spacing: .25em; text-transform: uppercase; }
+  .cta .big { font-size: 20px; color: var(--ink); margin: 8px 0 6px; }
+  .cta .why { font-size: 13px; color: var(--ink-dim); }
+
+  footer {
+    margin-top: 30px; padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--ink-dim);
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between;
+  }
+  footer .quote { color: var(--gold); font-style: italic; }
+
+  @media (max-width: 900px) {
+    .options, .children, .phase-map { grid-template-columns: 1fr; }
+    .qs { columns: 1; }
+    h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="tag">Entity Structure · Roadmap · US Only</span>
+    <h1>MJUEM S-CORP STRUCTURE</h1>
+    <p class="sub">Parent: MJUnlimited Essential Marketing Co. (MJUEM Co.) — S-Corp · Owner: Mona Jackson-Ham · Home state: CT</p>
+    <div class="disclaimer">
+      <b>Not legal or tax advice.</b> Use this as the operating roadmap.
+      A US-licensed CPA and business attorney handle the actual filings.
+    </div>
+  </header>
+
+  <!-- ORG CHART -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> The Umbrella — How Everything Sits</h2>
+      <p class="sub">MJUEM Co. is the parent S-Corp. Every brand operates underneath it. All revenue and all IP flow up to the parent.</p>
+      <div class="org">
+        <div class="parent">
+          <div class="label">Parent · S-Corp</div>
+          <div class="name">MJUnlimited Essential Marketing Co.</div>
+          <div class="meta">Owner / CEO: Mona Jackson-Ham · State: CT</div>
+        </div>
+        <div class="vline"></div>
+        <div class="hline-wrap"><div class="hline"><div class="mid"></div></div></div>
+        <div class="children">
+          <div class="child">
+            <div class="label">Brand 01</div>
+            <div class="name">ThinkBox AI Operation Systems</div>
+            <div class="kind">DBA or subsidiary LLC</div>
+          </div>
+          <div class="child">
+            <div class="label">Brand 02</div>
+            <div class="name">MJUEM AI Operations Systems™</div>
+            <div class="kind">DBA or subsidiary LLC</div>
+          </div>
+          <div class="child future">
+            <div class="label">Brand 03</div>
+            <div class="name">Future Brand</div>
+            <div class="kind">Room to add</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TWO OPTIONS -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Two Ways to Structure the Brands</h2>
+      <div class="options">
+        <div class="option recommended">
+          <div class="badge">Recommended to start</div>
+          <div class="t">Option A — DBAs under one S-Corp</div>
+          <ul>
+            <li>One legal entity: MJUEM Co. (S-Corp)</li>
+            <li>Each brand is a registered DBA / trade name</li>
+            <li>One bank account, one tax return</li>
+            <li>Lowest cost, simplest bookkeeping</li>
+          </ul>
+          <div class="tradeoff"><b>Trade-off:</b> all brands share the same liability shield — a lawsuit against one reaches everything.</div>
+        </div>
+        <div class="option">
+          <div class="badge">Move to this later</div>
+          <div class="t">Option B — Subsidiary LLCs owned by the S-Corp</div>
+          <ul>
+            <li>MJUEM Co. (S-Corp) owns single-member LLCs</li>
+            <li>Each brand = its own LLC, e.g., ThinkBox AI Operation Systems LLC</li>
+            <li>Taxes still roll up to the parent (disregarded entities)</li>
+            <li>Each brand is liability-walled from the others</li>
+          </ul>
+          <div class="tradeoff"><b>Trade-off:</b> more filing fees, annual reports, and bookkeeping. Worth it once a brand crosses material revenue or risk.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHICH BASE ENTITY -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Which Base Entity Do You File First?</h2>
+      <p class="sub">You don't file an "S-Corp" directly. You form an LLC or Corp, then elect S-Corp tax treatment with the IRS using <b>Form 2553</b>.</p>
+      <div class="options">
+        <div class="option recommended">
+          <div class="badge">Most common for solo founders</div>
+          <div class="t">LLC in CT → elect S-Corp tax</div>
+          <ul>
+            <li>LLC's flexibility + S-Corp's payroll-tax savings</li>
+            <li>Simpler annual paperwork than a full corporation</li>
+            <li>File IRS Form 2553 after formation</li>
+          </ul>
+        </div>
+        <div class="option">
+          <div class="badge">More formal</div>
+          <div class="t">C-Corporation in CT → elect S-Corp tax</div>
+          <ul>
+            <li>Requires bylaws, board minutes, shareholder records</li>
+            <li>Useful if you plan investors or stock options later</li>
+            <li>Heavier ongoing compliance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Step-by-Step Checklist</h2>
+      <div class="checklist-phases">
+        <div class="check-phase">
+          <h4>Phase 1 · Weeks 1–2 · Foundation</h4>
+          <ul>
+            <li>Pick state of formation (CT)</li>
+            <li>Choose LLC vs. Corp with CPA</li>
+            <li>Reserve name with CT Secretary of State</li>
+            <li>File Certificate of Organization / Incorporation</li>
+            <li>Pay state filing fee</li>
+          </ul>
+        </div>
+        <div class="check-phase">
+          <h4>Phase 2 · Weeks 2–3 · Tax &amp; Identity</h4>
+          <ul>
+            <li>Apply for EIN at irs.gov (free)</li>
+            <li>File IRS Form 2553 for S-Corp election</li>
+            <li>Register CT business taxes (CT-REG-1)</li>
+            <li>Register DBAs for each brand</li>
+          </ul>
+        </div>
+        <div class="check-phase">
+          <h4>Phase 3 · Weeks 3–4 · Banking &amp; Books</h4>
+          <ul>
+            <li>Open business bank account (EIN required)</li>
+            <li>Open business credit card</li>
+            <li>Set up QuickBooks / Xero</li>
+            <li>Set up payroll (Gusto / ADP / Justworks)</li>
+            <li>Separate business &amp; personal finances</li>
+          </ul>
+        </div>
+        <div class="check-phase">
+          <h4>Phase 4 · Weeks 4–8 · Compliance &amp; IP</h4>
+          <ul>
+            <li>File USPTO trademarks (MJUEM, RCTF, Agent 508, ThinkBox)</li>
+            <li>Operating Agreement or Bylaws</li>
+            <li>Assign all existing IP to MJUEM Co. in writing</li>
+            <li>Update Terms / Privacy / TCPA / IP Notice docs</li>
+            <li>Get GL + E&amp;O + Cyber insurance</li>
+          </ul>
+        </div>
+        <div class="check-phase">
+          <h4>Phase 5 · Every Year · Ongoing</h4>
+          <ul>
+            <li>CT Annual Report</li>
+            <li>Form 1120-S federal return</li>
+            <li>K-1 to Mona</li>
+            <li>CT state filings</li>
+            <li>Reasonable W-2 salary + distributions</li>
+            <li>Renew DBAs</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISKS -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Risks to Avoid</h2>
+      <div class="risks">
+        <div class="risk"><div class="icon">!</div><div><b>Late Form 2553.</b> Miss the window and you pay self-employment tax on everything for the year.</div></div>
+        <div class="risk"><div class="icon">!</div><div><b>Zero-salary S-Corp.</b> Taking all profit as distributions is an IRS audit trigger. Pay yourself a reasonable W-2 salary.</div></div>
+        <div class="risk"><div class="icon">!</div><div><b>Mixing personal and business funds.</b> Destroys your liability shield instantly. Use the business account only.</div></div>
+        <div class="risk"><div class="icon">!</div><div><b>Undocumented IP transfer.</b> Without a written assignment, IP still legally belongs to you personally — not MJUEM Co.</div></div>
+        <div class="risk"><div class="icon">!</div><div><b>Expired DBAs.</b> CT requires renewals. Lapsed names weaken brand protection.</div></div>
+        <div class="risk"><div class="icon">!</div><div><b>Doing client work before formation.</b> Any work done before the entity exists is personal-liability work.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTIONS FOR CPA -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Questions to Ask Your CPA / Attorney</h2>
+      <div class="qs">
+        <ol>
+          <li>Form in CT, or DE / WY and register as foreign in CT?</li>
+          <li>LLC taxed as S-Corp, or full C-Corp electing S-Corp?</li>
+          <li>What's a reasonable W-2 salary at my revenue level?</li>
+          <li>DBAs vs. subsidiary LLCs — which fits my risk?</li>
+          <li>How do I assign existing IP without a taxable event?</li>
+          <li>Multi-state nexus — where else must I register?</li>
+          <li>What's the Form 2553 deadline for this tax year?</li>
+          <li>Do I qualify for the QBI / Section 199A deduction?</li>
+          <li>CT Pass-Through Entity Tax — does it help me?</li>
+          <li>Best payroll &amp; accounting tools for my size?</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- MJUEM PHASE MAP -->
+  <section>
+    <div class="panel">
+      <h2><span class="hash">##</span> Aligned to the MJUEM 4-Phase Methodology</h2>
+      <p class="sub">The same rule applies to your own business: never skip phases.</p>
+      <div class="phase-map">
+        <div class="pm">
+          <div class="n">AUDIT</div>
+          <div class="name">This document</div>
+          <div class="desc">Decide structure, confirm state, list IP to assign.</div>
+        </div>
+        <div class="pm">
+          <div class="n">BUILD</div>
+          <div class="name">File &amp; register</div>
+          <div class="desc">Entity formation, EIN, Form 2553, DBAs, bank account.</div>
+        </div>
+        <div class="pm">
+          <div class="n">AUTOMATE</div>
+          <div class="name">Compliance on autopilot</div>
+          <div class="desc">Payroll, bookkeeping, annual report calendar reminders.</div>
+        </div>
+        <div class="pm">
+          <div class="n">SCALE</div>
+          <div class="name">Add subsidiaries</div>
+          <div class="desc">Move brands into their own LLCs as revenue &amp; risk grow.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="cta">
+      <div class="small">Immediate Next Step · This Week</div>
+      <div class="big">Book a 45-minute consult with a CT-based CPA who has S-Corp experience.</div>
+      <div class="why">Bring this document. Decide LLC vs. Corp. Lock the Form 2553 election deadline. Everything else follows that one decision.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div>© MJUnlimited Essential Marketing Co. (MJUEM Co.) · All IP retained by Mona Jackson-Ham.</div>
+    <div class="quote">"Never skip phases in the MJUEM methodology."</div>
+  </footer>
+</div>
+</body>
+</html>
