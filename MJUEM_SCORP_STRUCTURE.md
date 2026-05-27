@@ -2,7 +2,8 @@
 **Parent entity (planned):** MJUnlimited Essential Marketing Co. (MJUEM Co.) — S-Corp
 **Brand(s) underneath:** ThinkBox AI Operation Systems · MJUEM AI Operations Systems™ · Agent 508™ · (room for future brands)
 **Owner / Officer:** Mona Jackson-Ham, CEO
-**Home state (assumed):** Connecticut (CT) — area code 203 — confirm with CPA
+**Home state (formation):** Maryland (MD) — owner residence
+**Other state license:** Connecticut (CT) professional license — multi-state nexus question for CPA
 
 > **Not legal or tax advice.** Final structure and filings should be reviewed
 > with a US-licensed CPA and a business attorney before you sign anything.
@@ -44,8 +45,9 @@ through to you on your personal tax return — that's the S-Corp benefit.
 
 ### Option A — DBAs under one S-Corp (simplest, cheapest)
 - One entity: MJUEM Co. (S-Corp)
-- "ThinkBox AI Operation Systems" and others are **DBAs** ("doing business as" /
-  trade names) registered in CT under MJUEM Co.
+- "ThinkBox AI Operation Systems" and others are **Trade Names** (MD's term
+  for DBAs) registered with the Maryland State Department of Assessments
+  and Taxation (SDAT) under MJUEM Co.
 - One bank account, one set of books, one tax return.
 - **Trade-off:** all brands share the same legal liability — a lawsuit against
   one brand reaches all assets of MJUEM Co.
@@ -73,8 +75,8 @@ Corporation) and then **elect** S-Corp tax treatment with the IRS.
 
 | Base entity                          | S-Corp election | Notes                                              |
 |--------------------------------------|------------------|----------------------------------------------------|
-| **LLC** in CT, elect S-Corp tax       | IRS Form 2553   | Most flexible. Recommended for solo founders.      |
-| **C-Corporation** in CT, elect S-Corp | IRS Form 2553   | More formal. Required board minutes, bylaws, etc. |
+| **LLC** in MD, elect S-Corp tax       | IRS Form 2553   | Most flexible. Recommended for solo founders.      |
+| **C-Corporation** in MD, elect S-Corp | IRS Form 2553   | More formal. Required board minutes, bylaws, etc. |
 
 > Most solo / small-team agencies form an **LLC and elect S-Corp tax
 > status** — you get the LLC's simplicity with the S-Corp's payroll
@@ -85,13 +87,17 @@ Corporation) and then **elect** S-Corp tax treatment with the IRS.
 ## 4. THE STEP-BY-STEP CHECKLIST
 
 ### Phase 1 — Foundation (Weeks 1–2)
-- [ ] Pick state of formation (CT recommended if you're CT-based).
+- [ ] Confirm state of formation = **Maryland** (owner residence).
 - [ ] Choose base entity: LLC vs. Corp (talk to CPA — LLC most common).
-- [ ] Reserve the legal name **MJUnlimited Essential Marketing Co.** with
-      CT Secretary of the State.
-- [ ] File **Certificate of Organization** (LLC) or **Certificate of
-      Incorporation** (Corp) with CT.
-- [ ] Pay state filing fee (~$120 CT LLC / ~$250 CT Corp — confirm current).
+- [ ] Search and reserve the legal name **MJUnlimited Essential Marketing
+      Co.** with the **Maryland State Department of Assessments and Taxation
+      (SDAT)** via Maryland Business Express.
+- [ ] File **Articles of Organization** (LLC) or **Articles of
+      Incorporation** (Corp) with SDAT.
+- [ ] Pay state filing fee (~$100 MD LLC / ~$120 MD Corp — confirm current
+      SDAT fee schedule; expedited filing add-on available).
+- [ ] Designate a **Maryland Resident Agent** (yourself if MD-based, or a
+      registered agent service).
 
 ### Phase 2 — Tax & Identity (Weeks 2–3)
 - [ ] Apply for **EIN** (Employer Identification Number) from IRS — free,
@@ -99,9 +105,15 @@ Corporation) and then **elect** S-Corp tax treatment with the IRS.
 - [ ] File **IRS Form 2553** to elect S-Corp tax status (deadline matters —
       generally within 2 months + 15 days of formation, or by March 15 for
       current tax year).
-- [ ] Register for CT business taxes (CT-REG-1) with DRS if applicable.
-- [ ] Register DBA(s) in CT for each brand name (ThinkBox AI Operation
-      Systems, MJUEM AI Operations Systems™, Agent 508™, etc.).
+- [ ] Register for Maryland state taxes with the **Maryland Comptroller**
+      using the **Combined Registration Application (Form CRA)** —
+      sales/use tax, withholding, unemployment if applicable.
+- [ ] Register Trade Name(s) with SDAT for each brand (ThinkBox AI
+      Operation Systems, MJUEM AI Operations Systems™, Agent 508™, etc.) —
+      ~$25 per trade name, 5-year term.
+- [ ] If serving CT clients on-site or holding yourself out as a CT
+      business: register MJUEM Co. as a **foreign entity in CT** with the
+      CT Secretary of the State (CPA to confirm whether nexus is triggered).
 
 ### Phase 3 — Banking & Books (Week 3–4)
 - [ ] Open business bank account in MJUEM Co.'s name (bring EIN + formation docs).
@@ -124,21 +136,27 @@ Corporation) and then **elect** S-Corp tax treatment with the IRS.
       (E&O) + Cyber. Talk to a US broker.
 
 ### Phase 5 — Ongoing (every year)
-- [ ] CT Annual Report filing (LLC ~$80, Corp ~$150 — confirm current).
+- [ ] MD **Annual Report + Personal Property Tax Return** filed with
+      SDAT by **April 15** each year ($300 minimum filing fee for LLCs
+      and Corps — confirm current).
 - [ ] Federal **Form 1120-S** S-Corp tax return.
 - [ ] Federal **Schedule K-1** issued to Mona (the only shareholder).
-- [ ] CT state tax filings.
+- [ ] **Maryland Form 510** (Pass-Through Entity Income Tax Return) +
+      consider **Form 511** election for MD Pass-Through Entity Tax.
+- [ ] If foreign-registered in CT: CT Annual Report + CT pass-through
+      filings as required.
 - [ ] Pay yourself reasonable salary (W-2) + take additional profits as
       distributions (not subject to self-employment tax — this is the
       whole point of the S-Corp).
-- [ ] Renew DBAs as required by CT.
+- [ ] Renew SDAT Trade Names every **5 years**.
 
 ---
 
 ## 5. QUESTIONS TO ASK YOUR CPA / ATTORNEY
 
-1. Should I form in CT, or in a holding-friendly state (DE / WY) and
-   register as foreign in CT?
+1. Should I form in **MD** (home state), or in a holding-friendly state
+   (DE / WY) and register as foreign in MD? Given I also hold a **CT
+   professional license**, do I need to register as foreign in CT too?
 2. LLC taxed as S-Corp, or full C-Corp electing S-Corp? Why?
 3. What is a "reasonable salary" for my role given current revenue?
 4. Single-member LLC subsidiaries vs. DBAs — which fits my risk profile?
@@ -148,7 +166,9 @@ Corporation) and then **elect** S-Corp tax treatment with the IRS.
    What triggers "nexus"?
 7. What is the **deadline** for my Form 2553 election to apply this tax year?
 8. Do I qualify for the QBI deduction (Section 199A) as an S-Corp owner?
-9. How do I handle CT's Business Entity Tax / Pass-Through Entity Tax?
+9. Should I elect the **MD Pass-Through Entity Tax** (Form 511) to
+   work around the federal SALT cap? Any CT pass-through filings if I'm
+   foreign-registered there?
 10. Recommended payroll provider and accounting software for my size?
 
 ---
@@ -165,8 +185,11 @@ Corporation) and then **elect** S-Corp tax treatment with the IRS.
 - **Assuming the LLC alone protects IP** — IP must be **assigned in
   writing** to the entity. Without that, IP technically still belongs
   to you personally.
-- **Forgetting DBA renewals** — CT requires renewals; expired DBAs
-  weaken your brand claim.
+- **Forgetting Trade Name renewals** — MD SDAT requires renewals every
+  5 years; expired trade names weaken your brand claim.
+- **Missing the MD Annual Report / Personal Property deadline** —
+  April 15 every year. Late filings carry penalties and can put your
+  entity into "Not in Good Standing" status with SDAT.
 - **Operating before the entity is formed** — any client work done
   before the formation date is still personal-liability work.
 
@@ -186,9 +209,11 @@ The same rule applies: **never skip phases.**
 
 ## 8. IMMEDIATE NEXT STEP (THIS WEEK)
 
-Book a **45-minute consult with a Connecticut CPA** who has S-Corp
-experience. Bring this document. Decide LLC vs. Corp, and lock the
-Form 2553 election deadline. Everything else follows.
+Book a **45-minute consult with a Maryland-based CPA** who has S-Corp
+experience (multi-state work is a plus given the CT license). Bring
+this document. Decide LLC vs. Corp, lock the Form 2553 election
+deadline, and confirm whether CT foreign-registration is required.
+Everything else follows.
 
 > All IP belongs to Mona Jackson-Ham / MJUEM Co.
 > Never skip phases in the MJUEM methodology.
