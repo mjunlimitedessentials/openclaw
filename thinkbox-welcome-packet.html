@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThinkBox AI — Welcome Packet | Content Lab Studios</title>
+<style>
+  :root{
+    --ink:#1a1d24;
+    --muted:#5b6472;
+    --line:#e3e7ee;
+    --brand:#3b5bfd;        /* ThinkBox blue */
+    --brand-deep:#1f2a66;
+    --accent:#00c2a8;       /* teal accent */
+    --paper:#ffffff;
+    --soft:#f5f7fb;
+    --warn-bg:#fff6e9;
+    --warn-bd:#f3c97a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#9aa3b2;
+    background:linear-gradient(160deg,#aeb6c4,#7e8799);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    line-height:1.55;
+    padding:40px 16px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- Paper sheet ---- */
+  .sheet{
+    width:8.5in;
+    min-height:11in;
+    background:var(--paper);
+    margin:0 auto 40px;
+    padding:0;
+    box-shadow:0 18px 50px rgba(20,28,48,.35);
+    position:relative;
+    overflow:hidden;
+    border-radius:2px;
+  }
+
+  /* ---- Cover ---- */
+  .cover{
+    background:radial-gradient(120% 80% at 80% -10%, #2c3df0 0%, #1f2a66 55%, #141a3a 100%);
+    color:#fff;
+    padding:0.9in 0.85in 0.85in;
+    min-height:11in;
+    display:flex;
+    flex-direction:column;
+  }
+  .brandbar{display:flex;align-items:center;gap:12px;}
+  .logo{
+    width:46px;height:46px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),#3b5bfd);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:22px;color:#fff;
+    box-shadow:0 6px 18px rgba(0,194,168,.4);
+  }
+  .brandname{font-weight:700;letter-spacing:.3px;font-size:15px;}
+  .brandname small{display:block;font-weight:400;opacity:.7;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;}
+  .cover-mid{margin-top:auto;margin-bottom:auto;}
+  .eyebrow{
+    display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:18px;
+  }
+  .cover h1{font-size:46px;line-height:1.05;margin:0 0 16px;font-weight:800;letter-spacing:-.5px;}
+  .cover h1 span{color:#9fb0ff;}
+  .cover .sub{font-size:17px;opacity:.85;max-width:80%;font-weight:300;}
+  .prepared{
+    margin-top:42px;display:flex;gap:48px;border-top:1px solid rgba(255,255,255,.18);padding-top:22px;
+  }
+  .prepared div small{display:block;text-transform:uppercase;letter-spacing:1.5px;font-size:10px;opacity:.6;margin-bottom:4px;}
+  .prepared div b{font-size:15px;font-weight:600;}
+  .cover-foot{font-size:11px;opacity:.55;letter-spacing:.5px;}
+
+  /* ---- Interior ---- */
+  .page{padding:0.8in 0.85in;min-height:11in;display:flex;flex-direction:column;}
+  .pg-head{
+    display:flex;justify-content:space-between;align-items:center;
+    border-bottom:2px solid var(--line);padding-bottom:12px;margin-bottom:26px;
+  }
+  .pg-head .mini{display:flex;align-items:center;gap:9px;font-weight:700;font-size:13px;color:var(--brand-deep);}
+  .mini .dot{width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--accent),#3b5bfd);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+  .pg-head .tag{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+
+  h2{font-size:23px;margin:0 0 6px;color:var(--brand-deep);letter-spacing:-.3px;}
+  .lead{color:var(--muted);font-size:14px;margin:0 0 22px;}
+
+  .greeting{font-size:15px;}
+  .greeting p{margin:0 0 14px;}
+  .sig{margin-top:24px;font-size:14px;}
+  .sig b{color:var(--brand-deep);}
+  .sig small{color:var(--muted);}
+
+  .section-title{
+    display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--brand-deep);
+    margin:26px 0 12px;
+  }
+  .num{
+    width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto;
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px;}
+  .chip{background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:6px 13px;font-size:12.5px;color:var(--brand-deep);font-weight:500;}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin:6px 0;}
+  th{background:var(--brand-deep);color:#fff;text-align:left;padding:9px 11px;font-weight:600;font-size:11px;letter-spacing:.4px;text-transform:uppercase;}
+  td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+  tr:nth-child(even) td{background:var(--soft);}
+  .when{font-weight:700;color:var(--brand);white-space:nowrap;}
+
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
+  .card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;}
+  .card h4{margin:0 0 8px;font-size:13px;color:var(--brand-deep);}
+  .card p,.card li{font-size:12.5px;color:var(--muted);margin:0 0 4px;}
+  .card ul{margin:0;padding-left:16px;}
+
+  .invoice{border:1px dashed var(--brand);border-radius:12px;padding:16px 18px;background:linear-gradient(180deg,#f7f9ff,#fff);margin-top:6px;}
+  .invoice .row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dotted var(--line);}
+  .invoice .row:last-child{border-bottom:none;font-weight:700;color:var(--brand-deep);}
+  .invoice small{color:var(--muted);}
+
+  .paperwork{list-style:none;padding:0;margin:6px 0;}
+  .paperwork li{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;margin-bottom:9px;font-size:13px;background:#fff;}
+  .paperwork .box{width:20px;height:20px;border:2px solid var(--brand);border-radius:5px;flex:0 0 auto;}
+  .paperwork b{color:var(--brand-deep);}
+  .paperwork .link{margin-left:auto;font-size:11px;color:var(--brand);border:1px solid var(--brand);border-radius:16px;padding:4px 12px;font-weight:600;}
+
+  .faq{margin-top:6px;}
+  .faq .q{font-weight:700;color:var(--brand-deep);font-size:13px;margin-top:12px;}
+  .faq .a{font-size:12.5px;color:var(--muted);margin-top:2px;}
+
+  .cta{
+    margin-top:auto;background:var(--brand-deep);color:#fff;border-radius:14px;
+    padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .cta .t{font-size:15px;font-weight:600;}
+  .cta .t small{display:block;opacity:.7;font-weight:300;font-size:12px;margin-top:3px;}
+  .cta .btn{background:var(--accent);color:#06231e;font-weight:700;padding:12px 22px;border-radius:30px;font-size:13px;white-space:nowrap;}
+
+  .pg-foot{
+    margin-top:28px;border-top:1px solid var(--line);padding-top:10px;
+    display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.4px;
+  }
+
+  .note{font-size:11px;color:var(--muted);font-style:italic;margin-top:10px;}
+
+  .contacts{display:flex;gap:24px;flex-wrap:wrap;margin-top:4px;}
+  .contacts div{font-size:12.5px;}
+  .contacts small{display:block;text-transform:uppercase;letter-spacing:1px;font-size:9.5px;color:var(--muted);margin-bottom:2px;}
+  .contacts b{color:var(--brand-deep);}
+
+  /* print */
+  @media print{
+    body{background:#fff;padding:0;}
+    .sheet{box-shadow:none;margin:0;width:100%;min-height:auto;page-break-after:always;border-radius:0;}
+    .no-print{display:none;}
+  }
+  .toolbar{max-width:8.5in;margin:0 auto 18px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:13px;}
+  .toolbar button{background:#fff;color:var(--brand-deep);border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <span>📄 Mockup — ThinkBox Welcome Packet (print to PDF to share with Marqus)</span>
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<!-- ============ PAGE 1: COVER ============ -->
+<div class="sheet">
+  <div class="cover">
+    <div class="brandbar">
+      <div class="logo">T</div>
+      <div class="brandname">ThinkBox AI Operation Systems
+        <small>a MJUEM company</small>
+      </div>
+    </div>
+
+    <div class="cover-mid">
+      <span class="eyebrow">Client Welcome Packet</span>
+      <h1>Let's automate <span>Content&nbsp;Lab&nbsp;Studios.</span></h1>
+      <p class="sub">You focus on creating. We'll make the operations run themselves — AI systems, done-for-you automation, and the strategy behind them.</p>
+
+      <div class="prepared">
+        <div>
+          <small>Prepared for</small>
+          <b>Marqus — Content Lab Studios</b>
+        </div>
+        <div>
+          <small>Prepared by</small>
+          <b>ThinkBox AI Operation Systems LLC</b>
+        </div>
+        <div>
+          <small>Date</small>
+          <b>June 7, 2026</b>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-foot">Confidential · Maryland, USA · thinkbox.ai</div>
+  </div>
+</div>
+
+<!-- ============ PAGE 2: WELCOME + BUILD + TIMELINE ============ -->
+<div class="sheet">
+  <div class="page">
+    <div class="pg-head">
+      <div class="mini"><span class="dot">T</span> ThinkBox AI Operation Systems</div>
+      <span class="tag">Welcome &amp; Roadmap</span>
+    </div>
+
+    <h2>Welcome aboard, Marqus 🚀</h2>
+    <p class="lead">Here's exactly what happens next, what we'll need from you, and the quick paperwork to get us cleared to build.</p>
+
+    <div class="greeting">
+      <p>Thank you for trusting <b>ThinkBox AI Operation Systems</b> to build the systems behind Content Lab Studios. This packet walks you through your onboarding so nothing falls through the cracks — and so you always know what's coming. Let's get to work.</p>
+    </div>
+    <div class="sig">
+      <b>[Your Name]</b><br>
+      <small>Founder, ThinkBox AI Operation Systems LLC — a MJUEM Co.</small>
+    </div>
+
+    <div class="section-title"><span class="num">1</span> What we're building for you</div>
+    <div class="chips">
+      <span class="chip">AI Systems &amp; Agents</span>
+      <span class="chip">Done-for-You Automation</span>
+      <span class="chip">Operations Strategy</span>
+      <span class="chip">Training &amp; Templates</span>
+    </div>
+    <p class="note">Tailored to Content Lab Studios' booking, client onboarding, and content workflows — confirmed at kickoff.</p>
+
+    <div class="section-title"><span class="num">2</span> Your onboarding timeline</div>
+    <table>
+      <tr><th>When</th><th>What ThinkBox does</th><th>What we need from you</th></tr>
+      <tr><td class="when">Day 0</td><td>Contract signed ✅ · Welcome packet sent</td><td>Sign NDA + Access Authorization</td></tr>
+      <tr><td class="when">Days 1–2</td><td>Project workspace created · team briefed</td><td>Book your kickoff call</td></tr>
+      <tr><td class="when">Days 3–5</td><td><b>Kickoff call</b> — goals, priorities, system map</td><td>Share goals · grant tool access</td></tr>
+      <tr><td class="when">Week 1</td><td>Audit current ops · first invoice activates</td><td>Confirm scope / SOW</td></tr>
+      <tr><td class="when">Weeks 1–3</td><td>Build phase — automations &amp; AI configured</td><td>Quick feedback as we go</td></tr>
+      <tr><td class="when">Week 3–4</td><td>Delivery, walkthrough &amp; training</td><td>Review &amp; approve</td></tr>
+      <tr><td class="when">Day 30</td><td><b>30-day check-in</b> — results &amp; next phase</td><td>20 min to review wins</td></tr>
+    </table>
+
+    <div class="pg-foot">
+      <span>ThinkBox AI Operation Systems LLC · Maryland</span>
+      <span>Page 2 of 3 · Confidential</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE 3: HOW WE WORK, INVESTMENT, PAPERWORK, CONTACTS, FAQ ============ -->
+<div class="sheet">
+  <div class="page">
+    <div class="pg-head">
+      <div class="mini"><span class="dot">T</span> ThinkBox AI Operation Systems</div>
+      <span class="tag">Working Together</span>
+    </div>
+
+    <div class="section-title"><span class="num">3</span> How we work</div>
+    <div class="twocol">
+      <div class="card">
+        <h4>Communication</h4>
+        <ul>
+          <li>Channel: [email / portal / Slack]</li>
+          <li>Responses within [X] business hours</li>
+          <li>Project hub: everything lives in one place</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Scope &amp; revisions</h4>
+        <ul>
+          <li>Deliverables per your SOW</li>
+          <li>New requests = quick change-order</li>
+          <li>No surprises — you approve each phase</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="num">4</span> Your investment &amp; invoice schedule</div>
+    <div class="invoice">
+      <div class="row"><span>Engagement</span><span>$[amount]</span></div>
+      <div class="row"><span>Terms</span><span>[50% to start · 50% on delivery] or [retainer $X/mo]</span></div>
+      <div class="row"><span>Maryland tax</span><span>Applied per service type</span></div>
+      <div class="row"><span>Billing</span><span>Auto reminders + secure online pay links</span></div>
+    </div>
+    <p class="note">Invoices are issued automatically — you'll never have to chase a link.</p>
+
+    <div class="section-title"><span class="num">5</span> Quick paperwork (before we access anything)</div>
+    <ul class="paperwork">
+      <li><span class="box"></span><b>Mutual NDA</b> — keeps your business &amp; data confidential <span class="link">Sign →</span></li>
+      <li><span class="box"></span><b>Service Agreement + SOW</b> — scope, deliverables, ownership <span class="link">Review →</span></li>
+      <li><span class="box"></span><b>Access Authorization</b> — permission to access your tools <span class="link">Sign →</span></li>
+      <li><span class="box"></span><b>Data Handling summary</b> — how we protect your data <span class="link">Read →</span></li>
+    </ul>
+
+    <div class="section-title"><span class="num">6</span> Your points of contact</div>
+    <div class="contacts">
+      <div><small>Project Lead</small><b>[name · email]</b></div>
+      <div><small>Billing</small><b>[email]</b></div>
+      <div><small>Urgent</small><b>[number]</b></div>
+    </div>
+
+    <div class="section-title"><span class="num">7</span> Quick answers</div>
+    <div class="faq">
+      <div class="q">Who owns what we build?</div>
+      <div class="a">You own all final deliverables on full payment. ThinkBox retains its pre-existing tools &amp; frameworks.</div>
+      <div class="q">Will you use AI?</div>
+      <div class="a">Yes — with human review on everything before it reaches you.</div>
+      <div class="q">Is my data safe?</div>
+      <div class="a">Access is limited, documented, and removable at your request (see Data Handling).</div>
+    </div>
+
+    <div class="cta">
+      <div class="t">Ready when you are.
+        <small>Book your kickoff call and we'll map the engine behind Content Lab.</small>
+      </div>
+      <div class="btn">Book Kickoff Call →</div>
+    </div>
+
+    <div class="pg-foot">
+      <span>ThinkBox AI Operation Systems LLC · Maryland · thinkbox.ai</span>
+      <span>Page 3 of 3 · Confidential</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
