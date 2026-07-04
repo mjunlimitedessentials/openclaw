@@ -44,6 +44,15 @@ language, in your channel (Telegram/voice/etc.).
 | "What's due this week?" | Lists open commitments + what's at risk |
 | "Note that Acme renewed for 12 months" | Updates the client record |
 
+## The 3D brain
+
+| You say | JARVIS does |
+| ------- | ----------- |
+| "Show me the brain" / "open the map" | Opens the animated 3D business graph on the Canvas |
+| "What's connected to BrightPath?" | Focuses that node, lights up its links |
+| "Update the brain" | Pulls the CRM, regenerates the graph, reloads it |
+| In the map: "good morning" / "show me clients" / "what's at risk" | The Ask bar drives the view live |
+
 ## Proactive (automatic)
 
 - **Morning brief** (weekday ~07:30): the day's calendar + priority inbox + due items.

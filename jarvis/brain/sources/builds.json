@@ -1,0 +1,15 @@
+[
+  { "id": "jarvis2", "label": "JARVIS 2 — Core", "cat": "build",
+    "note": "The assistant itself: brain, sub-agents, memory. Central node.",
+    "links": ["comms", "content", "crm", "research", "memory", "gateway"] },
+  { "id": "gateway", "label": "OpenClaw Gateway", "cat": "build",
+    "note": "Control plane: daemon, channels, cron, skills.", "links": ["telegram", "cron"] },
+  { "id": "telegram", "label": "Telegram Channel", "cat": "build",
+    "note": "Front door. Voice + text.", "links": [] },
+  { "id": "memory", "label": "Memory / CRM Store", "cat": "build",
+    "note": "Supabase long-term memory: people, projects, commitments.", "links": ["crm"] },
+  { "id": "cron", "label": "Cron & Heartbeat", "cat": "build",
+    "note": "Morning brief + end-of-day wrap.", "links": ["comms"] },
+  { "id": "brain-ui", "label": "Brain UI (3D map)", "cat": "build",
+    "note": "This visualization on the live Canvas.", "links": ["crm", "jarvis2"] }
+]

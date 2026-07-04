@@ -1,0 +1,9 @@
+[
+  { "id": "p-dana", "label": "Dana Ruiz", "cat": "note", "note": "BrightPath decision-maker. Prefers Thursday calls.", "links": ["c-brightpath"] },
+  { "id": "p-marco", "label": "Marco Silva", "cat": "note", "note": "Summit ops lead.", "links": ["c-summit"] },
+  { "id": "p-lena", "label": "Lena Park", "cat": "note", "note": "Harbor Law managing partner.", "links": ["c-harbor"] },
+  { "id": "p-omar", "label": "Omar Haddad", "cat": "note", "note": "Northside owner.", "links": ["c-northside"] },
+  { "id": "n-rules", "label": "Note — Standing Rules", "cat": "note", "note": "No meetings before 10:00. Fridays heads-down. Flag invoices over $5k.", "links": ["jarvis2", "comms"] },
+  { "id": "n-brand", "label": "Note — Brand Voice", "cat": "note", "note": "Confident, plain, no jargon.", "links": ["content"] },
+  { "id": "n-pricing", "label": "Note — Retainer Pricing", "cat": "note", "note": "Local $1.5k, Growth $3k, Scale $6k/mo.", "links": ["ads", "seo", "geo"] }
+]

@@ -1,0 +1,16 @@
+[
+  { "id": "comms", "label": "Comms Sub-agent", "cat": "suite",
+    "note": "Email + calendar. Triage, draft, schedule.", "links": ["gmail", "gcal"] },
+  { "id": "content", "label": "Content Studio", "cat": "suite",
+    "note": "Decks, design, media, YouTube growth.", "links": ["gamma", "canva", "higgs", "vidiq"] },
+  { "id": "crm", "label": "CRM & Memory", "cat": "suite",
+    "note": "Remember/recall clients, projects, commitments.", "links": ["memory"] },
+  { "id": "research", "label": "Research Sub-agent", "cat": "suite",
+    "note": "Web + Drive + meeting transcripts, verified.", "links": ["drive", "granola"] },
+  { "id": "seo", "label": "SEO Suite", "cat": "suite",
+    "note": "Organic search playbooks and audits.", "links": ["content"] },
+  { "id": "geo", "label": "GEO Suite", "cat": "suite",
+    "note": "Local / map-pack visibility.", "links": ["content"] },
+  { "id": "ads", "label": "Ads Suite", "cat": "suite",
+    "note": "Paid acquisition, search & social.", "links": ["content"] }
+]
