@@ -28,9 +28,13 @@
           "primary": "anthropic/claude-opus-4-6",
           "fallbacks": ["anthropic/claude-sonnet-4-5"]
         },
-        "_skills_comment": "Allowlist keeps JARVIS focused. Add/remove skills you actually use. 'jarvis' is the orchestration brain (loaded via skills.load.extraDirs below).",
+        "_skills_comment": "Allowlist keeps JARVIS focused. 'jarvis' is the orchestration brain; the 'jarvis-*' skills are the sub-agents (comms, content, crm, research). All are loaded via skills.load.extraDirs below. Add/remove to taste.",
         "skills": [
           "jarvis",
+          "jarvis-comms",
+          "jarvis-content",
+          "jarvis-crm",
+          "jarvis-research",
           "mcporter",
           "weather",
           "summarize",
@@ -72,6 +76,15 @@
         "reactions": true,
         "sendMessage": true
       }
+    },
+    "_business_channels_comment": "Optional: add business channels as you grow (v4 on the roadmap). WhatsApp for clients, Slack for the team. Flip enabled:true and set the tokens in .env. See docs.openclaw.ai for each channel's setup.",
+    "slack": {
+      "enabled": false,
+      "dmPolicy": "allowlist"
+    },
+    "whatsapp": {
+      "enabled": false,
+      "dmPolicy": "allowlist"
     }
   },
 

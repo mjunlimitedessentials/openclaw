@@ -62,10 +62,30 @@ routing skill**. Cleaner, more capable, and yours to extend.
 | ---- | ---------- |
 | `JARVIS.md` | The persona & operating charter (who JARVIS is, the safety rules, your business context). Loaded as workspace context. |
 | `skills/jarvis/SKILL.md` | The orchestration **brain**: the request loop, the routing table, the act-vs-ask gate. |
+| `skills/jarvis-comms/SKILL.md` | Sub-agent: **email + calendar** (Gmail, Google Calendar) with draft-don't-send. |
+| `skills/jarvis-content/SKILL.md` | Sub-agent: **content & media studio** (Gamma, Canva, Higgsfield, vidIQ). |
+| `skills/jarvis-crm/SKILL.md` | Sub-agent: **memory & CRM** with concrete SQL against the Supabase schema. |
+| `skills/jarvis-research/SKILL.md` | Sub-agent: **research** (web, Drive, Granola) with source verification. |
 | `HEARTBEAT.md` | Proactive mode: the morning brief / hourly check / EOD wrap. |
 | `openclaw.jarvis.example.json` | A ready-to-adapt OpenClaw config (identity, model, Telegram, voice, memory, cron, skills). |
+| `.env.jarvis.example` | Secrets template → copy to `~/.openclaw/.env`. |
 | `mcp/mcporter.jarvis.example.json` | MCP server wiring for the sub-agents (Gmail, Calendar, Drive, Slack, Supabase, Gamma, Canva, Higgsfield, vidIQ, Jotform, Granola). |
 | `supabase/schema.sql` | Long-term memory + lightweight CRM schema. |
+| `setup.sh` | Bootstrap + validate: scaffolds the workspace & config, checks prerequisites. |
+| `CHEATSHEET.md` | Operator quick reference — what to say and what JARVIS does. |
+
+### The brain + its sub-agents
+
+The `jarvis` skill is the router. It delegates to four focused sub-agents, each a
+skill that owns a domain and knows the exact MCP tools + safe workflows for it:
+
+- **jarvis-comms** — inbox triage, drafting, scheduling, reschedules.
+- **jarvis-content** — decks, designs, images, video, voiceovers, YouTube growth.
+- **jarvis-crm** — remember/recall facts, people, projects, commitments.
+- **jarvis-research** — web + your Drive + meeting transcripts, verified & cited.
+
+This is the clean version of what JARVIS V4 wires by hand in n8n — but editable in
+plain Markdown and extensible with one more file.
 
 ---
 
@@ -76,13 +96,18 @@ routing skill**. Cleaner, more capable, and yours to extend.
 - A device to run the daemon (your Mac/Linux box, always-on ideally)
 - Accounts/keys for the sub-agents you want (Google, Slack, Supabase, etc.)
 
-### 1. Put the JARVIS files where OpenClaw can see them
-Copy this folder to your machine and point your agent workspace at it:
+### 1. Bootstrap (one command)
+The included script scaffolds everything and validates it — safe to re-run, never
+overwrites your files:
 ```bash
-cp -r jarvis ~/jarvis          # persona + skill + heartbeat live here
+./jarvis/setup.sh
 ```
-`JARVIS.md` and `HEARTBEAT.md` sit at the workspace root; the `jarvis` skill lives
-in `~/jarvis/skills/jarvis/`.
+It copies the persona/skills into `~/jarvis`, drops the config + `.env` into
+`~/.openclaw`, checks Node/openclaw/mcporter, and validates the JSON. Prefer to do
+it by hand? The steps below are exactly what it automates.
+
+`JARVIS.md` and `HEARTBEAT.md` sit at the workspace root; the `jarvis` +
+`jarvis-*` skills live in `~/jarvis/skills/`.
 
 ### 2. Configure OpenClaw
 ```bash
@@ -169,16 +194,27 @@ way until you trust a given class of action, then list it under
 
 ## Roadmap (make it *yours*)
 
-1. **v1 (this package):** Telegram + voice, Email + Calendar, memory, morning brief.
-2. **v2:** add the content/media studio (Gamma decks, Canva, Higgsfield, vidIQ) as
-   a real "content sub-agent" for the business.
-3. **v3:** Supabase CRM fully wired — JARVIS knows every client and commitment.
-4. **v4:** multi-channel (WhatsApp for clients, Slack for the team), custom skills
-   for your specific workflows (invoicing, lead intake via Jotform, etc.).
-5. **v5:** deeper computer-use — JARVIS operating apps on your machine on request.
+1. ✅ **v1 (done):** persona + brain, Telegram + voice, **comms sub-agent**
+   (Email + Calendar), memory, morning brief.
+2. ✅ **v2 (done):** **content/media studio sub-agent** — Gamma decks, Canva,
+   Higgsfield image/video/audio, vidIQ YouTube growth.
+3. ✅ **v3 (done):** **CRM/memory sub-agent** + Supabase schema — people, projects,
+   commitments, durable facts (semantic recall ready).
+4. **v4 (scaffolded):** multi-channel — WhatsApp for clients, Slack for the team
+   (stubbed in the config, flip `enabled:true` + add tokens). Add custom skills for
+   your specific workflows (invoicing, lead intake via Jotform, etc.).
+5. **v5 (next):** deeper computer-use — JARVIS operating apps on your machine on
+   request; plus a **research sub-agent** (already included) going deep with the
+   bundled `deep-research` skill.
 
 Each step is additive — a skill or an MCP server and a few lines of config. That's
 the whole point of building on OpenClaw instead of a monolithic workflow.
+
+> **What's built vs. what needs your accounts:** everything in this package (the
+> brain, four sub-agents, config, memory schema, tooling) is complete and committed.
+> Going *live* requires **you** to add your own API keys/OAuth on your machine
+> (Google, Slack, Supabase, the content tools) — those auth flows can't run from a
+> headless session. `setup.sh` + the steps above get you there.
 
 ---
 
