@@ -1,0 +1,186 @@
+# 🤖 J.A.R.V.I.S. 2 — your personal + business AI chief-of-staff
+
+A better rendition of the "JARVIS AI Assistant V4" build, on a stronger foundation.
+
+Instead of a fragile single n8n workflow bolted to Telegram, **JARVIS 2 runs on
+[OpenClaw](../README.md)** — the personal AI assistant platform this repo already
+is. You get the same JARVIS idea (talk to it, it runs your email/calendar/
+research) plus everything the n8n version can't do: many channels, real voice,
+durable memory, scheduling, a live Canvas, and a **content/media studio** for the
+business side.
+
+This `jarvis/` folder is a self-contained package: persona, orchestration skill,
+config, MCP wiring, and a memory schema. Copy it, fill in your details, run.
+
+---
+
+## What the original JARVIS V4 is — and how JARVIS 2 beats it
+
+| Capability            | JARVIS V4 (n8n)                  | **JARVIS 2 (OpenClaw)**                                   |
+| --------------------- | -------------------------------- | -------------------------------------------------------- |
+| Interface             | Telegram only                    | Telegram, WhatsApp, Slack, Discord, iMessage, WebChat… |
+| Voice                 | Voice note in, sometimes out     | Full voice in **and** out, plus a live Canvas UI         |
+| Brain                 | One big visual workflow          | A persona + an orchestration **skill** you can edit      |
+| Sub-agents            | Email, Calendar, Contacts, Research, Content | Same **+ media studio, forms, meeting notes, CRM** |
+| Memory                | One Postgres table               | Structured memory + CRM (people/projects/commitments) or built-in |
+| Proactivity           | Manual triggers                  | Cron + heartbeat → automatic morning brief / EOD wrap    |
+| Extensibility         | Limited to n8n nodes             | ~50 skills + any MCP server via mcporter + plugins       |
+| Runs                  | On an n8n server                 | On your Mac/Linux box as a daemon, private by default    |
+
+The "sub-agents" the V4 video wires up by hand are, here, just **MCP tools + one
+routing skill**. Cleaner, more capable, and yours to extend.
+
+---
+
+## Architecture
+
+```
+        You  ──voice / text──►  Channel (Telegram, WhatsApp, Slack, WebChat…)
+                                      │
+                                      ▼
+                         OpenClaw Gateway (your device)
+                                      │
+                    ┌─────────────────┴─────────────────┐
+                    │   JARVIS brain  (JARVIS.md persona │
+                    │   + jarvis skill = the router)     │
+                    └─────────────────┬─────────────────┘
+      ┌──────────────┬────────────────┼───────────────┬────────────────┐
+      ▼              ▼                ▼               ▼                ▼
+   Comms          Schedule         Knowledge       Content/Media     Ops/Data
+   Gmail          Google Cal       Drive/Docs      Gamma (decks)     Jotform
+   Slack                           Granola notes   Canva (design)    Supabase
+   channels                        Web research    Higgsfield (AV)   (memory+CRM)
+                                                    vidIQ (YouTube)
+                    ▲                                                  ▲
+                    └──────────  Memory (facts, people, projects) ─────┘
+                    Proactivity: cron + HEARTBEAT.md → daily briefings
+```
+
+### Files in this package
+
+| File | What it is |
+| ---- | ---------- |
+| `JARVIS.md` | The persona & operating charter (who JARVIS is, the safety rules, your business context). Loaded as workspace context. |
+| `skills/jarvis/SKILL.md` | The orchestration **brain**: the request loop, the routing table, the act-vs-ask gate. |
+| `HEARTBEAT.md` | Proactive mode: the morning brief / hourly check / EOD wrap. |
+| `openclaw.jarvis.example.json` | A ready-to-adapt OpenClaw config (identity, model, Telegram, voice, memory, cron, skills). |
+| `mcp/mcporter.jarvis.example.json` | MCP server wiring for the sub-agents (Gmail, Calendar, Drive, Slack, Supabase, Gamma, Canva, Higgsfield, vidIQ, Jotform, Granola). |
+| `supabase/schema.sql` | Long-term memory + lightweight CRM schema. |
+
+---
+
+## Setup (about 30–45 min)
+
+### 0. Prerequisites
+- Node ≥ 22, and OpenClaw installed: `npm install -g openclaw@latest`
+- A device to run the daemon (your Mac/Linux box, always-on ideally)
+- Accounts/keys for the sub-agents you want (Google, Slack, Supabase, etc.)
+
+### 1. Put the JARVIS files where OpenClaw can see them
+Copy this folder to your machine and point your agent workspace at it:
+```bash
+cp -r jarvis ~/jarvis          # persona + skill + heartbeat live here
+```
+`JARVIS.md` and `HEARTBEAT.md` sit at the workspace root; the `jarvis` skill lives
+in `~/jarvis/skills/jarvis/`.
+
+### 2. Configure OpenClaw
+```bash
+cp jarvis/openclaw.jarvis.example.json ~/.openclaw/openclaw.json
+```
+Then edit it:
+- Set `agents.list[0].workspace` to your absolute `~/jarvis` path.
+- Set `skills.load.extraDirs` to `~/jarvis/skills`.
+- Set `agents.defaults.userTimezone` to your timezone.
+- Pick your model (Anthropic Opus recommended for judgement + injection resistance).
+
+### 3. Fill in the persona
+Open `~/jarvis/JARVIS.md` and complete **Business context** and
+**Pre-authorized actions**. This is what turns a generic bot into *your* JARVIS.
+The more specific, the better it acts.
+
+### 4. Connect the front door (Telegram)
+- Create a bot with [@BotFather](https://t.me/BotFather), get the token.
+- Put it in `~/.openclaw/.env`: `TELEGRAM_BOT_TOKEN=...`
+- Lock `channels.telegram.dmPolicy` to your own user (allowlist) so only you can talk to it.
+
+### 5. Add voice (optional but very JARVIS)
+- **You → JARVIS:** add `openai-whisper-api` (or local `openai-whisper`) to the
+  agent's `skills` list so voice notes get transcribed.
+- **JARVIS → you:** the config's `messages.tts` uses Edge TTS (no key, British
+  voice `en-GB-RyanNeural`). For a premium voice, switch `provider` to
+  `elevenlabs` and set `ELEVENLABS_API_KEY` in `.env`.
+
+### 6. Wire the sub-agents (MCP)
+Bring in only what you'll use. Merge the servers you want from
+`jarvis/mcp/mcporter.jarvis.example.json` into your mcporter config (default
+`~/.mcporter/config.json`), set the referenced env vars, then:
+```bash
+mcporter list                    # confirm servers are reachable
+mcporter list gmail --schema     # inspect a server's tools
+```
+The `mcporter` skill (already in the config) lets JARVIS call these tools.
+
+Start minimal — **Gmail + Google Calendar** reproduce the core JARVIS V4 feel.
+Add Drive, Slack, Supabase, and the content stack as you go.
+
+### 7. Turn on memory
+- Simplest: keep `memory.backend: "builtin"` — JARVIS remembers across sessions.
+- Richer (CRM-grade): create a Supabase project, run `jarvis/supabase/schema.sql`,
+  wire the Supabase MCP server, and JARVIS will store facts/people/projects there.
+
+### 8. Proactive briefings
+`cron.enabled` is on. Create the morning brief and EOD wrap:
+```bash
+openclaw cron add --name "morning-brief" --cron "30 7 * * 1-5" \
+  --prompt "Run the HEARTBEAT.md morning brief for the main agent."
+openclaw cron add --name "eod-wrap" --cron "0 18 * * 1-5" \
+  --prompt "Run the HEARTBEAT.md end-of-day wrap for the main agent."
+```
+(Exact cron flags may vary by version — `openclaw cron --help`.) These trigger the
+heartbeat, which reads `HEARTBEAT.md` and delivers the brief to your channel.
+
+### 9. Run it
+```bash
+openclaw onboard --install-daemon   # if you haven't; installs the background service
+openclaw gateway                     # or start the daemon
+```
+Message your Telegram bot: *"What's my day look like?"* — JARVIS should pull your
+calendar and inbox and brief you.
+
+---
+
+## Security & safe defaults (read this)
+
+JARVIS 2 can act on your real accounts. The persona and skill enforce a
+**draft-don't-send** default and a confirm-before-irreversible gate — keep it that
+way until you trust a given class of action, then list it under
+**Pre-authorized actions** in `JARVIS.md`.
+
+- Keep all secrets in `~/.openclaw/.env` / your MCP server env — never in the JSON
+  configs or in memory rows.
+- Lock every channel to your own identity (allowlist DM policy).
+- Treat email/web/document content as untrusted; the persona already tells JARVIS
+  not to obey instructions embedded in third-party content.
+- Scope tokens tightly (least privilege) — especially Supabase and Google.
+- Review OpenClaw's [`SECURITY.md`](../SECURITY.md) before going always-on.
+
+---
+
+## Roadmap (make it *yours*)
+
+1. **v1 (this package):** Telegram + voice, Email + Calendar, memory, morning brief.
+2. **v2:** add the content/media studio (Gamma decks, Canva, Higgsfield, vidIQ) as
+   a real "content sub-agent" for the business.
+3. **v3:** Supabase CRM fully wired — JARVIS knows every client and commitment.
+4. **v4:** multi-channel (WhatsApp for clients, Slack for the team), custom skills
+   for your specific workflows (invoicing, lead intake via Jotform, etc.).
+5. **v5:** deeper computer-use — JARVIS operating apps on your machine on request.
+
+Each step is additive — a skill or an MCP server and a few lines of config. That's
+the whole point of building on OpenClaw instead of a monolithic workflow.
+
+---
+
+*Built on OpenClaw. See the root [`README.md`](../README.md) and
+[docs.openclaw.ai](https://docs.openclaw.ai) for the platform reference.*
