@@ -53,6 +53,17 @@ language, in your channel (Telegram/voice/etc.).
 | "Update the brain" | Pulls the CRM, regenerates the graph, reloads it |
 | In the map: "good morning" / "show me clients" / "what's at risk" | The Ask bar drives the view live |
 
+## Websites (cinematic 3D-scroll)
+
+| You say | JARVIS does |
+| ------- | ----------- |
+| "Build the JARVIS site" | Runs `jarvis/websites/prompt-01-jarvis.md` via Higgsfield |
+| "Build my ThinkBox portfolio" | Uploads your photo, runs `prompt-02-thinkbox.md` |
+| "Make a landing page for [X]" | Adapts the pack to a new subject |
+| After a build: "slow the orbit" / "bigger headline" | Directs the site like an editor |
+
+> Generates a hero image first (shows you), then video clips, then the scroll site. Previews before publishing; spends Higgsfield credits.
+
 ## Proactive (automatic)
 
 - **Morning brief** (weekday ~07:30): the day's calendar + priority inbox + due items.
