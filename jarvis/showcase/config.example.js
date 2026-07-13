@@ -14,6 +14,10 @@
  * TLS/tunnel). See LIVE.md for CORS + safety notes.
  * ---------------------------------------------------------------------------- */
 window.JARVIS = {
+  // Must be true to leave the offline demo and talk to your gateway.
+  // Leave false (or omit) and the console stays in safe demo mode.
+  enabled: true,
+
   // Your gateway base URL (no trailing /v1). Examples:
   //   "http://localhost:8788"   (local daemon)
   //   "https://jarvis.yourdomain.com"

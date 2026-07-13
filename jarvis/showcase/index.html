@@ -202,7 +202,10 @@
 <script>
 "use strict";
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const LIVE = !!(window.JARVIS && window.JARVIS.endpoint);
+// Live mode requires an explicit opt-in (enabled:true) AND a real http(s) endpoint.
+// Without both, the console runs the offline demo — so a hosted page never gets
+// stuck talking to a gateway that isn't there.
+const LIVE = !!(window.JARVIS && window.JARVIS.enabled === true && /^https?:\/\//i.test(String(window.JARVIS.endpoint || "")));
 
 /* --- capability cards --- */
 const CAPS = [
