@@ -94,6 +94,13 @@
   .draft .h{font:600 9px var(--mono);letter-spacing:.12em;color:var(--suite);text-transform:uppercase;margin-bottom:5px}
 
   .composer{border-top:1px solid var(--hair-soft);padding:12px;display:flex;flex-direction:column;gap:10px}
+  .voicebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .vbtn{font:600 11px var(--mono);letter-spacing:.04em;color:var(--ink-dim);background:rgba(9,17,38,.7);
+    border:1px solid var(--hair);border-radius:16px;padding:6px 12px;cursor:pointer;transition:.15s}
+  .vbtn:hover{color:#fff;border-color:var(--accent)}
+  .vbtn.on{color:#04122f;background:radial-gradient(circle at 38% 32%,#bfe0ff,var(--accent) 60%,#12275f);
+    border-color:var(--accent);box-shadow:0 0 12px var(--glow)}
+  .vhint{font:500 10px var(--mono);color:var(--muted);letter-spacing:.02em}
   .chips{display:flex;gap:7px;flex-wrap:wrap}
   .chips button{font:500 11px var(--mono);letter-spacing:.02em;color:var(--ink-dim);background:rgba(9,17,38,.7);
     border:1px solid var(--hair);border-radius:16px;padding:6px 11px;cursor:pointer;transition:.15s}
@@ -159,6 +166,10 @@
     <div class="bar"><span class="d g"></span><span class="d y"></span><span class="d"></span><span class="title">jarvis://live-session — demo</span></div>
     <div class="log" id="log"></div>
     <div class="composer">
+      <div class="voicebar">
+        <button id="voiceBtn" class="vbtn">🔇 Voice off</button>
+        <span class="vhint">tap to make JARVIS speak aloud</span>
+      </div>
       <div class="chips" id="chips"></div>
       <div class="inputrow">
         <input id="ask" placeholder='Ask JARVIS anything — or tap a suggestion above…' autocomplete="off" />
@@ -318,6 +329,7 @@ async function run(id){
   const body = m.querySelector(".body");
   body.innerHTML = `<span class="tag">${d.tag}</span><div class="ans"></div>`;
   await typeHTML(body.querySelector(".ans"), d.reply);
+  speak(stripHTML(d.reply));
   busy = false; setDisabled(false); askEl.focus();
 }
 function setDisabled(v){ sendEl.disabled = v; askEl.disabled = v; chips.querySelectorAll("button").forEach(b=>b.disabled=v); }
@@ -347,6 +359,39 @@ async function submitFree(){
 }
 sendEl.addEventListener("click", submitFree);
 askEl.addEventListener("keydown", e => { if (e.key==="Enter") submitFree(); });
+
+/* ---- VOICE: browser text-to-speech (no keys, no credits) ---- */
+let VOICE_ON = false, ttsVoice = null;
+const hasTTS = typeof window !== "undefined" && "speechSynthesis" in window;
+function pickVoice(){
+  if (!hasTTS) return null;
+  const vs = speechSynthesis.getVoices() || [];
+  if (!vs.length) return null;
+  const pref = ["Daniel","Google UK English Male","Arthur","Oliver","Serena","Google UK English"];
+  for (const n of pref){ const v = vs.find(v => v.name === n); if (v) return v; }
+  return vs.find(v => /en-GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || vs[0];
+}
+if (hasTTS){ ttsVoice = pickVoice(); speechSynthesis.onvoiceschanged = () => { ttsVoice = pickVoice(); }; }
+function stripHTML(html){ const d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
+function speak(text){
+  if (!VOICE_ON || !hasTTS || !text) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if (ttsVoice) { u.voice = ttsVoice; u.lang = ttsVoice.lang; }
+    u.rate = 1.0; u.pitch = 0.9;
+    speechSynthesis.speak(u);
+  } catch (_) {}
+}
+const voiceBtn = document.getElementById("voiceBtn");
+if (!hasTTS){ voiceBtn.disabled = true; voiceBtn.textContent = "🔇 Voice n/a"; }
+voiceBtn.addEventListener("click", () => {
+  VOICE_ON = !VOICE_ON;
+  voiceBtn.classList.toggle("on", VOICE_ON);
+  voiceBtn.textContent = VOICE_ON ? "🔊 Voice on" : "🔇 Voice off";
+  if (VOICE_ON){ ttsVoice = ttsVoice || pickVoice(); speak("Voice online, sir. How can I help?"); }
+  else if (hasTTS){ speechSynthesis.cancel(); }
+});
 
 /* ---- LIVE MODE: talk to the real OpenClaw gateway (/v1/responses) ---- */
 function escapeHTML(s){ return String(s).replace(/[&<>]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])); }
@@ -417,6 +462,7 @@ async function liveSend(text){
       caret.insertAdjacentText("beforebegin", extractText(data) || "(the gateway returned no text)");
     }
     caret.remove();
+    speak(ans.textContent);
   } catch (err) {
     ln.querySelector(".ok").textContent = "✕"; ln.querySelector(".ok").className = "";
     body.innerHTML = `<span class="tag">Connection error</span><div class="ans"></div>`;
