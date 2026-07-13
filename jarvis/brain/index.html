@@ -296,6 +296,9 @@
   .askbar .mic:hover { color: #fff; border-color: var(--accent); }
   .askbar .mic.listening { color: #fff; border-color: #ff5a7a; background: radial-gradient(circle at 40% 35%, #ff9db3, #e11d48 70%); animation: micpulse 1.2s infinite; }
   @keyframes micpulse { 0% { box-shadow: 0 0 0 0 rgba(225,29,72,.5); } 70% { box-shadow: 0 0 0 10px rgba(225,29,72,0); } 100% { box-shadow: 0 0 0 0 rgba(225,29,72,0); } }
+  .voicepick { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .voicepick label { font: 500 10px var(--mono); color: var(--ink-dim); letter-spacing: .06em; text-transform: uppercase; width: 40px; }
+  .voicepick select { flex: 1; min-width: 0; background: rgba(3,8,22,.6); color: var(--ink); border: 1px solid var(--hair); border-radius: 7px; font: 500 10px var(--mono); padding: 5px 6px; }
   @media (max-width: 1000px) { .reactor { width: 240px; height: 240px; } .hud-tag { display: none; } }
   @media (max-width: 680px) { .jarvis-hud { right: 14px; top: auto; bottom: 150px; transform: none; } .reactor { width: 150px; height: 150px; } .hud-name { font-size: 9px; } }
   @media (prefers-reduced-motion: reduce) { .reactor .s1, .reactor .s2, .reactor .s3, .reactor .s4, .reactor .s5, .reactor .sweep, .reactor .center { animation: none; } }
@@ -349,6 +352,7 @@
       <label class="toggle"><input type="checkbox" id="tFlow" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Particle flow</label>
       <label class="toggle"><input type="checkbox" id="tSpin" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Auto-orbit</label>
       <label class="toggle"><input type="checkbox" id="tVoice" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Voice (JARVIS speaks)</label>
+      <div class="voicepick"><label>Voice</label><select id="voiceSel" title="Pick JARVIS's voice"></select></div>
     </div>
 
     <div class="block">
@@ -842,14 +846,41 @@ function reply(msg) {
 /* ---- Voice + mic for the brain ---- */
 const hasTTS = "speechSynthesis" in window;
 let VOICE_ON = true, ttsVoice = null, ttsUnlocked = false;
+function scoreVoice(v){
+  let s = 0; const n = v.name.toLowerCase();
+  if (/en-gb/i.test(v.lang)) s += 40;                       // British accent
+  if (/\b(daniel|arthur|oliver|george|james|jamie|ryan)\b/.test(n)) s += 30; // butler-ish names
+  if (/enhanced|premium|natural|neural|siri/.test(n)) s += 28; // high-quality
+  if (/google uk english male/.test(n)) s += 22;
+  if (/\bmale\b/.test(n)) s += 6;
+  if (/compact|eloquence/.test(n)) s -= 20;                 // robotic
+  return s;
+}
 function pickVoice(){
   if (!hasTTS) return null;
   const vs = speechSynthesis.getVoices() || []; if (!vs.length) return null;
-  const pref = ["Daniel","Google UK English Male","Arthur","Oliver","Serena","Google UK English"];
-  for (const n of pref){ const v = vs.find(v => v.name === n); if (v) return v; }
-  return vs.find(v => /en-GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || vs[0];
+  const en = vs.filter(v => /^en(-|_)/i.test(v.lang));
+  const pool = en.length ? en : vs;
+  return pool.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0];
 }
-if (hasTTS){ ttsVoice = pickVoice(); speechSynthesis.onvoiceschanged = () => { ttsVoice = pickVoice(); }; }
+const voiceSel = document.getElementById("voiceSel");
+function populateVoices(){
+  if (!hasTTS) return;
+  const vs = (speechSynthesis.getVoices() || []).filter(v => /^en/i.test(v.lang));
+  ttsVoice = pickVoice() || ttsVoice;
+  if (voiceSel && vs.length){
+    const ranked = vs.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    voiceSel.innerHTML = ranked.map(v => `<option value="${v.name}">${v.name.replace(/\((.*?)\)/g, "").trim()} · ${v.lang}</option>`).join("");
+    if (ttsVoice) voiceSel.value = ttsVoice.name;
+  }
+}
+if (hasTTS){ populateVoices(); speechSynthesis.onvoiceschanged = populateVoices; }
+if (voiceSel) voiceSel.addEventListener("change", () => {
+  const v = (speechSynthesis.getVoices() || []).find(x => x.name === voiceSel.value);
+  if (!v) return;
+  ttsVoice = v; unlockTTS();
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance("Good evening. J.A.R.V.I.S. at your service."); u.voice = v; u.lang = v.lang; u.rate = 0.95; u.pitch = 0.82; speechSynthesis.speak(u); } catch (_) {}
+});
 function unlockTTS(){ if (ttsUnlocked || !hasTTS) return; ttsUnlocked = true; try { speechSynthesis.resume(); const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (_) {} }
 document.addEventListener("pointerdown", unlockTTS, { once: true });
 function speak(text){
@@ -858,7 +889,7 @@ function speak(text){
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     if (ttsVoice){ u.voice = ttsVoice; u.lang = ttsVoice.lang; }
-    u.rate = 1.0; u.pitch = 0.9;
+    u.rate = 0.95; u.pitch = 0.82;
     u.onstart = () => pulseReactor(4200);
     speechSynthesis.speak(u);
   } catch (_) {}
