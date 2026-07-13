@@ -2,6 +2,15 @@
 
 A better rendition of the "JARVIS AI Assistant V4" build, on a stronger foundation.
 
+## 🔗 Live demos (shareable)
+- **JARVIS HQ (hub):** https://claude.ai/code/artifact/c7e32086-6997-4a64-bed5-c5aca78b4580
+- **Capabilities Console:** https://claude.ai/code/artifact/a6d507ea-884d-470a-823c-d250afdbc867
+- **3D Infrastructure Brain:** https://claude.ai/code/artifact/910ad969-f738-4c66-b2b0-b64ae2e5814f
+
+> Artifacts are private by default — open each and use the page's **Share** menu to
+> let others view it. The hosted hub is generated from `hq/shared.html`; the repo's
+> `hq/index.html` uses relative links for local serving.
+
 Instead of a fragile single n8n workflow bolted to Telegram, **JARVIS 2 runs on
 [OpenClaw](../README.md)** — the personal AI assistant platform this repo already
 is. You get the same JARVIS idea (talk to it, it runs your email/calendar/
