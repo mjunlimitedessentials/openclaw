@@ -234,37 +234,42 @@
 
   /* ---------- JARVIS reactor HUD ---------- */
   .jarvis-hud {
-    position: absolute; right: 22px; bottom: 104px; z-index: 6;
-    display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none;
+    position: absolute; right: 40px; top: 50%; transform: translateY(-50%); z-index: 6;
+    display: flex; flex-direction: column; align-items: center; gap: 12px; pointer-events: none;
     text-align: center;
   }
-  .reactor { --rc: #5aa2ff; width: 190px; height: 190px; position: relative; line-height: 0; }
+  .reactor { --rc: #5aa2ff; width: 320px; height: 320px; position: relative; line-height: 0; }
   .rsvg { width: 100%; height: 100%; overflow: visible; }
-  .reactor circle, .reactor path { vector-effect: non-scaling-stroke; }
-  .reactor .ring { transform-box: fill-box; transform-origin: 50% 50%; }
-  .reactor .ring circle { fill: none; stroke: var(--rc); }
-  .reactor .tick circle { stroke-width: 1; stroke-dasharray: .5 3.4; opacity: .5; }
-  .reactor .mid circle { stroke-width: 1.3; stroke-dasharray: 7 5; opacity: .65; }
-  .reactor .seg circle { stroke-width: 3.2; stroke-dasharray: 16 12; opacity: .85; stroke-linecap: round; }
-  .reactor .inner { fill: none; stroke: var(--rc); stroke-width: .7; opacity: .35; }
-  .reactor .sweep { transform-box: fill-box; transform-origin: 50% 50%; }
-  .reactor .sweep path { stroke: var(--rc); stroke-width: 1.1; opacity: .75; }
-  .reactor .core { fill: var(--rc); filter: drop-shadow(0 0 7px var(--rc)); }
-  .reactor .hl { fill: #eaf4ff; opacity: .6; }
+  .reactor circle, .reactor path, .reactor polygon { vector-effect: non-scaling-stroke; }
+  .reactor .spin, .reactor .spinr, .reactor .sweep { transform-box: fill-box; transform-origin: 50% 50%; }
+  .reactor .bracket path { fill: none; stroke: var(--rc); stroke-width: 1.4; opacity: .5; }
+  .reactor .ticks { fill: none; stroke: var(--rc); stroke-width: 1.4; stroke-dasharray: .3 2.1; opacity: .5; }
+  .reactor .ring1 { fill: none; stroke: var(--rc); stroke-width: 1; stroke-dasharray: 2 3; opacity: .55; }
+  .reactor .gauge { fill: none; stroke: var(--rc); stroke-width: 3; stroke-dasharray: 18 43.2; opacity: .85; }
+  .reactor .data { fill: none; stroke: var(--rc); stroke-width: 2.4; stroke-dasharray: .6 3.2; opacity: .55; }
+  .reactor .hex { fill: none; stroke: var(--rc); stroke-width: 1; opacity: .5; }
+  .reactor .cross path { stroke: var(--rc); stroke-width: 1.2; opacity: .7; }
+  .reactor .ring2 { fill: none; stroke: var(--rc); stroke-width: .8; stroke-dasharray: 1 2; opacity: .4; }
+  .reactor .sweep path { filter: drop-shadow(0 0 3px var(--rc)); }
+  .reactor .core { filter: drop-shadow(0 0 9px var(--rc)); }
+  .reactor .coreHex { fill: none; stroke: #eaf4ff; stroke-width: .8; opacity: .5; }
+  .reactor .hl { fill: #eaf4ff; opacity: .5; }
   .reactor .center { fill: #ff6a4a; filter: drop-shadow(0 0 3px #ff6a4a); }
-  .reactor .tick { animation: rspin 26s linear infinite; }
-  .reactor .mid { animation: rspinr 17s linear infinite; }
-  .reactor .seg { animation: rspin 11s linear infinite; }
-  .reactor .sweep { animation: rspin 3.6s linear infinite; }
+  .reactor .s1 { animation: rspin 40s linear infinite; }
+  .reactor .s2 { animation: rspinr 24s linear infinite; }
+  .reactor .s3 { animation: rspin 16s linear infinite; }
+  .reactor .s4 { animation: rspinr 30s linear infinite; }
+  .reactor .s5 { animation: rspin 20s linear infinite; }
+  .reactor .sweep { animation: rspin 4.5s linear infinite; }
   .reactor .center { animation: rpulse 2.4s ease-in-out infinite; }
   @keyframes rspin { to { transform: rotate(360deg); } }
   @keyframes rspinr { to { transform: rotate(-360deg); } }
-  @keyframes rpulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
-  @keyframes rcore { 0%,100% { opacity: 1; } 50% { opacity: .68; } }
-  .reactor.active { --rc: #7fdcff; }
-  .reactor.active .seg { animation-duration: 3.4s; }
-  .reactor.active .mid { animation-duration: 6s; }
-  .reactor.active .sweep { animation-duration: 1.3s; }
+  @keyframes rpulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+  @keyframes rcore { 0%,100% { opacity: 1; } 50% { opacity: .66; } }
+  .reactor.active { --rc: #8fe3ff; }
+  .reactor.active .s3 { animation-duration: 6s; }
+  .reactor.active .s5 { animation-duration: 8s; }
+  .reactor.active .sweep { animation-duration: 1.5s; }
   .reactor.active .core { animation: rcore .5s ease-in-out infinite; }
   .hud-name { font: 700 12px var(--mono); letter-spacing: .34em; color: #dfeaff; text-indent: .34em; }
   .hud-status { display: flex; align-items: center; gap: 6px; font: 600 8.5px var(--mono); letter-spacing: .22em; color: var(--good, #43d9a3); text-transform: uppercase; }
@@ -275,9 +280,9 @@
   .askbar .mic:hover { color: #fff; border-color: var(--accent); }
   .askbar .mic.listening { color: #fff; border-color: #ff5a7a; background: radial-gradient(circle at 40% 35%, #ff9db3, #e11d48 70%); animation: micpulse 1.2s infinite; }
   @keyframes micpulse { 0% { box-shadow: 0 0 0 0 rgba(225,29,72,.5); } 70% { box-shadow: 0 0 0 10px rgba(225,29,72,0); } 100% { box-shadow: 0 0 0 0 rgba(225,29,72,0); } }
-  @media (max-width: 900px) { .jarvis-hud { bottom: 92px; } .reactor { width: 118px; height: 118px; } .hud-name { font-size: 10px; } .hud-tag { display: none; } }
-  @media (max-width: 560px) { .jarvis-hud { display: none; } }
-  @media (prefers-reduced-motion: reduce) { .reactor .tick, .reactor .mid, .reactor .seg, .reactor .sweep, .reactor .center { animation: none; } }
+  @media (max-width: 1000px) { .reactor { width: 240px; height: 240px; } .hud-tag { display: none; } }
+  @media (max-width: 680px) { .jarvis-hud { right: 14px; top: auto; bottom: 150px; transform: none; } .reactor { width: 150px; height: 150px; } .hud-name { font-size: 9px; } }
+  @media (prefers-reduced-motion: reduce) { .reactor .s1, .reactor .s2, .reactor .s3, .reactor .s4, .reactor .s5, .reactor .sweep, .reactor .center { animation: none; } }
 </style>
 
 <div id="stage">
@@ -347,14 +352,27 @@
   <div class="jarvis-hud">
     <div class="reactor" id="reactor">
       <svg viewBox="0 0 100 100" class="rsvg" aria-hidden="true">
-        <g class="ring tick"><circle cx="50" cy="50" r="47"/></g>
-        <g class="ring mid"><circle cx="50" cy="50" r="40"/></g>
-        <g class="ring seg"><circle cx="50" cy="50" r="33"/></g>
-        <circle class="inner" cx="50" cy="50" r="26"/>
-        <g class="sweep"><path d="M50 50 L50 20"/></g>
-        <circle class="core" cx="50" cy="50" r="16"/>
-        <circle class="hl" cx="44" cy="43" r="6"/>
-        <circle class="center" cx="50" cy="50" r="3.6"/>
+        <defs>
+          <radialGradient id="coreg" cx="50%" cy="46%" r="55%">
+            <stop offset="0" stop-color="#eaf4ff"/><stop offset=".5" stop-color="var(--rc)"/><stop offset="1" stop-color="#06122f"/>
+          </radialGradient>
+          <radialGradient id="sweepg" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="var(--rc)" stop-opacity=".55"/><stop offset="1" stop-color="var(--rc)" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g class="bracket"><path d="M3 16 V3 H16"/><path d="M84 3 H97 V16"/><path d="M97 84 V97 H84"/><path d="M16 97 H3 V84"/></g>
+        <g class="spin s1"><circle class="ticks" cx="50" cy="50" r="47"/></g>
+        <g class="spinr s2"><circle class="ring1" cx="50" cy="50" r="43"/></g>
+        <g class="spin s3"><circle class="gauge" cx="50" cy="50" r="39"/></g>
+        <g class="spinr s4"><circle class="data" cx="50" cy="50" r="34.5"/></g>
+        <g class="spin s5"><polygon class="hex" points="50,18 77.7,34 77.7,66 50,82 22.3,66 22.3,34"/></g>
+        <g class="cross"><path d="M50 6 V13"/><path d="M50 87 V94"/><path d="M6 50 H13"/><path d="M87 50 H94"/></g>
+        <circle class="ring2" cx="50" cy="50" r="28"/>
+        <g class="sweep"><path d="M50 50 L50 6 A44 44 0 0 1 81 19 Z" fill="url(#sweepg)"/></g>
+        <circle class="core" cx="50" cy="50" r="16" fill="url(#coreg)"/>
+        <polygon class="coreHex" points="50,39 59.5,44.5 59.5,55.5 50,61 40.5,55.5 40.5,44.5"/>
+        <circle class="hl" cx="45" cy="44" r="5"/>
+        <circle class="center" cx="50" cy="50" r="3.4"/>
       </svg>
     </div>
     <div class="hud-name">J.A.R.V.I.S.</div>
