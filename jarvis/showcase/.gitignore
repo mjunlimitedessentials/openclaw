@@ -1,0 +1,2 @@
+# Local live-wiring config — contains your gateway token. Never commit.
+config.js

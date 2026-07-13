@@ -1,0 +1,10 @@
+[
+  { "id": "proj-brightpath", "label": "Project — BrightPath Q3", "cat": "project",
+    "note": "Renewal + expanded ad budget. At risk: waiting on creative approval.", "links": ["content"] },
+  { "id": "proj-summit", "label": "Project — Summit Local Launch", "cat": "project",
+    "note": "New location GEO rollout. On track.", "links": ["geo"] },
+  { "id": "proj-harbor", "label": "Project — Harbor Lead Gen", "cat": "project",
+    "note": "Landing pages + paid search.", "links": ["ads"] },
+  { "id": "proj-intake", "label": "Project — Client Intake System", "cat": "project",
+    "note": "Jotform to CRM automation for new leads.", "links": ["jotform", "crm"] }
+]

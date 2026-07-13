@@ -1,0 +1,81 @@
+{
+  "_comment": "JARVIS 2 MCP server wiring for mcporter (https://mcporter.dev). OpenClaw bridges MCP through mcporter, so this is where JARVIS's 'sub-agents' plug in. Copy the servers you want into your mcporter config (default: ~/.mcporter/config.json), then run `mcporter list` and `mcporter list <server> --schema` to verify. Put secrets in env vars, NOT inline. Only wire what you'll actually use — fewer tools = sharper routing.",
+
+  "mcpServers": {
+    "gmail": {
+      "_comment": "Email sub-agent. Use a hosted Gmail MCP or a local one (e.g. GongRzhe/Gmail-MCP-Server). OAuth per that server's setup.",
+      "command": "npx",
+      "args": ["-y", "@gongrzhe/server-gmail-autoauth-mcp"]
+    },
+
+    "gcal": {
+      "_comment": "Calendar sub-agent. Google Calendar MCP (e.g. nspady/google-calendar-mcp). Needs Google OAuth creds.",
+      "command": "npx",
+      "args": ["-y", "@cocal/google-calendar-mcp"],
+      "env": {
+        "GOOGLE_OAUTH_CREDENTIALS": "${GOOGLE_OAUTH_CREDENTIALS_PATH}"
+      }
+    },
+
+    "gdrive": {
+      "_comment": "Knowledge/files sub-agent. Google Drive MCP. Docs read/write + search.",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-gdrive"]
+    },
+
+    "slack": {
+      "_comment": "Team comms. Official/community Slack MCP. Needs a bot token + team id.",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "${SLACK_TEAM_ID}"
+      }
+    },
+
+    "supabase": {
+      "_comment": "Long-term memory + CRM. Supabase MCP (read/write via SQL). Apply jarvis/supabase/schema.sql first. Use a scoped access token.",
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase", "--project-ref=${SUPABASE_PROJECT_REF}"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
+      }
+    },
+
+    "granola": {
+      "_comment": "Meeting notes/transcripts. Granola MCP (community). Optional.",
+      "command": "npx",
+      "args": ["-y", "granola-mcp"]
+    },
+
+    "gamma": {
+      "_comment": "Decks/one-pagers. Gamma MCP (remote/HTTP). Content-creation sub-agent.",
+      "url": "https://mcp.gamma.app/mcp",
+      "headers": { "Authorization": "Bearer ${GAMMA_API_KEY}" }
+    },
+
+    "canva": {
+      "_comment": "Designs/graphics. Canva MCP (remote/HTTP). OAuth in your Canva connector.",
+      "url": "https://mcp.canva.com/mcp"
+    },
+
+    "higgsfield": {
+      "_comment": "Image/video/audio/voiceover generation — JARVIS 2's media studio. Remote MCP.",
+      "url": "https://mcp.higgsfield.ai/mcp",
+      "headers": { "Authorization": "Bearer ${HIGGSFIELD_API_KEY}" }
+    },
+
+    "vidiq": {
+      "_comment": "YouTube/social growth: keyword research, titles, thumbnails. Remote MCP.",
+      "url": "https://mcp.vidiq.com/mcp",
+      "headers": { "Authorization": "Bearer ${VIDIQ_API_KEY}" }
+    },
+
+    "jotform": {
+      "_comment": "Forms/intake/surveys. Jotform MCP. Needs an API key.",
+      "command": "npx",
+      "args": ["-y", "jotform-mcp"],
+      "env": { "JOTFORM_API_KEY": "${JOTFORM_API_KEY}" }
+    }
+  }
+}

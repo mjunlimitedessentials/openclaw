@@ -1,0 +1,11 @@
+[
+  { "id": "gmail", "label": "Gmail", "cat": "ops", "note": "Inbox for the comms sub-agent.", "links": [] },
+  { "id": "gcal", "label": "Google Calendar", "cat": "ops", "note": "Scheduling + conflicts.", "links": [] },
+  { "id": "drive", "label": "Google Drive", "cat": "ops", "note": "Docs, specs, deliverables.", "links": [] },
+  { "id": "granola", "label": "Granola Notes", "cat": "ops", "note": "Meeting transcripts.", "links": [] },
+  { "id": "gamma", "label": "Gamma", "cat": "ops", "note": "AI decks and one-pagers.", "links": [] },
+  { "id": "canva", "label": "Canva", "cat": "ops", "note": "Branded graphics.", "links": [] },
+  { "id": "higgs", "label": "Higgsfield", "cat": "ops", "note": "Image / video / audio studio.", "links": [] },
+  { "id": "vidiq", "label": "vidIQ", "cat": "ops", "note": "YouTube titles + keywords.", "links": [] },
+  { "id": "jotform", "label": "Jotform", "cat": "ops", "note": "Lead intake forms.", "links": ["crm"] }
+]

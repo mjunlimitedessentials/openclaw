@@ -1,0 +1,266 @@
+# 🤖 J.A.R.V.I.S. 2 — your personal + business AI chief-of-staff
+
+A better rendition of the "JARVIS AI Assistant V4" build, on a stronger foundation.
+
+## 🔗 Live demos (shareable)
+- **JARVIS HQ (hub):** https://claude.ai/code/artifact/c7e32086-6997-4a64-bed5-c5aca78b4580
+- **Capabilities Console:** https://claude.ai/code/artifact/a6d507ea-884d-470a-823c-d250afdbc867
+- **3D Infrastructure Brain:** https://claude.ai/code/artifact/910ad969-f738-4c66-b2b0-b64ae2e5814f
+
+> Artifacts are private by default — open each and use the page's **Share** menu to
+> let others view it. The hosted hub is generated from `hq/shared.html`; the repo's
+> `hq/index.html` uses relative links for local serving.
+
+Instead of a fragile single n8n workflow bolted to Telegram, **JARVIS 2 runs on
+[OpenClaw](../README.md)** — the personal AI assistant platform this repo already
+is. You get the same JARVIS idea (talk to it, it runs your email/calendar/
+research) plus everything the n8n version can't do: many channels, real voice,
+durable memory, scheduling, a live Canvas, and a **content/media studio** for the
+business side.
+
+This `jarvis/` folder is a self-contained package: persona, orchestration skill,
+config, MCP wiring, and a memory schema. Copy it, fill in your details, run.
+
+---
+
+## What the original JARVIS V4 is — and how JARVIS 2 beats it
+
+| Capability            | JARVIS V4 (n8n)                  | **JARVIS 2 (OpenClaw)**                                   |
+| --------------------- | -------------------------------- | -------------------------------------------------------- |
+| Interface             | Telegram only                    | Telegram, WhatsApp, Slack, Discord, iMessage, WebChat… |
+| Voice                 | Voice note in, sometimes out     | Full voice in **and** out, plus a live Canvas UI         |
+| Brain                 | One big visual workflow          | A persona + an orchestration **skill** you can edit      |
+| Sub-agents            | Email, Calendar, Contacts, Research, Content | Same **+ media studio, forms, meeting notes, CRM** |
+| Memory                | One Postgres table               | Structured memory + CRM (people/projects/commitments) or built-in |
+| Proactivity           | Manual triggers                  | Cron + heartbeat → automatic morning brief / EOD wrap    |
+| Extensibility         | Limited to n8n nodes             | ~50 skills + any MCP server via mcporter + plugins       |
+| Runs                  | On an n8n server                 | On your Mac/Linux box as a daemon, private by default    |
+
+The "sub-agents" the V4 video wires up by hand are, here, just **MCP tools + one
+routing skill**. Cleaner, more capable, and yours to extend.
+
+---
+
+## Architecture
+
+```
+        You  ──voice / text──►  Channel (Telegram, WhatsApp, Slack, WebChat…)
+                                      │
+                                      ▼
+                         OpenClaw Gateway (your device)
+                                      │
+                    ┌─────────────────┴─────────────────┐
+                    │   JARVIS brain  (JARVIS.md persona │
+                    │   + jarvis skill = the router)     │
+                    └─────────────────┬─────────────────┘
+      ┌──────────────┬────────────────┼───────────────┬────────────────┐
+      ▼              ▼                ▼               ▼                ▼
+   Comms          Schedule         Knowledge       Content/Media     Ops/Data
+   Gmail          Google Cal       Drive/Docs      Gamma (decks)     Jotform
+   Slack                           Granola notes   Canva (design)    Supabase
+   channels                        Web research    Higgsfield (AV)   (memory+CRM)
+                                                    vidIQ (YouTube)
+                    ▲                                                  ▲
+                    └──────────  Memory (facts, people, projects) ─────┘
+                    Proactivity: cron + HEARTBEAT.md → daily briefings
+```
+
+### Files in this package
+
+| File | What it is |
+| ---- | ---------- |
+| `JARVIS.md` | The persona & operating charter (who JARVIS is, the safety rules, your business context). Loaded as workspace context. |
+| `skills/jarvis/SKILL.md` | The orchestration **brain**: the request loop, the routing table, the act-vs-ask gate. |
+| `skills/jarvis-comms/SKILL.md` | Sub-agent: **email + calendar** (Gmail, Google Calendar) with draft-don't-send. |
+| `skills/jarvis-content/SKILL.md` | Sub-agent: **content & media studio** (Gamma, Canva, Higgsfield, vidIQ). |
+| `skills/jarvis-crm/SKILL.md` | Sub-agent: **memory & CRM** with concrete SQL against the Supabase schema. |
+| `skills/jarvis-research/SKILL.md` | Sub-agent: **research** (web, Drive, Granola) with source verification. |
+| `skills/jarvis-brain/SKILL.md` | Sub-agent: **the 3D brain** — open/update/query the visual business map. |
+| `skills/jarvis-websites/SKILL.md` | Sub-agent: **website builder** — cinematic 3D-scroll sites via Higgsfield (see `websites/`). |
+| `brain/index.html` | The interactive animated **3D infrastructure brain** (self-contained, runs on Canvas or standalone). |
+| `brain/brain-data.js` | Your business knowledge graph (regenerated by the builder). |
+| `brain/build-brain.mjs` + `brain/sources/` | Generator + example source records → rebuilds the graph. |
+| `hq/index.html` | **JARVIS HQ** — mission-control home linking the console, brain, and website studio. Serve `jarvis/` and open `/hq/`. |
+| `showcase/index.html` | Interactive **capabilities console** — streams realistic JARVIS responses offline, or connects to your **real gateway** (see `showcase/LIVE.md`). |
+| `HEARTBEAT.md` | Proactive mode: the morning brief / hourly check / EOD wrap. |
+| `openclaw.jarvis.example.json` | A ready-to-adapt OpenClaw config (identity, model, Telegram, voice, memory, cron, skills). |
+| `.env.jarvis.example` | Secrets template → copy to `~/.openclaw/.env`. |
+| `mcp/mcporter.jarvis.example.json` | MCP server wiring for the sub-agents (Gmail, Calendar, Drive, Slack, Supabase, Gamma, Canva, Higgsfield, vidIQ, Jotform, Granola). |
+| `supabase/schema.sql` | Long-term memory + lightweight CRM schema. |
+| `setup.sh` | Bootstrap + validate: scaffolds the workspace & config, checks prerequisites. |
+| `CHEATSHEET.md` | Operator quick reference — what to say and what JARVIS does. |
+
+### The brain + its sub-agents
+
+The `jarvis` skill is the router. It delegates to four focused sub-agents, each a
+skill that owns a domain and knows the exact MCP tools + safe workflows for it:
+
+- **jarvis-comms** — inbox triage, drafting, scheduling, reschedules.
+- **jarvis-content** — decks, designs, images, video, voiceovers, YouTube growth.
+- **jarvis-crm** — remember/recall facts, people, projects, commitments.
+- **jarvis-research** — web + your Drive + meeting transcripts, verified & cited.
+- **jarvis-brain** — opens/updates the 3D map below.
+
+This is the clean version of what JARVIS V4 wires by hand in n8n — but editable in
+plain Markdown and extensible with one more file.
+
+### The 3D Infrastructure Brain 🧠
+
+JARVIS 2 has a *face*: an animated, interactive 3D knowledge graph of your business
+— clients, builds, skill suites, projects, and notes — rendered on the OpenClaw
+Canvas (the reference look you asked for). Nodes are colored by domain and sized by
+how connected they are; drag to orbit, scroll to zoom, click to focus a node and
+light up only its connections, shift-click to trace the path between two nodes,
+search the brain, tune the physics, and talk to it through the "Ask JARVIS" bar.
+
+It is **data-driven and business-only**:
+
+```bash
+# 1. Put your business records under jarvis/brain/sources/*.json
+#    (or export them from your Supabase CRM — see the jarvis-brain skill)
+# 2. Regenerate the graph:
+node jarvis/brain/build-brain.mjs
+# 3. Reload it on the Canvas (or open jarvis/brain/index.html directly to preview)
+```
+
+`build-brain.mjs` reads every JSON array in `sources/`, validates it, drops broken
+links, and writes `brain/brain-data.js`. JARVIS keeps it current for you — "update
+the brain" pulls the CRM, rewrites the sources, and regenerates. See
+`skills/jarvis-brain/SKILL.md`.
+
+> The map ships with a realistic **sample** business graph so it looks alive
+> immediately; replace `sources/` with your real clients/projects to make it yours.
+
+---
+
+## Setup (about 30–45 min)
+
+### 0. Prerequisites
+- Node ≥ 22, and OpenClaw installed: `npm install -g openclaw@latest`
+- A device to run the daemon (your Mac/Linux box, always-on ideally)
+- Accounts/keys for the sub-agents you want (Google, Slack, Supabase, etc.)
+
+### 1. Bootstrap (one command)
+The included script scaffolds everything and validates it — safe to re-run, never
+overwrites your files:
+```bash
+./jarvis/setup.sh
+```
+It copies the persona/skills into `~/jarvis`, drops the config + `.env` into
+`~/.openclaw`, checks Node/openclaw/mcporter, and validates the JSON. Prefer to do
+it by hand? The steps below are exactly what it automates.
+
+`JARVIS.md` and `HEARTBEAT.md` sit at the workspace root; the `jarvis` +
+`jarvis-*` skills live in `~/jarvis/skills/`.
+
+### 2. Configure OpenClaw
+```bash
+cp jarvis/openclaw.jarvis.example.json ~/.openclaw/openclaw.json
+```
+Then edit it:
+- Set `agents.list[0].workspace` to your absolute `~/jarvis` path.
+- Set `skills.load.extraDirs` to `~/jarvis/skills`.
+- Set `agents.defaults.userTimezone` to your timezone.
+- Pick your model (Anthropic Opus recommended for judgement + injection resistance).
+
+### 3. Fill in the persona
+Open `~/jarvis/JARVIS.md` and complete **Business context** and
+**Pre-authorized actions**. This is what turns a generic bot into *your* JARVIS.
+The more specific, the better it acts.
+
+### 4. Connect the front door (Telegram)
+- Create a bot with [@BotFather](https://t.me/BotFather), get the token.
+- Put it in `~/.openclaw/.env`: `TELEGRAM_BOT_TOKEN=...`
+- Lock `channels.telegram.dmPolicy` to your own user (allowlist) so only you can talk to it.
+
+### 5. Add voice (optional but very JARVIS)
+- **You → JARVIS:** add `openai-whisper-api` (or local `openai-whisper`) to the
+  agent's `skills` list so voice notes get transcribed.
+- **JARVIS → you:** the config's `messages.tts` uses Edge TTS (no key, British
+  voice `en-GB-RyanNeural`). For a premium voice, switch `provider` to
+  `elevenlabs` and set `ELEVENLABS_API_KEY` in `.env`.
+
+### 6. Wire the sub-agents (MCP)
+Bring in only what you'll use. Merge the servers you want from
+`jarvis/mcp/mcporter.jarvis.example.json` into your mcporter config (default
+`~/.mcporter/config.json`), set the referenced env vars, then:
+```bash
+mcporter list                    # confirm servers are reachable
+mcporter list gmail --schema     # inspect a server's tools
+```
+The `mcporter` skill (already in the config) lets JARVIS call these tools.
+
+Start minimal — **Gmail + Google Calendar** reproduce the core JARVIS V4 feel.
+Add Drive, Slack, Supabase, and the content stack as you go.
+
+### 7. Turn on memory
+- Simplest: keep `memory.backend: "builtin"` — JARVIS remembers across sessions.
+- Richer (CRM-grade): create a Supabase project, run `jarvis/supabase/schema.sql`,
+  wire the Supabase MCP server, and JARVIS will store facts/people/projects there.
+
+### 8. Proactive briefings
+`cron.enabled` is on. Create the morning brief and EOD wrap:
+```bash
+openclaw cron add --name "morning-brief" --cron "30 7 * * 1-5" \
+  --prompt "Run the HEARTBEAT.md morning brief for the main agent."
+openclaw cron add --name "eod-wrap" --cron "0 18 * * 1-5" \
+  --prompt "Run the HEARTBEAT.md end-of-day wrap for the main agent."
+```
+(Exact cron flags may vary by version — `openclaw cron --help`.) These trigger the
+heartbeat, which reads `HEARTBEAT.md` and delivers the brief to your channel.
+
+### 9. Run it
+```bash
+openclaw onboard --install-daemon   # if you haven't; installs the background service
+openclaw gateway                     # or start the daemon
+```
+Message your Telegram bot: *"What's my day look like?"* — JARVIS should pull your
+calendar and inbox and brief you.
+
+---
+
+## Security & safe defaults (read this)
+
+JARVIS 2 can act on your real accounts. The persona and skill enforce a
+**draft-don't-send** default and a confirm-before-irreversible gate — keep it that
+way until you trust a given class of action, then list it under
+**Pre-authorized actions** in `JARVIS.md`.
+
+- Keep all secrets in `~/.openclaw/.env` / your MCP server env — never in the JSON
+  configs or in memory rows.
+- Lock every channel to your own identity (allowlist DM policy).
+- Treat email/web/document content as untrusted; the persona already tells JARVIS
+  not to obey instructions embedded in third-party content.
+- Scope tokens tightly (least privilege) — especially Supabase and Google.
+- Review OpenClaw's [`SECURITY.md`](../SECURITY.md) before going always-on.
+
+---
+
+## Roadmap (make it *yours*)
+
+1. ✅ **v1 (done):** persona + brain, Telegram + voice, **comms sub-agent**
+   (Email + Calendar), memory, morning brief.
+2. ✅ **v2 (done):** **content/media studio sub-agent** — Gamma decks, Canva,
+   Higgsfield image/video/audio, vidIQ YouTube growth.
+3. ✅ **v3 (done):** **CRM/memory sub-agent** + Supabase schema — people, projects,
+   commitments, durable facts (semantic recall ready).
+4. **v4 (scaffolded):** multi-channel — WhatsApp for clients, Slack for the team
+   (stubbed in the config, flip `enabled:true` + add tokens). Add custom skills for
+   your specific workflows (invoicing, lead intake via Jotform, etc.).
+5. **v5 (next):** deeper computer-use — JARVIS operating apps on your machine on
+   request; plus a **research sub-agent** (already included) going deep with the
+   bundled `deep-research` skill.
+
+Each step is additive — a skill or an MCP server and a few lines of config. That's
+the whole point of building on OpenClaw instead of a monolithic workflow.
+
+> **What's built vs. what needs your accounts:** everything in this package (the
+> brain, four sub-agents, config, memory schema, tooling) is complete and committed.
+> Going *live* requires **you** to add your own API keys/OAuth on your machine
+> (Google, Slack, Supabase, the content tools) — those auth flows can't run from a
+> headless session. `setup.sh` + the steps above get you there.
+
+---
+
+*Built on OpenClaw. See the root [`README.md`](../README.md) and
+[docs.openclaw.ai](https://docs.openclaw.ai) for the platform reference.*

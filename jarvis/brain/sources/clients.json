@@ -1,0 +1,12 @@
+[
+  { "id": "c-brightpath", "label": "Client — BrightPath Dental", "cat": "client",
+    "note": "SEO + Ads retainer. Renewal due Q3. Contact: Dana.", "links": ["seo", "ads", "proj-brightpath", "p-dana"] },
+  { "id": "c-summit", "label": "Client — Summit Fitness", "cat": "client",
+    "note": "GEO / local map-pack. 3 locations.", "links": ["geo", "proj-summit", "p-marco"] },
+  { "id": "c-harbor", "label": "Client — Harbor Law", "cat": "client",
+    "note": "Ads + content. High-value leads.", "links": ["ads", "proj-harbor", "p-lena"] },
+  { "id": "c-northside", "label": "Client — Northside Cafe", "cat": "client",
+    "note": "Local GEO + social content.", "links": ["geo", "content", "p-omar"] },
+  { "id": "c-verde", "label": "Client — Verde Landscaping", "cat": "client",
+    "note": "Seasonal ads + reviews.", "links": ["ads", "proj-intake"] }
+]

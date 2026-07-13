@@ -1,0 +1,102 @@
+{
+  "$schema": "https://docs.openclaw.ai/schema/openclaw.schema.json",
+  "_comment": "JARVIS 2 example config. Copy to ~/.openclaw/openclaw.json and adapt. Secrets go in ~/.openclaw/.env, NOT here. See jarvis/README.md for the full walkthrough.",
+
+  "ui": {
+    "assistant": {
+      "name": "JARVIS",
+      "avatar": "🤖"
+    }
+  },
+
+  "agents": {
+    "defaults": {
+      "userTimezone": "America/Los_Angeles"
+    },
+    "list": [
+      {
+        "id": "main",
+        "default": true,
+        "identity": {
+          "name": "JARVIS",
+          "theme": "calm, precise chief-of-staff AI",
+          "emoji": "🤖"
+        },
+        "_workspace_comment": "Point the workspace at your JARVIS folder so JARVIS.md + HEARTBEAT.md load as durable context. Use an absolute path on your machine.",
+        "workspace": "~/jarvis",
+        "model": {
+          "primary": "anthropic/claude-opus-4-6",
+          "fallbacks": ["anthropic/claude-sonnet-4-5"]
+        },
+        "_skills_comment": "Allowlist keeps JARVIS focused. 'jarvis' is the orchestration brain; the 'jarvis-*' skills are the sub-agents (comms, content, crm, research). All are loaded via skills.load.extraDirs below. Add/remove to taste.",
+        "skills": [
+          "jarvis",
+          "jarvis-comms",
+          "jarvis-content",
+          "jarvis-crm",
+          "jarvis-research",
+          "jarvis-brain",
+          "jarvis-websites",
+          "mcporter",
+          "weather",
+          "summarize",
+          "voice-call"
+        ],
+        "heartbeat": {
+          "enabled": true,
+          "prompt": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. If nothing needs attention, reply HEARTBEAT_OK."
+        }
+      }
+    ]
+  },
+
+  "skills": {
+    "load": {
+      "_comment": "Load the bundled JARVIS orchestration skill from this repo. Use an absolute path on your machine.",
+      "extraDirs": ["~/jarvis/skills"],
+      "watch": true
+    }
+  },
+
+  "memory": {
+    "_comment": "Start with the built-in memory plugin. To use Supabase as long-term memory/CRM, see jarvis/supabase/schema.sql and wire it via the Supabase MCP server + the jarvis skill's memory routing.",
+    "backend": "builtin"
+  },
+
+  "cron": {
+    "_comment": "Enables scheduled jobs. Create the morning brief / EOD wrap with `openclaw cron` (see jarvis/README.md → Proactive briefings). Heartbeat above drives the checks; cron triggers them on a schedule.",
+    "enabled": true,
+    "sessionRetention": "48h"
+  },
+
+  "channels": {
+    "telegram": {
+      "_comment": "Front door. Set TELEGRAM_BOT_TOKEN in ~/.openclaw/.env (from @BotFather). Lock dmPolicy to just you.",
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "actions": {
+        "reactions": true,
+        "sendMessage": true
+      }
+    },
+    "_business_channels_comment": "Optional: add business channels as you grow (v4 on the roadmap). WhatsApp for clients, Slack for the team. Flip enabled:true and set the tokens in .env. See docs.openclaw.ai for each channel's setup.",
+    "slack": {
+      "enabled": false,
+      "dmPolicy": "allowlist"
+    },
+    "whatsapp": {
+      "enabled": false,
+      "dmPolicy": "allowlist"
+    }
+  },
+
+  "messages": {
+    "_comment": "Outbound voice (JARVIS talks back). Pick ONE provider and put its key in ~/.openclaw/.env. 'edge' needs no API key and is the easiest start; 'elevenlabs' gives the best JARVIS-like voice. Inbound voice notes (you talk to JARVIS) are transcribed by the 'openai-whisper' or 'openai-whisper-api' skill — add it to the agent skills allowlist and see docs.openclaw.ai.",
+    "tts": {
+      "auto": "inbound",
+      "mode": "final",
+      "provider": "edge",
+      "edge": { "enabled": true, "voice": "en-GB-RyanNeural" }
+    }
+  }
+}

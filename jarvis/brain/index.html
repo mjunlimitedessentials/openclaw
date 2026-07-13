@@ -1,0 +1,787 @@
+<title>J.A.R.V.I.S. 2 — Infrastructure Brain</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<style>
+  :root {
+    --bg-0: #05070f;
+    --bg-1: #060a18;
+    --panel: rgba(11, 21, 51, 0.62);
+    --panel-solid: #0a1330;
+    --hair: #1b2b55;
+    --hair-soft: rgba(90, 130, 220, 0.14);
+    --ink: #cfe0ff;
+    --ink-dim: #8ea6d8;
+    --muted: #6a80b8;
+    --accent: #3b82f6;
+    --accent-2: #60a5fa;
+    --glow: rgba(59, 130, 246, 0.55);
+    --client: #4aa3ff;
+    --build: #34e2e2;
+    --suite: #f5c451;
+    --project: #a78bfa;
+    --note: #f4a6c0;
+    --ops: #6ff0c0;
+    --radius: 12px;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 800px at 62% 40%, #0b1836 0%, var(--bg-1) 55%, var(--bg-0) 100%);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #stage { position: fixed; inset: 0; }
+  canvas#graph { position: absolute; inset: 0; display: block; cursor: grab; }
+  canvas#graph.dragging { cursor: grabbing; }
+
+  /* ---------- vignette + scanline ambience ---------- */
+  #stage::after {
+    content: "";
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(120% 120% at 50% 50%, transparent 58%, rgba(2,4,10,0.72) 100%);
+    z-index: 2;
+  }
+
+  /* ---------- left rail ---------- */
+  .rail {
+    position: absolute; top: 18px; left: 18px; bottom: 18px; width: 268px;
+    z-index: 6;
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--hair);
+    border-radius: var(--radius);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    box-shadow: 0 24px 60px -30px rgba(0,0,0,0.9), inset 0 1px 0 rgba(120,160,255,0.08);
+    overflow: hidden auto;
+    scrollbar-width: thin; scrollbar-color: #24386e transparent;
+  }
+  .rail::-webkit-scrollbar { width: 7px; }
+  .rail::-webkit-scrollbar-thumb { background: #24386e; border-radius: 8px; }
+
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .orb {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #bfe0ff, var(--accent) 55%, #10245e 100%);
+    box-shadow: 0 0 18px var(--glow), inset 0 0 8px rgba(255,255,255,0.5);
+    flex: none;
+    animation: pulse 3.4s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 14px var(--glow); } 50% { box-shadow: 0 0 26px var(--glow); } }
+  .brand h1 {
+    font: 700 14px/1.05 var(--mono); letter-spacing: 0.14em; margin: 0; text-transform: uppercase;
+  }
+  .brand .sub { font: 500 10px/1.3 var(--mono); color: var(--muted); letter-spacing: 0.08em; margin-top: 3px; }
+
+  .search {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(3,8,22,0.6); border: 1px solid var(--hair);
+    border-radius: 9px; padding: 8px 10px;
+  }
+  .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.16); }
+  .search svg { flex: none; opacity: 0.7; }
+  .search input {
+    background: none; border: 0; outline: 0; color: var(--ink);
+    font: 500 12px var(--mono); width: 100%; letter-spacing: 0.02em;
+  }
+  .search input::placeholder { color: var(--muted); }
+
+  .block { border-top: 1px solid var(--hair-soft); padding-top: 12px; }
+  .eyebrow {
+    font: 600 9.5px var(--mono); letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 9px;
+  }
+
+  .inspector-body { font: 400 12px/1.55 var(--sans); color: var(--ink-dim); }
+  .inspector-body .title {
+    font: 600 13px/1.2 var(--sans); color: var(--ink); margin-bottom: 4px; display: flex; align-items: center; gap: 7px;
+  }
+  .inspector-body .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; box-shadow: 0 0 8px currentColor; }
+  .inspector-body .meta { font: 500 10px var(--mono); color: var(--muted); letter-spacing: 0.05em; margin: 6px 0 8px; text-transform: uppercase; }
+  .inspector-body .links a { color: var(--accent-2); cursor: pointer; text-decoration: none; }
+  .inspector-body .links a:hover { text-decoration: underline; }
+  .hint { color: var(--muted); font-style: normal; }
+
+  ul.hubs, ul.legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  ul.hubs li, ul.legend li {
+    display: flex; align-items: center; gap: 9px; padding: 4px 6px; border-radius: 7px; cursor: pointer;
+    font: 500 11.5px var(--mono); color: var(--ink-dim); letter-spacing: 0.02em;
+  }
+  ul.hubs li:hover, ul.legend li:hover { background: rgba(80,120,220,0.12); color: var(--ink); }
+  ul.hubs .name, ul.legend .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  ul.hubs .count { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .swatch { width: 8px; height: 8px; border-radius: 50%; flex: none; box-shadow: 0 0 7px currentColor; }
+
+  .ctl { display: flex; flex-direction: column; gap: 11px; }
+  .ctl .row { display: flex; align-items: center; gap: 10px; }
+  .ctl label { font: 500 10.5px var(--mono); color: var(--ink-dim); letter-spacing: 0.04em; width: 84px; text-transform: uppercase; }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none; height: 3px; flex: 1;
+    background: linear-gradient(90deg, var(--accent), #24386e); border-radius: 3px; outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 13px; height: 13px; border-radius: 50%;
+    background: #dcecff; border: 2px solid var(--accent);
+    box-shadow: 0 0 8px var(--glow); cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 13px; height: 13px; border-radius: 50%; background: #dcecff; border: 2px solid var(--accent);
+    box-shadow: 0 0 8px var(--glow); cursor: pointer;
+  }
+
+  .toggle { display: flex; align-items: center; gap: 9px; cursor: pointer; font: 500 11px var(--mono); color: var(--ink-dim); letter-spacing: 0.03em; }
+  .toggle input { display: none; }
+  .toggle .box {
+    width: 15px; height: 15px; border-radius: 4px; border: 1px solid var(--hair);
+    background: rgba(3,8,22,0.6); display: grid; place-items: center; flex: none; transition: 0.15s;
+  }
+  .toggle input:checked + .box { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 10px var(--glow); }
+  .toggle .box svg { opacity: 0; transition: 0.15s; }
+  .toggle input:checked + .box svg { opacity: 1; }
+
+  .keys { font: 500 9.5px/1.7 var(--mono); color: var(--muted); letter-spacing: 0.03em; }
+  .keys b { color: var(--ink-dim); font-weight: 600; }
+
+  /* ---------- top-right camera cluster ---------- */
+  .cam {
+    position: absolute; top: 18px; right: 18px; z-index: 6;
+    display: flex; gap: 8px;
+  }
+  .cam button {
+    font: 600 11px var(--mono); letter-spacing: 0.06em; color: var(--ink);
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 9px;
+    padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: 0.15s;
+  }
+  .cam button:hover { border-color: var(--accent); color: #fff; box-shadow: 0 0 0 3px rgba(59,130,246,0.14); }
+  .cam button.on { border-color: var(--accent); color: #fff; }
+
+  .stat {
+    position: absolute; top: 18px; left: 50%; transform: translateX(-50%); z-index: 5;
+    font: 500 10.5px var(--mono); color: var(--ink-dim); letter-spacing: 0.14em; text-transform: uppercase;
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 20px; padding: 6px 16px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  }
+  .stat b { color: #fff; font-weight: 700; }
+
+  /* ---------- node tooltip ---------- */
+  #tip {
+    position: absolute; z-index: 7; pointer-events: none; opacity: 0; transform: translateY(4px);
+    transition: opacity 0.12s; max-width: 240px;
+    background: rgba(6,12,30,0.94); border: 1px solid var(--hair); border-radius: 9px;
+    padding: 8px 11px; box-shadow: 0 14px 34px -14px #000;
+  }
+  #tip .t { font: 600 12px var(--sans); color: #fff; display: flex; align-items: center; gap: 7px; }
+  #tip .m { font: 500 9.5px var(--mono); color: var(--muted); letter-spacing: 0.06em; margin-top: 4px; text-transform: uppercase; }
+
+  /* ---------- ask bar ---------- */
+  .ask {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 6;
+    width: min(620px, calc(100vw - 320px));
+    display: flex; flex-direction: column; gap: 9px; align-items: center;
+  }
+  .chips { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+  .chips button {
+    font: 500 10.5px var(--mono); letter-spacing: 0.03em; color: var(--ink-dim);
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 16px; padding: 5px 11px; cursor: pointer;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: 0.15s;
+  }
+  .chips button:hover { color: #fff; border-color: var(--accent); }
+  .askbar {
+    width: 100%; display: flex; align-items: center; gap: 10px;
+    background: var(--panel); border: 1px solid var(--hair); border-radius: 26px; padding: 10px 12px 10px 18px;
+    backdrop-filter: blur(16px) saturate(130%); -webkit-backdrop-filter: blur(16px) saturate(130%);
+    box-shadow: 0 20px 50px -24px #000, inset 0 1px 0 rgba(120,160,255,0.08);
+  }
+  .askbar:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.16), 0 20px 50px -24px #000; }
+  .askbar input {
+    flex: 1; background: none; border: 0; outline: 0; color: var(--ink);
+    font: 500 13px var(--sans); letter-spacing: 0.01em;
+  }
+  .askbar input::placeholder { color: var(--muted); }
+  .askbar .go {
+    width: 34px; height: 34px; border-radius: 50%; flex: none; cursor: pointer; border: 0;
+    background: radial-gradient(circle at 38% 32%, #bfe0ff, var(--accent) 60%, #12275f);
+    box-shadow: 0 0 16px var(--glow); display: grid; place-items: center;
+  }
+  .askbar .go:hover { filter: brightness(1.12); }
+
+  /* ---------- reply toast ---------- */
+  #reply {
+    position: absolute; bottom: 108px; left: 50%; transform: translateX(-50%) translateY(6px); z-index: 6;
+    width: min(600px, calc(100vw - 320px));
+    background: rgba(6,12,30,0.95); border: 1px solid var(--accent); border-radius: 12px;
+    padding: 13px 16px; opacity: 0; transition: 0.2s; pointer-events: none;
+    box-shadow: 0 20px 50px -20px #000;
+  }
+  #reply.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #reply .who { font: 700 9.5px var(--mono); letter-spacing: 0.2em; color: var(--accent-2); text-transform: uppercase; }
+  #reply .msg { font: 400 12.5px/1.5 var(--sans); color: var(--ink); margin-top: 5px; }
+
+  @media (max-width: 720px) {
+    .rail { width: 210px; }
+    .ask, #reply { width: calc(100vw - 250px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .brand .orb { animation: none; } }
+</style>
+
+<div id="stage">
+  <canvas id="graph"></canvas>
+
+  <div class="stat" id="stat">— notes · — connections</div>
+
+  <aside class="rail">
+    <div class="brand">
+      <div class="orb"></div>
+      <div>
+        <h1>JARVIS · BRAIN</h1>
+        <div class="sub" id="brand-sub">infrastructure map</div>
+      </div>
+    </div>
+
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8ea6d8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" placeholder="Search the brain…" autocomplete="off" spellcheck="false" />
+    </div>
+
+    <div class="block">
+      <p class="eyebrow">Inspector</p>
+      <div class="inspector-body" id="inspector">
+        <span class="hint">Click a node to focus it — only that node and its connections light up, and its note shows here. Shift-click a second node to trace the path between them.</span>
+      </div>
+    </div>
+
+    <div class="block">
+      <p class="eyebrow">Top Hubs</p>
+      <ul class="hubs" id="hubs"></ul>
+    </div>
+
+    <div class="block">
+      <p class="eyebrow">Domains</p>
+      <ul class="legend" id="legend"></ul>
+    </div>
+
+    <div class="block ctl">
+      <p class="eyebrow">Forces</p>
+      <div class="row"><label>Repel</label><input type="range" id="repel" min="40" max="420" value="180" /></div>
+      <div class="row"><label>Link length</label><input type="range" id="linklen" min="30" max="220" value="96" /></div>
+    </div>
+
+    <div class="block ctl">
+      <p class="eyebrow">Display</p>
+      <label class="toggle"><input type="checkbox" id="tHubs" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Hub labels</label>
+      <label class="toggle"><input type="checkbox" id="tFlow" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Particle flow</label>
+      <label class="toggle"><input type="checkbox" id="tSpin" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Auto-orbit</label>
+    </div>
+
+    <div class="block">
+      <p class="keys"><b>orbit</b> drag · <b>zoom</b> scroll · <b>focus</b> click · <b>path</b> shift-click · <b>clear</b> esc</p>
+    </div>
+  </aside>
+
+  <div class="cam">
+    <button id="fit" title="Frame the whole graph">◎ Fit</button>
+    <button id="reset" title="Reset view">⟲ Reset</button>
+  </div>
+
+  <div id="tip"><div class="t"><span class="dot"></span><span class="tl"></span></div><div class="m"></div></div>
+
+  <div id="reply"><div class="who">J.A.R.V.I.S.</div><div class="msg"></div></div>
+
+  <div class="ask">
+    <div class="chips">
+      <button data-cmd="good morning">☀ Good morning</button>
+      <button data-cmd="show me clients">◍ Show clients</button>
+      <button data-cmd="show me builds">◈ Show builds</button>
+      <button data-cmd="what's at risk">▲ At risk</button>
+    </div>
+    <div class="askbar">
+      <input id="ask" placeholder='Ask JARVIS —  "good morning"  ·  "show me clients"  ·  "remind me…"' autocomplete="off" />
+      <button class="go" id="askGo" title="Send"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#04122f" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- Optional external data: build-brain.mjs writes brain-data.js which sets window.__BRAIN__.
+     When absent (e.g. standalone preview), the rich sample business graph below is used. -->
+<script src="brain-data.js" onerror="void 0"></script>
+<script>
+"use strict";
+
+/* ============================================================================
+   J.A.R.V.I.S. 2 — Infrastructure Brain
+   Self-contained 3D force-directed knowledge graph (Canvas 2D, pseudo-3D).
+   Data model: { categories:[{id,label,color}], nodes:[{id,label,cat,note,links:[]}] }
+   ==========================================================================*/
+
+/* ---- Sample business graph (replace with YOUR data via brain-data.js) ---- */
+const DEFAULT_GRAPH = (function () {
+  const categories = [
+    { id: "build",   label: "Builds",        color: "#34e2e2" },
+    { id: "client",  label: "Clients",       color: "#4aa3ff" },
+    { id: "suite",   label: "Skill Suites",  color: "#f5c451" },
+    { id: "project", label: "Projects",      color: "#a78bfa" },
+    { id: "ops",     label: "Business Ops",  color: "#6ff0c0" },
+    { id: "note",    label: "Notes",         color: "#f4a6c0" },
+  ];
+
+  // Compact authoring: [id, label, cat, note, [links...]]
+  const rows = [
+    ["jarvis2", "JARVIS 2 — Core", "build", "The assistant itself: brain, sub-agents, memory. Central node of the whole operation.", ["comms","content","crm","research","brain-ui","memory","gateway"]],
+    ["brain-ui", "Brain UI (3D map)", "build", "This visualization. Renders the business knowledge graph on the live Canvas.", ["crm","jarvis2"]],
+    ["gateway", "OpenClaw Gateway", "build", "Control plane. Runs the daemon, channels, cron, and skill loading.", ["telegram","cron","jarvis2"]],
+    ["telegram", "Telegram Channel", "build", "Front door. Voice + text in and out.", ["gateway"]],
+    ["memory", "Memory / CRM Store", "build", "Supabase long-term memory: people, projects, commitments, durable facts.", ["crm","jarvis2"]],
+    ["cron", "Cron & Heartbeat", "build", "Morning brief + end-of-day wrap. Proactive automation.", ["gateway","comms"]],
+
+    ["comms", "Comms Sub-agent", "suite", "Email + calendar. Triage, draft, schedule, reschedule.", ["gmail","gcal","jarvis2"]],
+    ["content", "Content Studio", "suite", "Decks, design, image/video/audio, YouTube growth.", ["gamma","canva","higgs","vidiq","jarvis2"]],
+    ["crm", "CRM & Memory", "suite", "Remember/recall clients, projects, commitments.", ["memory","jarvis2"]],
+    ["research", "Research Sub-agent", "suite", "Web + Drive + meeting transcripts, verified & cited.", ["drive","granola","jarvis2"]],
+    ["seo", "SEO Suite", "suite", "Organic search playbooks and audits.", ["content","c-brightpath"]],
+    ["geo", "GEO Suite", "suite", "Local / map-pack visibility for local businesses.", ["content","c-summit","c-northside"]],
+    ["ads", "Ads Suite", "suite", "Paid acquisition — search & social.", ["content","c-brightpath","c-harbor"]],
+
+    ["gmail", "Gmail", "ops", "Inbox integration for the comms sub-agent.", ["comms"]],
+    ["gcal", "Google Calendar", "ops", "Scheduling + conflict detection.", ["comms"]],
+    ["drive", "Google Drive", "ops", "Docs, specs, contracts, deliverables.", ["research"]],
+    ["granola", "Granola Notes", "ops", "Meeting transcripts and action items.", ["research"]],
+    ["gamma", "Gamma", "ops", "AI decks and one-pagers.", ["content"]],
+    ["canva", "Canva", "ops", "Branded graphics and social posts.", ["content"]],
+    ["higgs", "Higgsfield", "ops", "Image / video / audio generation studio.", ["content"]],
+    ["vidiq", "vidIQ", "ops", "YouTube titles, thumbnails, keyword research.", ["content"]],
+    ["jotform", "Jotform", "ops", "Lead intake forms and surveys.", ["crm","proj-intake"]],
+
+    ["c-brightpath", "Client — BrightPath Dental", "client", "SEO + Ads retainer. Renewal due Q3. Primary contact: Dana.", ["seo","ads","proj-brightpath","p-dana"]],
+    ["c-summit", "Client — Summit Fitness", "client", "GEO / local map-pack. 3 locations.", ["geo","proj-summit","p-marco"]],
+    ["c-harbor", "Client — Harbor Law", "client", "Ads + content. High-value leads.", ["ads","proj-harbor","p-lena"]],
+    ["c-northside", "Client — Northside Cafe", "client", "Local GEO + social content.", ["geo","content","p-omar"]],
+    ["c-verde", "Client — Verde Landscaping", "client", "Seasonal ads + reviews.", ["ads","proj-intake"]],
+
+    ["proj-brightpath", "Project — BrightPath Q3", "project", "Renewal + expanded ad budget. At risk: waiting on creative approval.", ["c-brightpath","content"]],
+    ["proj-summit", "Project — Summit Local Launch", "project", "New location GEO rollout. On track.", ["c-summit","geo"]],
+    ["proj-harbor", "Project — Harbor Lead Gen", "project", "Landing pages + paid search.", ["c-harbor","ads"]],
+    ["proj-intake", "Project — Client Intake System", "project", "Jotform → CRM automation for new leads.", ["jotform","crm"]],
+
+    ["p-dana", "Dana Ruiz", "note", "BrightPath decision-maker. Prefers Thursday calls.", ["c-brightpath"]],
+    ["p-marco", "Marco Silva", "note", "Summit ops lead.", ["c-summit"]],
+    ["p-lena", "Lena Park", "note", "Harbor Law managing partner.", ["c-harbor"]],
+    ["p-omar", "Omar Haddad", "note", "Northside owner.", ["c-northside"]],
+
+    ["n-rules", "Note — Standing Rules", "note", "No meetings before 10:00. Fridays heads-down. Flag invoices over $5k.", ["jarvis2","comms"]],
+    ["n-brand", "Note — Brand Voice", "note", "Confident, plain, no jargon. Used by the content studio.", ["content"]],
+    ["n-pricing", "Note — Retainer Pricing", "note", "Tiers: Local $1.5k, Growth $3k, Scale $6k/mo.", ["ads","seo","geo"]],
+  ];
+
+  const nodes = rows.map(([id, label, cat, note, links]) => ({ id, label, cat, note, links: links || [] }));
+  return { categories, nodes };
+})();
+
+const GRAPH = (window.__BRAIN__ && window.__BRAIN__.nodes) ? window.__BRAIN__ : DEFAULT_GRAPH;
+
+/* ------------------------------- setup ---------------------------------- */
+const canvas = document.getElementById("graph");
+const ctx = canvas.getContext("2d");
+const catMap = Object.fromEntries(GRAPH.categories.map(c => [c.id, c]));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Build node objects + adjacency
+const nodes = GRAPH.nodes.map((n, i) => ({
+  ...n,
+  idx: i,
+  x: (Math.cos(i * 2.399) * 180), y: (Math.sin(i * 2.399) * 180), z: (Math.sin(i * 1.1) * 180),
+  vx: 0, vy: 0, vz: 0, deg: 0,
+}));
+const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
+const links = [];
+const adj = Object.fromEntries(nodes.map(n => [n.id, new Set()]));
+for (const n of nodes) {
+  for (const t of n.links) {
+    if (!byId[t] || t === n.id) continue;
+    const key = n.id < t ? n.id + "|" + t : t + "|" + n.id;
+    if (!adj[n.id].has(t)) {
+      adj[n.id].add(t); adj[t].add(n.id);
+      links.push({ a: n.id, b: t, phase: (links.length * 0.137) % 1 });
+    }
+  }
+}
+for (const n of nodes) n.deg = adj[n.id].size;
+const maxDeg = Math.max(1, ...nodes.map(n => n.deg));
+
+/* ------------------------------ camera ---------------------------------- */
+let yaw = 0.5, pitch = -0.25, zoom = 1, autoSpin = !reduceMotion;
+let camX = 0, camY = 0; // pan (unused drag-pan; reserved)
+let W = 0, H = 0, DPR = 1;
+function resize() {
+  DPR = Math.min(2, window.devicePixelRatio || 1);
+  W = canvas.clientWidth = window.innerWidth;
+  H = canvas.clientHeight = window.innerHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+window.addEventListener("resize", resize);
+resize();
+
+/* --------------------------- force simulation --------------------------- */
+let REPEL = 180, LINKLEN = 96;
+function simulate() {
+  const n = nodes.length;
+  // repulsion
+  for (let i = 0; i < n; i++) {
+    const a = nodes[i];
+    for (let j = i + 1; j < n; j++) {
+      const b = nodes[j];
+      let dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+      let d2 = dx*dx + dy*dy + dz*dz || 0.01;
+      let d = Math.sqrt(d2);
+      const f = (REPEL * REPEL) / d2 * 0.12;
+      const ux = dx/d, uy = dy/d, uz = dz/d;
+      a.vx += ux*f; a.vy += uy*f; a.vz += uz*f;
+      b.vx -= ux*f; b.vy -= uy*f; b.vz -= uz*f;
+    }
+  }
+  // springs
+  for (const l of links) {
+    const a = byId[l.a], b = byId[l.b];
+    let dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z;
+    let d = Math.sqrt(dx*dx + dy*dy + dz*dz) || 0.01;
+    const f = (d - LINKLEN) * 0.02;
+    const ux = dx/d, uy = dy/d, uz = dz/d;
+    a.vx += ux*f; a.vy += uy*f; a.vz += uz*f;
+    b.vx -= ux*f; b.vy -= uy*f; b.vz -= uz*f;
+  }
+  // centering gravity + integrate
+  for (const a of nodes) {
+    a.vx += -a.x * 0.0016; a.vy += -a.y * 0.0016; a.vz += -a.z * 0.0016;
+    a.vx *= 0.86; a.vy *= 0.86; a.vz *= 0.86;
+    a.x += a.vx; a.y += a.vy; a.z += a.vz;
+  }
+}
+
+/* --------------------------- projection --------------------------------- */
+const FOCAL = 620;
+function project(a) {
+  const cy = Math.cos(yaw), sy = Math.sin(yaw);
+  const cp = Math.cos(pitch), sp = Math.sin(pitch);
+  let x = a.x * cy - a.z * sy;
+  let z = a.x * sy + a.z * cy;
+  let y = a.y * cp - z * sp;
+  z = a.y * sp + z * cp;
+  const scale = FOCAL / (FOCAL + z) * zoom;
+  return { sx: W/2 + x*scale, sy: H/2 + y*scale, scale, depth: z };
+}
+
+/* ----------------------------- interaction ------------------------------ */
+let focusId = null, pathSet = null, hoverId = null, searchTerm = "";
+const tip = document.getElementById("tip");
+const projCache = new Map();
+
+function neighborSet(id) {
+  const s = new Set([id]);
+  for (const t of adj[id]) s.add(t);
+  return s;
+}
+function shortestPath(a, b) {
+  const prev = { [a]: null }; const q = [a];
+  while (q.length) {
+    const cur = q.shift();
+    if (cur === b) break;
+    for (const t of adj[cur]) if (!(t in prev)) { prev[t] = cur; q.push(t); }
+  }
+  if (!(b in prev)) return null;
+  const path = []; let c = b;
+  while (c != null) { path.push(c); c = prev[c]; }
+  return new Set(path);
+}
+
+function setFocus(id, additive) {
+  if (additive && focusId && id && id !== focusId) {
+    const p = shortestPath(focusId, id);
+    if (p) { pathSet = p; renderInspectorPath(focusId, id, p); return; }
+  }
+  focusId = id; pathSet = null;
+  if (id) renderInspector(byId[id]); else clearInspector();
+}
+function clearInspector() {
+  document.getElementById("inspector").innerHTML =
+    '<span class="hint">Click a node to focus it — only that node and its connections light up, and its note shows here. Shift-click a second node to trace the path between them.</span>';
+}
+function renderInspector(nd) {
+  const c = catMap[nd.cat] || { color: "#8ea6d8", label: nd.cat };
+  const nbrs = [...adj[nd.id]].map(id => byId[id]).sort((a,b) => b.deg - a.deg).slice(0, 8);
+  document.getElementById("inspector").innerHTML =
+    `<div class="title"><span class="dot" style="color:${c.color};background:${c.color}"></span>${esc(nd.label)}</div>
+     <div class="meta">${esc(c.label)} · ${nd.deg} link${nd.deg===1?"":"s"}</div>
+     <div>${esc(nd.note || "")}</div>
+     ${nbrs.length ? `<div class="meta" style="margin-top:10px">Connected</div><div class="links">${nbrs.map(nb=>`<a data-go="${nb.id}">${esc(nb.label)}</a>`).join(" · ")}</div>` : ""}`;
+}
+function renderInspectorPath(a, b, set) {
+  const order = [...set];
+  document.getElementById("inspector").innerHTML =
+    `<div class="title"><span class="dot" style="color:#fff;background:#fff"></span>Path traced</div>
+     <div class="meta">${esc(byId[a].label)} → ${esc(byId[b].label)} · ${set.size} hops</div>
+     <div class="links">${order.map(id=>`<a data-go="${id}">${esc(byId[id].label)}</a>`).join(" → ")}</div>`;
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])); }
+
+document.getElementById("inspector").addEventListener("click", e => {
+  const a = e.target.closest("[data-go]"); if (a) setFocus(a.getAttribute("data-go"), false);
+});
+
+// pointer: drag to orbit, click to focus, hover to tip
+let dragging = false, moved = false, lx = 0, ly = 0;
+canvas.addEventListener("pointerdown", e => { dragging = true; moved = false; lx = e.clientX; ly = e.clientY; canvas.classList.add("dragging"); canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener("pointermove", e => {
+  if (dragging) {
+    const dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+    if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+    yaw += dx * 0.006; pitch += dy * 0.006;
+    pitch = Math.max(-1.45, Math.min(1.45, pitch));
+  } else {
+    updateHover(e.clientX, e.clientY);
+  }
+});
+canvas.addEventListener("pointerup", e => {
+  canvas.classList.remove("dragging");
+  if (dragging && !moved) {
+    const id = pick(e.clientX, e.clientY);
+    setFocus(id, e.shiftKey);
+  }
+  dragging = false;
+});
+canvas.addEventListener("wheel", e => { e.preventDefault(); zoom *= e.deltaY < 0 ? 1.08 : 0.925; zoom = Math.max(0.3, Math.min(3.2, zoom)); }, { passive: false });
+window.addEventListener("keydown", e => { if (e.key === "Escape") { setFocus(null); document.getElementById("search").value=""; searchTerm=""; } });
+
+function pick(px, py) {
+  let best = null, bestD = 26 * 26;
+  for (const n of nodes) {
+    const p = projCache.get(n.id); if (!p) continue;
+    const r = nodeRadius(n, p.scale) + 6;
+    const dx = px - p.sx, dy = py - p.sy, d = dx*dx + dy*dy;
+    if (d < r*r && d < bestD) { bestD = d; best = n.id; }
+  }
+  return best;
+}
+function updateHover(px, py) {
+  const id = pick(px, py);
+  hoverId = id;
+  if (id) {
+    const n = byId[id], c = catMap[n.cat] || {color:"#8ea6d8",label:n.cat};
+    tip.querySelector(".dot").style.cssText = `background:${c.color};color:${c.color}`;
+    tip.querySelector(".tl").textContent = n.label;
+    tip.querySelector(".m").textContent = `${c.label} · ${n.deg} links — click to focus`;
+    tip.style.left = Math.min(px + 14, W - 250) + "px";
+    tip.style.top = (py + 14) + "px";
+    tip.style.opacity = "1";
+    canvas.style.cursor = "pointer";
+  } else {
+    tip.style.opacity = "0";
+    canvas.style.cursor = dragging ? "grabbing" : "grab";
+  }
+}
+
+/* ------------------------------ rendering ------------------------------- */
+function nodeRadius(n, scale) { return (3.2 + (n.deg / maxDeg) * 11) * (0.5 + scale * 0.5); }
+
+let showHubs = true, showFlow = !reduceMotion, t = 0;
+const hubIds = nodes.slice().sort((a,b)=>b.deg-a.deg).slice(0, 6).map(n=>n.id);
+
+function activeSet() {
+  if (pathSet) return pathSet;
+  if (focusId) return neighborSet(focusId);
+  if (searchTerm) {
+    const s = new Set();
+    for (const n of nodes) if (n.label.toLowerCase().includes(searchTerm)) s.add(n.id);
+    return s.size ? s : null;
+  }
+  return null;
+}
+
+function frame() {
+  if (autoSpin && !dragging) yaw += 0.0016;
+  simulate();
+  t += 0.016;
+
+  ctx.clearRect(0, 0, W, H);
+  projCache.clear();
+  for (const n of nodes) projCache.set(n.id, project(n));
+
+  const active = activeSet();
+  const dim = active ? 0.12 : 1;
+
+  // links
+  ctx.lineWidth = 1;
+  for (const l of links) {
+    const pa = projCache.get(l.a), pb = projCache.get(l.b);
+    const on = active ? (active.has(l.a) && active.has(l.b)) : true;
+    const ca = catMap[byId[l.a].cat]?.color || "#4a6";
+    const depth = (pa.depth + pb.depth) / 2;
+    const fade = 0.5 + (200 - Math.min(400, depth + 200)) / 800;
+    ctx.strokeStyle = hexA(ca, on ? 0.30 * fade : 0.05);
+    ctx.beginPath(); ctx.moveTo(pa.sx, pa.sy); ctx.lineTo(pb.sx, pb.sy); ctx.stroke();
+
+    // particle flow
+    if (showFlow && on && !reduceMotion) {
+      const tt = ((t * 0.28 + l.phase) % 1);
+      const fx = pa.sx + (pb.sx - pa.sx) * tt, fy = pa.sy + (pb.sy - pa.sy) * tt;
+      ctx.fillStyle = hexA("#bfe0ff", on ? 0.9 : 0.2);
+      ctx.beginPath(); ctx.arc(fx, fy, 1.6, 0, 7); ctx.fill();
+    }
+  }
+
+  // nodes (back to front)
+  const order = nodes.slice().sort((a,b) => projCache.get(b.id).depth - projCache.get(a.id).depth);
+  for (const n of order) {
+    const p = projCache.get(n.id);
+    const c = catMap[n.cat]?.color || "#8ea6d8";
+    const on = active ? active.has(n.id) : true;
+    const r = nodeRadius(n, p.scale);
+    const a = on ? 1 : dim;
+
+    // glow
+    const g = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, r * 3.2);
+    g.addColorStop(0, hexA(c, 0.55 * a));
+    g.addColorStop(1, hexA(c, 0));
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(p.sx, p.sy, r * 3.2, 0, 7); ctx.fill();
+
+    // core
+    ctx.fillStyle = hexA(c, a);
+    ctx.beginPath(); ctx.arc(p.sx, p.sy, r, 0, 7); ctx.fill();
+    ctx.fillStyle = hexA("#ffffff", 0.55 * a);
+    ctx.beginPath(); ctx.arc(p.sx - r*0.28, p.sy - r*0.28, r*0.34, 0, 7); ctx.fill();
+
+    // focus ring
+    if (n.id === focusId || n.id === hoverId) {
+      ctx.strokeStyle = hexA("#ffffff", 0.8); ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(p.sx, p.sy, r + 4, 0, 7); ctx.stroke();
+    }
+
+    // labels
+    const labelIt = (showHubs && hubIds.includes(n.id)) || n.id === focusId || n.id === hoverId ||
+      (active && active.has(n.id) && (focusId || searchTerm) && r > 5);
+    if (labelIt && on) {
+      ctx.font = "600 11px " + "ui-monospace, monospace";
+      ctx.fillStyle = hexA("#dfeaff", 0.92 * a);
+      ctx.textAlign = "center";
+      ctx.fillText(n.label, p.sx, p.sy - r - 6);
+    }
+  }
+
+  requestAnimationFrame(frame);
+}
+
+function hexA(hex, a) {
+  if (hex[0] !== "#") return hex;
+  const h = hex.slice(1);
+  const v = h.length === 3 ? h.split("").map(x=>x+x).join("") : h;
+  const r = parseInt(v.slice(0,2),16), g = parseInt(v.slice(2,4),16), b = parseInt(v.slice(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+/* ------------------------------ side panel ------------------------------ */
+// stat line
+const totalLinks = links.length;
+document.getElementById("stat").innerHTML = `<b>${nodes.length}</b> notes · <b>${totalLinks}</b> connections`;
+document.getElementById("brand-sub").textContent = `${nodes.length} notes · ${totalLinks} connections`;
+
+// top hubs
+document.getElementById("hubs").innerHTML = nodes.slice().sort((a,b)=>b.deg-a.deg).slice(0,7)
+  .map(n => { const c = catMap[n.cat]||{color:"#8ea6d8"}; return `<li data-go="${n.id}"><span class="swatch" style="color:${c.color};background:${c.color}"></span><span class="name">${esc(n.label)}</span><span class="count">${n.deg}</span></li>`; })
+  .join("");
+document.getElementById("hubs").addEventListener("click", e => { const li = e.target.closest("[data-go]"); if (li) setFocus(li.getAttribute("data-go"), false); });
+
+// legend / domains with counts
+const counts = {};
+for (const n of nodes) counts[n.cat] = (counts[n.cat]||0)+1;
+document.getElementById("legend").innerHTML = GRAPH.categories
+  .map(c => `<li data-cat="${c.id}"><span class="swatch" style="color:${c.color};background:${c.color}"></span><span class="name">${esc(c.label)}</span><span class="count">${counts[c.id]||0}</span></li>`)
+  .join("");
+document.getElementById("legend").addEventListener("click", e => {
+  const li = e.target.closest("[data-cat]"); if (!li) return;
+  const cat = li.getAttribute("data-cat");
+  const first = nodes.filter(n=>n.cat===cat).sort((a,b)=>b.deg-a.deg)[0];
+  searchTerm = ""; document.getElementById("search").value = "";
+  if (first) { setFocus(first.id, false); }
+  reply(`Highlighting your ${catMap[cat].label.toLowerCase()} — ${counts[cat]||0} in the graph.`);
+});
+
+// search
+document.getElementById("search").addEventListener("input", e => {
+  searchTerm = e.target.value.trim().toLowerCase();
+  if (!searchTerm) { setFocus(null); }
+});
+document.getElementById("search").addEventListener("keydown", e => {
+  if (e.key === "Enter") { const m = nodes.find(n=>n.label.toLowerCase().includes(searchTerm)); if (m) setFocus(m.id, false); }
+});
+
+// controls
+document.getElementById("repel").addEventListener("input", e => REPEL = +e.target.value);
+document.getElementById("linklen").addEventListener("input", e => LINKLEN = +e.target.value);
+document.getElementById("tHubs").addEventListener("change", e => showHubs = e.target.checked);
+document.getElementById("tFlow").addEventListener("change", e => showFlow = e.target.checked);
+document.getElementById("tSpin").addEventListener("change", e => autoSpin = e.target.checked);
+document.getElementById("fit").addEventListener("click", () => { zoom = 1; setFocus(null); });
+document.getElementById("reset").addEventListener("click", () => { yaw = 0.5; pitch = -0.25; zoom = 1; setFocus(null); });
+
+/* ------------------------------- Ask bar -------------------------------- */
+const replyEl = document.getElementById("reply");
+let replyTimer = null;
+function reply(msg) {
+  replyEl.querySelector(".msg").textContent = msg;
+  replyEl.classList.add("show");
+  clearTimeout(replyTimer);
+  replyTimer = setTimeout(() => replyEl.classList.remove("show"), 5200);
+}
+function ask(qRaw) {
+  const q = qRaw.trim(); if (!q) return;
+  // In live OpenClaw, forward to the gateway / Canvas host:
+  try { if (window.parent !== window) window.parent.postMessage({ type: "jarvis.ask", text: q }, "*"); } catch (_) {}
+
+  const low = q.toLowerCase();
+  if (/good morning|morning brief|rundown/.test(low)) {
+    const risk = nodes.filter(n => /at risk/i.test(n.note || ""));
+    reply(`Good morning. You're tracking ${counts.client||0} clients and ${counts.project||0} live projects across ${nodes.length} nodes. ${risk.length ? risk.length + " item(s) flagged at risk — " + risk.map(n=>n.label).join(", ") + "." : "Nothing flagged at risk."} Say "show me" a domain to dive in.`);
+    return;
+  }
+  if (/at risk|risk|blocked|slipping/.test(low)) {
+    const risk = nodes.filter(n => /at risk|blocked/i.test(n.note || ""));
+    if (risk.length) { setFocus(risk[0].id, false); reply(`At risk: ${risk.map(n=>n.label).join(", ")}. Focused the first one.`); }
+    else reply("Nothing flagged at risk right now.");
+    return;
+  }
+  const m = low.match(/show me (?:my )?(.+)/);
+  const term = m ? m[1].replace(/s$/, "") : low;
+  // category match?
+  const cat = GRAPH.categories.find(c => c.label.toLowerCase().includes(term) || c.id.includes(term));
+  if (cat) {
+    const first = nodes.filter(n=>n.cat===cat.id).sort((a,b)=>b.deg-a.deg)[0];
+    if (first) setFocus(first.id, false);
+    reply(`Showing your ${cat.label.toLowerCase()} — ${counts[cat.id]||0} in the graph.`);
+    return;
+  }
+  // node match?
+  const node = nodes.find(n => n.label.toLowerCase().includes(term));
+  if (node) { setFocus(node.id, false); reply(`Focused "${node.label}". ${node.note || ""}`); return; }
+  if (/remind me|remember|note that|follow.?up/.test(low)) {
+    reply(`Noted. In your live JARVIS this creates a reminder / memory entry — this preview just maps the brain.`);
+    return;
+  }
+  reply(`No match for "${q}" in the map. Try a client, build, or domain name — or "good morning".`);
+}
+document.getElementById("askGo").addEventListener("click", () => { const el = document.getElementById("ask"); ask(el.value); el.value=""; });
+document.getElementById("ask").addEventListener("keydown", e => { if (e.key === "Enter") { ask(e.target.value); e.target.value=""; } });
+document.querySelectorAll(".chips button").forEach(b => b.addEventListener("click", () => ask(b.getAttribute("data-cmd"))));
+
+// warm up the layout so it opens settled
+for (let i = 0; i < 140; i++) simulate();
+requestAnimationFrame(frame);
+</script>
