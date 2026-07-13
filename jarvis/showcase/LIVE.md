@@ -40,10 +40,11 @@ answer. On an error it tells you exactly what failed.
 - **Request:** `POST {endpoint}/v1/responses`
   `Authorization: Bearer {token}`
   `{ "model": "default", "input": "<your message>", "stream": false }`
-- **Reply:** read from `output[].content[]` where `type == "output_text"`.
-- Code lives in `liveSend()` inside `index.html` — swap `stream:false` handling for
-  SSE if you want token-by-token streaming (the gateway emits
-  `response.output_text.delta` events).
+- **Reply:** streamed token-by-token. The console sends `stream: true` and parses
+  the gateway's SSE events (`response.output_text.delta` → `delta` chunks), typing
+  each token as it arrives. If the host/proxy doesn't stream, it falls back to
+  reading the full JSON body (`output[].content[]` where `type == "output_text"`).
+- Code lives in `liveSend()` inside `index.html`.
 
 ## CORS (the usual gotcha)
 A browser page calling the gateway is a cross-origin request. Serve the page from
