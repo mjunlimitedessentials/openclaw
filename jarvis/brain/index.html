@@ -231,6 +231,48 @@
     .ask, #reply { width: calc(100vw - 250px); }
   }
   @media (prefers-reduced-motion: reduce) { .brand .orb { animation: none; } }
+
+  /* ---------- JARVIS reactor HUD ---------- */
+  .jarvis-hud {
+    position: absolute; right: 22px; bottom: 104px; z-index: 6;
+    display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none;
+    text-align: center;
+  }
+  .reactor { --rc: #5aa2ff; width: 118px; height: 118px; position: relative; line-height: 0; }
+  .rsvg { width: 100%; height: 100%; overflow: visible; }
+  .reactor circle, .reactor path { vector-effect: non-scaling-stroke; }
+  .reactor .ring { transform-box: fill-box; transform-origin: 50% 50%; }
+  .reactor .ring circle { fill: none; stroke: var(--rc); }
+  .reactor .tick circle { stroke-width: 1; stroke-dasharray: .5 3.4; opacity: .5; }
+  .reactor .mid circle { stroke-width: 1.3; stroke-dasharray: 7 5; opacity: .65; }
+  .reactor .seg circle { stroke-width: 3.2; stroke-dasharray: 16 12; opacity: .85; stroke-linecap: round; }
+  .reactor .inner { fill: none; stroke: var(--rc); stroke-width: .7; opacity: .35; }
+  .reactor .sweep { transform-box: fill-box; transform-origin: 50% 50%; }
+  .reactor .sweep path { stroke: var(--rc); stroke-width: 1.1; opacity: .75; }
+  .reactor .core { fill: var(--rc); filter: drop-shadow(0 0 7px var(--rc)); }
+  .reactor .hl { fill: #eaf4ff; opacity: .6; }
+  .reactor .center { fill: #ff6a4a; filter: drop-shadow(0 0 3px #ff6a4a); }
+  .reactor .tick { animation: rspin 26s linear infinite; }
+  .reactor .mid { animation: rspinr 17s linear infinite; }
+  .reactor .seg { animation: rspin 11s linear infinite; }
+  .reactor .sweep { animation: rspin 3.6s linear infinite; }
+  .reactor .center { animation: rpulse 2.4s ease-in-out infinite; }
+  @keyframes rspin { to { transform: rotate(360deg); } }
+  @keyframes rspinr { to { transform: rotate(-360deg); } }
+  @keyframes rpulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+  @keyframes rcore { 0%,100% { opacity: 1; } 50% { opacity: .68; } }
+  .reactor.active { --rc: #7fdcff; }
+  .reactor.active .seg { animation-duration: 3.4s; }
+  .reactor.active .mid { animation-duration: 6s; }
+  .reactor.active .sweep { animation-duration: 1.3s; }
+  .reactor.active .core { animation: rcore .5s ease-in-out infinite; }
+  .hud-name { font: 700 12px var(--mono); letter-spacing: .34em; color: #dfeaff; text-indent: .34em; }
+  .hud-status { display: flex; align-items: center; gap: 6px; font: 600 8.5px var(--mono); letter-spacing: .22em; color: var(--good, #43d9a3); text-transform: uppercase; }
+  .hud-status .led { width: 6px; height: 6px; border-radius: 50%; background: #43d9a3; box-shadow: 0 0 8px #43d9a3; animation: pulse 2s infinite; }
+  .hud-tag { font: 600 8px var(--mono); letter-spacing: .18em; color: var(--muted); border: 1px solid var(--hair); border-radius: 20px; padding: 3px 9px; }
+  @media (max-width: 900px) { .jarvis-hud { bottom: 92px; } .reactor { width: 76px; height: 76px; } .hud-name { font-size: 10px; } .hud-tag { display: none; } }
+  @media (max-width: 560px) { .jarvis-hud { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .reactor .tick, .reactor .mid, .reactor .seg, .reactor .sweep, .reactor .center { animation: none; } }
 </style>
 
 <div id="stage">
@@ -295,6 +337,24 @@
   <div id="tip"><div class="t"><span class="dot"></span><span class="tl"></span></div><div class="m"></div></div>
 
   <div id="reply"><div class="who">J.A.R.V.I.S.</div><div class="msg"></div></div>
+
+  <div class="jarvis-hud">
+    <div class="reactor" id="reactor">
+      <svg viewBox="0 0 100 100" class="rsvg" aria-hidden="true">
+        <g class="ring tick"><circle cx="50" cy="50" r="47"/></g>
+        <g class="ring mid"><circle cx="50" cy="50" r="40"/></g>
+        <g class="ring seg"><circle cx="50" cy="50" r="33"/></g>
+        <circle class="inner" cx="50" cy="50" r="26"/>
+        <g class="sweep"><path d="M50 50 L50 20"/></g>
+        <circle class="core" cx="50" cy="50" r="16"/>
+        <circle class="hl" cx="44" cy="43" r="6"/>
+        <circle class="center" cx="50" cy="50" r="3.6"/>
+      </svg>
+    </div>
+    <div class="hud-name">J.A.R.V.I.S.</div>
+    <div class="hud-status"><span class="led"></span> Online</div>
+    <div class="hud-tag">OPUS 4.8</div>
+  </div>
 
   <div class="ask">
     <div class="chips">
@@ -508,7 +568,8 @@ function setFocus(id, additive) {
     if (p) { pathSet = p; renderInspectorPath(focusId, id, p); return; }
   }
   focusId = id; pathSet = null;
-  if (id) renderInspector(byId[id]); else clearInspector();
+  if (id) { renderInspector(byId[id]); if (typeof pulseReactor === "function") pulseReactor(1400); }
+  else clearInspector();
 }
 function clearInspector() {
   document.getElementById("inspector").innerHTML =
@@ -734,10 +795,18 @@ document.getElementById("reset").addEventListener("click", () => { yaw = 0.5; pi
 
 /* ------------------------------- Ask bar -------------------------------- */
 const replyEl = document.getElementById("reply");
-let replyTimer = null;
+const reactorEl = document.getElementById("reactor");
+let replyTimer = null, reactorTimer = null;
+function pulseReactor(ms = 2600) {
+  if (!reactorEl) return;
+  reactorEl.classList.add("active");
+  clearTimeout(reactorTimer);
+  reactorTimer = setTimeout(() => reactorEl.classList.remove("active"), ms);
+}
 function reply(msg) {
   replyEl.querySelector(".msg").textContent = msg;
   replyEl.classList.add("show");
+  pulseReactor();
   clearTimeout(replyTimer);
   replyTimer = setTimeout(() => replyEl.classList.remove("show"), 5200);
 }
