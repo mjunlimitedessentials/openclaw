@@ -1,0 +1,351 @@
+<title>J.A.R.V.I.S. 2 — Live Capabilities</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --bg-0:#05070f; --bg-1:#070c1c; --panel:rgba(11,21,51,.6); --panel-2:rgba(7,14,32,.72);
+    --hair:#1b2b55; --hair-soft:rgba(90,130,220,.16);
+    --ink:#dbe6ff; --ink-dim:#93a9db; --muted:#63799f;
+    --accent:#3b82f6; --accent-2:#60a5fa; --glow:rgba(59,130,246,.5);
+    --client:#4aa3ff; --build:#34e2e2; --suite:#f5c451; --project:#a78bfa; --note:#f4a6c0; --ops:#6ff0c0;
+    --good:#43d9a3; --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; color:var(--ink); font-family:var(--sans);
+    background:
+      radial-gradient(900px 620px at 78% -8%, #10224a 0%, transparent 60%),
+      radial-gradient(1000px 700px at 10% 110%, #0c1a3a 0%, transparent 55%),
+      var(--bg-0);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  a{color:var(--accent-2);text-decoration:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:22px 20px 60px}
+
+  /* ---------- top bar ---------- */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:34px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .orb{width:34px;height:34px;flex:none;border-radius:50%;position:relative;
+    background:radial-gradient(circle at 34% 30%,#cfe6ff,var(--accent) 55%,#0c1f52 100%);
+    box-shadow:0 0 20px var(--glow),inset 0 0 8px rgba(255,255,255,.5);animation:pulse 3.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 14px var(--glow)}50%{box-shadow:0 0 30px var(--glow)}}
+  .brand h1{margin:0;font:800 15px/1 var(--mono);letter-spacing:.16em}
+  .brand .sub{font:600 9.5px var(--mono);letter-spacing:.14em;color:var(--muted);margin-top:4px}
+  .status{display:flex;align-items:center;gap:8px;font:600 10px var(--mono);letter-spacing:.16em;color:var(--good);
+    border:1px solid var(--hair);background:var(--panel);border-radius:20px;padding:7px 13px;backdrop-filter:blur(10px)}
+  .status .led{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 9px var(--good);animation:pulse 2s infinite}
+
+  /* ---------- hero ---------- */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center;margin-bottom:40px}
+  .hero h2{font:800 clamp(30px,5vw,52px)/1.02 var(--sans);letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance;
+    background:linear-gradient(180deg,#fff,#a9c4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font:400 16px/1.6 var(--sans);color:var(--ink-dim);max-width:46ch;margin:0 0 22px}
+  .metrics{display:flex;gap:26px;flex-wrap:wrap}
+  .metric b{display:block;font:800 24px var(--mono);letter-spacing:.02em;font-variant-numeric:tabular-nums;
+    background:linear-gradient(180deg,#dbe9ff,#6ea3ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .metric span{font:600 9.5px var(--mono);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+
+  .bigorb{position:relative;aspect-ratio:1;max-width:320px;margin:0 auto;width:100%}
+  .bigorb .core{position:absolute;inset:22%;border-radius:50%;
+    background:radial-gradient(circle at 38% 32%,#eaf4ff,#5fa2ff 42%,#1b49b0 72%,#0a1c4d 100%);
+    box-shadow:0 0 60px var(--glow),0 0 120px rgba(59,130,246,.25),inset 0 0 30px rgba(255,255,255,.35)}
+  .bigorb .ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--hair-soft)}
+  .bigorb .ring.r2{inset:9%;border-color:rgba(90,140,230,.22)}
+  .bigorb .ring.r3{inset:18%;border-color:rgba(120,180,255,.14)}
+  .bigorb .spin{position:absolute;inset:6%;border-radius:50%;
+    background:conic-gradient(from 0deg,transparent,rgba(96,165,250,.5),transparent 30%,transparent 55%,rgba(52,226,226,.4),transparent 82%);
+    -webkit-mask:radial-gradient(circle,transparent 61%,#000 62%);mask:radial-gradient(circle,transparent 61%,#000 62%);
+    animation:spin 9s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bigorb .dot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--suite);box-shadow:0 0 10px var(--suite)}
+
+  /* ---------- console ---------- */
+  .console{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--hair);border-radius:16px;
+    overflow:hidden;box-shadow:0 30px 80px -40px #000,inset 0 1px 0 rgba(130,170,255,.08);backdrop-filter:blur(14px)}
+  .console .bar{display:flex;align-items:center;gap:8px;padding:11px 15px;border-bottom:1px solid var(--hair-soft);
+    font:600 10px var(--mono);letter-spacing:.14em;color:var(--muted)}
+  .console .bar .d{width:10px;height:10px;border-radius:50%;background:#25365f}
+  .console .bar .d.g{background:#2a7d5a}.console .bar .d.y{background:#8a7a2c}
+  .console .bar .title{margin-left:8px}
+  .log{height:340px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;
+    scrollbar-width:thin;scrollbar-color:#25396b transparent}
+  .log::-webkit-scrollbar{width:7px}.log::-webkit-scrollbar-thumb{background:#25396b;border-radius:8px}
+
+  .msg{display:flex;gap:10px;max-width:92%}
+  .msg .av{width:26px;height:26px;flex:none;border-radius:8px;display:grid;place-items:center;font:700 11px var(--mono)}
+  .msg.you{align-self:flex-end;flex-direction:row-reverse}
+  .msg.you .av{background:#20335f;color:#cfe0ff}
+  .msg.jar .av{background:radial-gradient(circle at 35% 30%,#bfe0ff,var(--accent) 60%,#0c1f52);color:#04122f;box-shadow:0 0 12px var(--glow)}
+  .bubble{border-radius:12px;padding:11px 13px;font:400 13.5px/1.55 var(--sans)}
+  .msg.you .bubble{background:#1a2c54;color:#e6eeff;border-top-right-radius:3px}
+  .msg.jar .bubble{background:rgba(9,17,38,.82);border:1px solid var(--hair-soft);border-top-left-radius:3px}
+  .trace{font:500 11px/1.7 var(--mono);color:var(--muted);letter-spacing:.01em;margin:2px 0 8px}
+  .trace .ln{display:flex;gap:7px;align-items:center;opacity:0;transform:translateX(-4px);animation:tin .3s forwards}
+  @keyframes tin{to{opacity:1;transform:none}}
+  .trace .tk{color:var(--accent-2)} .trace .ok{color:var(--good)}
+  .bubble .ans strong{color:#fff}
+  .bubble .tag{display:inline-block;font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+    padding:2px 7px;border-radius:20px;border:1px solid var(--hair);color:var(--ink-dim);margin-bottom:8px}
+  .caret{display:inline-block;width:7px;height:15px;background:var(--accent-2);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .draft{margin-top:9px;border:1px dashed var(--hair);border-radius:9px;padding:9px 11px;background:rgba(5,11,28,.6);
+    font:400 12px/1.5 var(--sans);color:var(--ink-dim)}
+  .draft .h{font:600 9px var(--mono);letter-spacing:.12em;color:var(--suite);text-transform:uppercase;margin-bottom:5px}
+
+  .composer{border-top:1px solid var(--hair-soft);padding:12px;display:flex;flex-direction:column;gap:10px}
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chips button{font:500 11px var(--mono);letter-spacing:.02em;color:var(--ink-dim);background:rgba(9,17,38,.7);
+    border:1px solid var(--hair);border-radius:16px;padding:6px 11px;cursor:pointer;transition:.15s}
+  .chips button:hover{color:#fff;border-color:var(--accent)}
+  .chips button:disabled{opacity:.4;cursor:not-allowed}
+  .inputrow{display:flex;gap:10px;align-items:center;background:rgba(5,11,28,.7);border:1px solid var(--hair);
+    border-radius:24px;padding:8px 8px 8px 16px}
+  .inputrow:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.16)}
+  .inputrow input{flex:1;background:none;border:0;outline:0;color:var(--ink);font:500 13px var(--sans)}
+  .inputrow input::placeholder{color:var(--muted)}
+  .send{width:34px;height:34px;flex:none;border:0;border-radius:50%;cursor:pointer;display:grid;place-items:center;
+    background:radial-gradient(circle at 38% 32%,#bfe0ff,var(--accent) 60%,#12275f);box-shadow:0 0 14px var(--glow)}
+  .send:hover{filter:brightness(1.12)} .send:disabled{filter:grayscale(.6) brightness(.7);cursor:not-allowed}
+
+  /* ---------- capabilities ---------- */
+  .section-h{font:700 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+    margin:48px 0 16px;display:flex;align-items:center;gap:12px}
+  .section-h::after{content:"";flex:1;height:1px;background:var(--hair-soft)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:16px;cursor:pointer;transition:.16s;position:relative;overflow:hidden}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--c,#4aa3ff);opacity:.8}
+  .card .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:17px;margin-bottom:11px;
+    background:color-mix(in srgb,var(--c,#4aa3ff) 18%,transparent);border:1px solid color-mix(in srgb,var(--c,#4aa3ff) 40%,transparent)}
+  .card h3{margin:0 0 5px;font:700 14px var(--sans)}
+  .card p{margin:0;font:400 12.5px/1.5 var(--sans);color:var(--ink-dim)}
+  .card .try{margin-top:10px;font:600 10px var(--mono);letter-spacing:.08em;color:var(--accent-2);text-transform:uppercase}
+
+  .foot{margin-top:46px;padding-top:18px;border-top:1px solid var(--hair-soft);display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:10px;font:500 11px var(--mono);color:var(--muted);letter-spacing:.04em}
+
+  @media (max-width:820px){.hero{grid-template-columns:1fr}.bigorb{max-width:220px;order:-1}.grid{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){.spin{animation:none}.brand .orb,.status .led{animation:none}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <div class="orb"></div>
+      <div><h1>J.A.R.V.I.S. 2</h1><div class="sub">INFRASTRUCTURE INTELLIGENCE</div></div>
+    </div>
+    <div class="status"><span class="led"></span> ONLINE</div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <h2>The AI that actually does things.</h2>
+      <p class="lead">A personal + business chief-of-staff that runs on your devices and your channels. It reads your inbox, guards your calendar, remembers your clients, builds your content — and asks before it acts. Try it live. 👇</p>
+      <div class="metrics">
+        <div class="metric"><b>6</b><span>Sub-agents</span></div>
+        <div class="metric"><b>9+</b><span>Channels</span></div>
+        <div class="metric"><b>11</b><span>Integrations</span></div>
+        <div class="metric"><b>∞</b><span>Memory</span></div>
+      </div>
+    </div>
+    <div class="bigorb">
+      <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+      <div class="spin"></div><div class="core"></div>
+    </div>
+  </section>
+
+  <div class="console">
+    <div class="bar"><span class="d g"></span><span class="d y"></span><span class="d"></span><span class="title">jarvis://live-session — demo</span></div>
+    <div class="log" id="log"></div>
+    <div class="composer">
+      <div class="chips" id="chips"></div>
+      <div class="inputrow">
+        <input id="ask" placeholder='Ask JARVIS anything — or tap a suggestion above…' autocomplete="off" />
+        <button class="send" id="send" title="Send"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#04122f" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-h">Capabilities</div>
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">
+    <span>Powered by OpenClaw — your data, your devices, your rules.</span>
+    <span>This is a simulated demo · live JARVIS uses your real accounts</span>
+  </div>
+</div>
+
+<script>
+"use strict";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* --- capability cards --- */
+const CAPS = [
+  { id:"comms",   c:"#4aa3ff", ic:"📬", h:"Comms",   p:"Triages your inbox and drafts replies. Books and reschedules meetings — never sends without your OK." },
+  { id:"content", c:"#f5c451", ic:"🎬", h:"Content",  p:"Decks, graphics, images, video, YouTube growth. Produces, doesn't just fetch." },
+  { id:"crm",     c:"#a78bfa", ic:"🧠", h:"Memory & CRM", p:"Remembers every client, project, and commitment. Recalls before it acts." },
+  { id:"research",c:"#6ff0c0", ic:"🔎", h:"Research", p:"Web + your Drive + meeting notes, cross-checked and cited." },
+  { id:"brain",   c:"#34e2e2", ic:"🌐", h:"3D Brain", p:"A live map of your whole business — clients, builds, projects, notes." },
+  { id:"websites",c:"#f4a6c0", ic:"🚀", h:"Websites", p:"Cinematic 3D-scroll sites from one brief. Preview, then publish." },
+];
+
+/* --- demo scripts: user line, tool trace, JARVIS reply (html) --- */
+const DEMOS = {
+  morning: {
+    label:"☀ Good morning", cap:"comms",
+    user:"Good morning — what's my day look like?",
+    trace:[["Calendar","list_events · today"],["Gmail","search_threads · is:unread"],["Memory","commitments · due"]],
+    tag:"Morning brief",
+    reply:`<strong>Morning, boss. 3 meetings today.</strong> First hard stop <strong>10:00 — Dana (BrightPath renewal)</strong>. ⚠️ 14:00 and 14:30 overlap — want me to move one?<br><br>
+    <strong>Inbox:</strong> 2 need you — Harbor Law (proposal question, I drafted a reply) and Summit Fitness (approving the new location ad set).<br>
+    <strong>Due today:</strong> send BrightPath the renewal paperwork. At risk: Summit creative — waiting on you.`
+  },
+  triage: {
+    label:"📬 Triage my inbox", cap:"comms",
+    user:"Reply to Dana and tell her Thursday works for the renewal call.",
+    trace:[["Memory","recall · Dana Ruiz"],["Gmail","get_thread · BrightPath"],["Calendar","suggest_time · Thu"]],
+    tag:"Draft — not sent",
+    reply:`Found the thread and a clean <strong>Thursday 11:00</strong> slot (Dana prefers Thursdays — noted from last time). Here's the reply, ready to send on your word:
+    <div class="draft"><div class="h">Draft → dana@brightpath.com</div>Hi Dana — Thursday works well. I've held <strong>11:00</strong> for the renewal call and sent an invite. I'll bring the updated paperwork so we can wrap it on the call. Talk then.</div>
+    Say <strong>"send it"</strong> and I'll fire the reply + the calendar invite.`
+  },
+  research: {
+    label:"🔎 Research a competitor", cap:"research",
+    user:"What's our top competitor doing on local SEO right now?",
+    trace:[["Web","search · competitor local SEO"],["Web","fetch · 3 sources"],["Drive","cross-check · our audit"]],
+    tag:"Verified · 3 sources",
+    reply:`<strong>They've leaned hard into review velocity + geo landing pages.</strong> Three signals: (1) ~40 new Google reviews in 60 days, (2) city-specific pages for each service, (3) fresh GBP posts weekly.<br><br>
+    Against our BrightPath audit, we're ahead on page speed but behind on review cadence. <strong>Recommendation:</strong> a review-request automation (Jotform → follow-up). Want me to draft the plan?`
+  },
+  deck: {
+    label:"🎬 Make a deck", cap:"content",
+    user:"Make a Q3 results deck for the BrightPath review.",
+    trace:[["Drive","read · BrightPath metrics"],["Memory","recall · brand voice"],["Gamma","generate · 8 slides"]],
+    tag:"Content studio",
+    reply:`<strong>Deck's ready — 8 slides, on-brand.</strong> Pulled the real numbers from the finance sheet: <strong>+38% organic traffic</strong>, 62 leads, 4.9★ avg. Structure: recap → wins → funnel → the renewal ask.<br><br>
+    → <span style="color:var(--accent-2)">Open in Gamma editor</span>. Want a matching one-pager, or should I tighten the ask slide?`
+  },
+  crm: {
+    label:"🧠 Remember a client", cap:"crm",
+    user:"Remember: BrightPath renewed for 12 months, and flag invoices over $5k.",
+    trace:[["Supabase","people · update BrightPath"],["Supabase","memories · insert rule"]],
+    tag:"Committed to memory",
+    reply:`Done. Logged <strong>BrightPath → renewed 12 months</strong> on their record, and saved the standing rule <strong>"flag any invoice over $5k"</strong>. I'll surface both automatically — the rule fires the moment an invoice lands.`
+  },
+  brain: {
+    label:"🌐 Show me the brain", cap:"brain",
+    user:"Show me the business brain.",
+    trace:[["Brain","load · brain-data.js"],["Canvas","render · 38 nodes"]],
+    tag:"3D infrastructure map",
+    reply:`Opening your <strong>infrastructure brain</strong> on the Canvas — 38 nodes, 55 connections. Clients, builds, skill suites, projects, and notes, colored by domain. <strong>BrightPath</strong> is your most-connected client node right now. Drag to orbit, click any node to trace its links.`
+  },
+  site: {
+    label:"🚀 Build the ThinkBox site", cap:"websites",
+    user:"Build my ThinkBox AI Operation Systems portfolio site.",
+    trace:[["Higgsfield","upload · identity photo"],["Higgsfield","generate_image · hero"],["Higgsfield","get_cost · preflight"]],
+    tag:"Preview before publish",
+    reply:`Starting the <strong>ThinkBox</strong> portfolio. Per the pack, I generated your <strong>hero shot first</strong> (identity-locked to your photo so your face stays consistent across every clip).<br><br>
+    Next: 3 cinematic clips — Hard Orbit, The Builder, The System — at ~2–6 credits each. <strong>I'll preview the site on localhost and stop before publishing</strong> so you approve it first. Generate the clips?`
+  },
+};
+const ORDER = ["morning","triage","research","deck","crm","brain","site"];
+
+/* --- render cards + chips --- */
+const grid = document.getElementById("grid");
+grid.innerHTML = CAPS.map(c =>
+  `<div class="card" style="--c:${c.c}" data-cap="${c.id}"><div class="ic">${c.ic}</div><h3>${c.h}</h3><p>${c.p}</p><div class="try">▶ Try it</div></div>`).join("");
+const firstDemoForCap = id => ORDER.find(k => DEMOS[k].cap === id) || "morning";
+grid.addEventListener("click", e => { const el = e.target.closest("[data-cap]"); if (el) run(firstDemoForCap(el.dataset.cap)); });
+
+const chips = document.getElementById("chips");
+chips.innerHTML = ORDER.map(k => `<button data-demo="${k}">${DEMOS[k].label}</button>`).join("");
+chips.addEventListener("click", e => { const b = e.target.closest("[data-demo]"); if (b) run(b.dataset.demo); });
+
+/* --- console engine --- */
+const log = document.getElementById("log");
+const askEl = document.getElementById("ask");
+const sendEl = document.getElementById("send");
+let busy = false;
+const sleep = ms => new Promise(r => setTimeout(r, reduce ? Math.min(ms,60) : ms));
+const scroll = () => log.scrollTop = log.scrollHeight;
+
+function bubbleYou(text){
+  const m = document.createElement("div"); m.className = "msg you";
+  m.innerHTML = `<div class="av">You</div><div class="bubble"></div>`;
+  m.querySelector(".bubble").textContent = text; log.appendChild(m); scroll();
+}
+function bubbleJarvis(){
+  const m = document.createElement("div"); m.className = "msg jar";
+  m.innerHTML = `<div class="av">J</div><div class="bubble"><div class="trace"></div><div class="body"></div></div>`;
+  log.appendChild(m); scroll(); return m;
+}
+
+async function typeHTML(node, html){
+  // type visible text but keep tags intact
+  const tokens = html.split(/(<[^>]+>)/).filter(Boolean);
+  const caret = document.createElement("span"); caret.className = "caret";
+  node.appendChild(caret);
+  for (const tok of tokens){
+    if (tok.startsWith("<")){ caret.insertAdjacentHTML("beforebegin", tok); }
+    else {
+      for (const ch of tok){ caret.insertAdjacentText("beforebegin", ch); if (ch!==" ") await sleep(11); scroll(); }
+    }
+  }
+  caret.remove();
+}
+
+async function run(id){
+  const d = DEMOS[id]; if (!d || busy) return;
+  busy = true; setDisabled(true);
+  bubbleYou(d.user);
+  await sleep(320);
+  const m = bubbleJarvis();
+  const traceEl = m.querySelector(".trace");
+  for (let i=0;i<d.trace.length;i++){
+    const [t,c] = d.trace[i];
+    const ln = document.createElement("div"); ln.className = "ln"; ln.style.animationDelay = (i*40)+"ms";
+    ln.innerHTML = `<span class="tk">→ ${t}</span> ${c} <span class="ok">✓</span>`;
+    traceEl.appendChild(ln); scroll(); await sleep(reduce?40:340);
+  }
+  await sleep(160);
+  const body = m.querySelector(".body");
+  body.innerHTML = `<span class="tag">${d.tag}</span><div class="ans"></div>`;
+  await typeHTML(body.querySelector(".ans"), d.reply);
+  busy = false; setDisabled(false); askEl.focus();
+}
+function setDisabled(v){ sendEl.disabled = v; askEl.disabled = v; chips.querySelectorAll("button").forEach(b=>b.disabled=v); }
+
+/* free-text: match to nearest demo by keyword, else graceful fallback */
+function freeAsk(q){
+  const s = q.toLowerCase();
+  const map = [["morning",["morning","day","brief","rundown","schedule today"]],["triage",["email","inbox","reply","dana","respond"]],
+    ["research",["research","competitor","look up","find out","latest"]],["deck",["deck","slide","presentation","content","design"]],
+    ["crm",["remember","memory","client","crm","note","flag"]],["brain",["brain","map","graph","visual","connected"]],
+    ["site",["site","website","portfolio","landing","thinkbox","build"]]];
+  for (const [id,ks] of map) if (ks.some(k=>s.includes(k))) return id;
+  return null;
+}
+async function submitFree(){
+  const q = askEl.value.trim(); if (!q || busy) return; askEl.value = "";
+  const id = freeAsk(q);
+  if (id){ DEMOS[id]._u = DEMOS[id].user; run(id); return; }
+  // fallback
+  busy = true; setDisabled(true); bubbleYou(q); await sleep(300);
+  const m = bubbleJarvis(); m.querySelector(".trace").innerHTML = `<div class="ln"><span class="tk">→ Router</span> intent · match <span class="ok">✓</span></div>`;
+  await sleep(300);
+  const body = m.querySelector(".body"); body.innerHTML = `<span class="tag">Demo</span><div class="ans"></div>`;
+  await typeHTML(body.querySelector(".ans"), `In the live system I'd route that to the right sub-agent and use your real tools. In this offline demo, try one of the suggestions — <strong>"good morning"</strong>, <strong>"reply to Dana"</strong>, <strong>"show me the brain"</strong>, or <strong>"build my ThinkBox site"</strong>.`);
+  busy = false; setDisabled(false);
+}
+sendEl.addEventListener("click", submitFree);
+askEl.addEventListener("keydown", e => { if (e.key==="Enter") submitFree(); });
+
+/* boot: JARVIS greets, then auto-plays the morning brief once */
+(async function boot(){
+  const m = bubbleJarvis();
+  m.querySelector(".trace").remove();
+  await typeHTML(m.querySelector(".body"), `<strong>J.A.R.V.I.S. 2 online.</strong> I'm your chief-of-staff — tap a suggestion or ask me anything.`);
+  await sleep(500); run("morning");
+})();
+</script>
