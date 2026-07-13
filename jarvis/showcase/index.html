@@ -176,9 +176,14 @@
   </div>
 </div>
 
+<!-- Optional live wiring: copy config.example.js → config.js and set your gateway
+     endpoint + token to make the console talk to the REAL JARVIS. See LIVE.md.
+     When absent, the console runs as the offline simulation below. -->
+<script src="config.js" onerror="void 0"></script>
 <script>
 "use strict";
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const LIVE = !!(window.JARVIS && window.JARVIS.endpoint);
 
 /* --- capability cards --- */
 const CAPS = [
@@ -297,6 +302,7 @@ async function typeHTML(node, html){
 
 async function run(id){
   const d = DEMOS[id]; if (!d || busy) return;
+  if (LIVE) return liveSend(d.user);
   busy = true; setDisabled(true);
   bubbleYou(d.user);
   await sleep(320);
@@ -328,6 +334,7 @@ function freeAsk(q){
 }
 async function submitFree(){
   const q = askEl.value.trim(); if (!q || busy) return; askEl.value = "";
+  if (LIVE) return liveSend(q);
   const id = freeAsk(q);
   if (id){ DEMOS[id]._u = DEMOS[id].user; run(id); return; }
   // fallback
@@ -341,11 +348,65 @@ async function submitFree(){
 sendEl.addEventListener("click", submitFree);
 askEl.addEventListener("keydown", e => { if (e.key==="Enter") submitFree(); });
 
-/* boot: JARVIS greets, then auto-plays the morning brief once */
+/* ---- LIVE MODE: talk to the real OpenClaw gateway (/v1/responses) ---- */
+function escapeHTML(s){ return String(s).replace(/[&<>]/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])); }
+function extractText(resp){
+  const parts = [];
+  for (const item of (resp && resp.output) || []){
+    if (item && item.type === "message" && Array.isArray(item.content)){
+      for (const c of item.content) if (c && c.type === "output_text" && c.text) parts.push(c.text);
+    } else if (item && item.type === "output_text" && item.text){ parts.push(item.text); }
+  }
+  return parts.join("\n").trim();
+}
+async function typeText(node, str){
+  const caret = document.createElement("span"); caret.className = "caret"; node.appendChild(caret);
+  for (const ch of str){ caret.insertAdjacentText("beforebegin", ch); if (ch !== " ") await sleep(7); scroll(); }
+  caret.remove();
+}
+async function liveSend(text){
+  if (busy) return; busy = true; setDisabled(true);
+  bubbleYou(text); await sleep(120);
+  const m = bubbleJarvis(); const traceEl = m.querySelector(".trace");
+  const ln = document.createElement("div"); ln.className = "ln";
+  ln.innerHTML = `<span class="tk">→ Gateway</span> /v1/responses <span class="ok">…</span>`;
+  traceEl.appendChild(ln); scroll();
+  const body = m.querySelector(".body");
+  try {
+    const cfg = window.JARVIS;
+    const res = await fetch(cfg.endpoint.replace(/\/+$/,"") + "/v1/responses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...(cfg.token ? { Authorization: "Bearer " + cfg.token } : {}) },
+      body: JSON.stringify({ model: cfg.model || "default", input: text, stream: false }),
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status + " — " + (await res.text()).slice(0, 160));
+    const data = await res.json();
+    ln.querySelector(".ok").textContent = "✓";
+    body.innerHTML = `<span class="tag">Live · gateway</span><div class="ans"></div>`;
+    await typeText(body.querySelector(".ans"), extractText(data) || "(the gateway returned no text)");
+  } catch (err) {
+    ln.querySelector(".ok").textContent = "✕"; ln.querySelector(".ok").className = "";
+    body.innerHTML = `<span class="tag">Connection error</span><div class="ans"></div>`;
+    await typeText(body.querySelector(".ans"), (err && err.message ? err.message : String(err)) + "  —  check showcase/LIVE.md (endpoint, token, CORS).");
+  }
+  busy = false; setDisabled(false); askEl.focus();
+}
+
+/* ---- reflect mode in the chrome ---- */
+if (LIVE){
+  document.querySelector(".console .title").textContent = "jarvis://live-session — connected to gateway";
+  const foot = document.querySelectorAll(".foot span")[1];
+  if (foot) foot.textContent = "LIVE — connected to your gateway (" + window.JARVIS.endpoint + ")";
+}
+
+/* boot: JARVIS greets. In demo mode it auto-plays the morning brief. */
 (async function boot(){
   const m = bubbleJarvis();
   m.querySelector(".trace").remove();
-  await typeHTML(m.querySelector(".body"), `<strong>J.A.R.V.I.S. 2 online.</strong> I'm your chief-of-staff — tap a suggestion or ask me anything.`);
-  await sleep(500); run("morning");
+  const hello = LIVE
+    ? `<strong>J.A.R.V.I.S. 2 online — live.</strong> Connected to your gateway. Tap a suggestion or ask me anything; I'll use your real tools.`
+    : `<strong>J.A.R.V.I.S. 2 online.</strong> I'm your chief-of-staff — tap a suggestion or ask me anything.`;
+  await typeHTML(m.querySelector(".body"), hello);
+  if (!LIVE){ await sleep(500); run("morning"); }
 })();
 </script>
