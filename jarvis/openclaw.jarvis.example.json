@@ -93,10 +93,11 @@
   "messages": {
     "_comment": "Outbound voice (JARVIS talks back). Pick ONE provider and put its key in ~/.openclaw/.env. 'edge' needs no API key and is the easiest start; 'elevenlabs' gives the best JARVIS-like voice. Inbound voice notes (you talk to JARVIS) are transcribed by the 'openai-whisper' or 'openai-whisper-api' skill — add it to the agent skills allowlist and see docs.openclaw.ai.",
     "tts": {
-      "auto": "inbound",
+      "_comment": "Premium British butler voice. Put ELEVENLABS_API_KEY in ~/.openclaw/.env. 'auto: always' makes JARVIS speak every reply. voiceId 'onwK4e9ZLuTAKqWW03F9' is Daniel (deep British). Swap to 'edge' (no key) if you prefer free/robotic.",
+      "auto": "always",
       "mode": "final",
-      "provider": "edge",
-      "edge": { "enabled": true, "voice": "en-GB-RyanNeural" }
+      "provider": "elevenlabs",
+      "elevenlabs": { "voiceId": "onwK4e9ZLuTAKqWW03F9", "modelId": "eleven_turbo_v2_5" }
     }
   }
 }
