@@ -95,6 +95,7 @@
 
   .composer{border-top:1px solid var(--hair-soft);padding:12px;display:flex;flex-direction:column;gap:10px}
   .voicebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .vsel{background:rgba(9,17,38,.7);color:var(--ink);border:1px solid var(--hair);border-radius:16px;font:500 10.5px var(--mono);padding:5px 8px;max-width:190px}
   .vbtn{font:600 11px var(--mono);letter-spacing:.04em;color:var(--ink-dim);background:rgba(9,17,38,.7);
     border:1px solid var(--hair);border-radius:16px;padding:6px 12px;cursor:pointer;transition:.15s}
   .vbtn:hover{color:#fff;border-color:var(--accent)}
@@ -175,7 +176,8 @@
     <div class="composer">
       <div class="voicebar">
         <button id="voiceBtn" class="vbtn">🔊 Voice on</button>
-        <span class="vhint">JARVIS speaks by default · tap 🎤 to talk back, or type</span>
+        <select id="voiceSel" class="vsel" title="Pick a voice"></select>
+        <span class="vhint">pick a voice · demo uses your browser's voice (the real JARVIS uses a premium one)</span>
       </div>
       <div class="chips" id="chips"></div>
       <div class="inputrow">
@@ -224,7 +226,7 @@ const DEMOS = {
     user:"Good morning — what's my day look like?",
     trace:[["Calendar","list_events · today"],["Gmail","search_threads · is:unread"],["Memory","commitments · due"]],
     tag:"Morning brief",
-    reply:`<strong>Morning, boss. 3 meetings today.</strong> First hard stop <strong>10:00 — Dana (BrightPath renewal)</strong>. ⚠️ 14:00 and 14:30 overlap — want me to move one?<br><br>
+    reply:`<strong>Morning, MJ. 3 meetings today.</strong> First hard stop <strong>10:00 — Dana (BrightPath renewal)</strong>. ⚠️ 14:00 and 14:30 overlap — want me to move one?<br><br>
     <strong>Inbox:</strong> 2 need you — Harbor Law (proposal question, I drafted a reply) and Summit Fitness (approving the new location ad set).<br>
     <strong>Due today:</strong> send BrightPath the renewal paperwork. At risk: Summit creative — waiting on you.`
   },
@@ -374,15 +376,42 @@ askEl.addEventListener("keydown", e => { if (e.key==="Enter") submitFree(); });
 /* ---- VOICE: browser text-to-speech (no keys, no credits). On by default. ---- */
 let VOICE_ON = true, ttsVoice = null, ttsUnlocked = false;
 const hasTTS = typeof window !== "undefined" && "speechSynthesis" in window;
+function scoreVoice(v){
+  let s = 0; const n = v.name.toLowerCase();
+  if (/en-gb/i.test(v.lang)) s += 40;
+  if (/\b(daniel|arthur|oliver|george|james|jamie|ryan)\b/.test(n)) s += 30;
+  if (/enhanced|premium|natural|neural|online|siri/.test(n)) s += 30;   // Windows/Edge "Natural/Online" neural voices
+  if (/google uk english male/.test(n)) s += 22;
+  if (/google/.test(n)) s += 10;
+  if (/\bmale\b/.test(n)) s += 6;
+  if (/compact|eloquence|zira|david|mark|hazel/.test(n)) s -= 20;       // known robotic SAPI voices
+  return s;
+}
 function pickVoice(){
   if (!hasTTS) return null;
-  const vs = speechSynthesis.getVoices() || [];
-  if (!vs.length) return null;
-  const pref = ["Daniel","Google UK English Male","Arthur","Oliver","Serena","Google UK English"];
-  for (const n of pref){ const v = vs.find(v => v.name === n); if (v) return v; }
-  return vs.find(v => /en-GB/i.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || vs[0];
+  const vs = speechSynthesis.getVoices() || []; if (!vs.length) return null;
+  const en = vs.filter(v => /^en(-|_)/i.test(v.lang));
+  const pool = en.length ? en : vs;
+  return pool.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0];
 }
-if (hasTTS){ ttsVoice = pickVoice(); speechSynthesis.onvoiceschanged = () => { ttsVoice = pickVoice(); }; }
+const voiceSel = document.getElementById("voiceSel");
+function populateVoices(){
+  if (!hasTTS) return;
+  const vs = (speechSynthesis.getVoices() || []).filter(v => /^en/i.test(v.lang));
+  ttsVoice = pickVoice() || ttsVoice;
+  if (voiceSel && vs.length){
+    const ranked = vs.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    voiceSel.innerHTML = ranked.map(v => `<option value="${v.name}">${v.name.replace(/\((.*?)\)/g, "").trim()} · ${v.lang}</option>`).join("");
+    if (ttsVoice) voiceSel.value = ttsVoice.name;
+  }
+}
+if (hasTTS){ populateVoices(); speechSynthesis.onvoiceschanged = populateVoices; }
+if (voiceSel) voiceSel.addEventListener("change", () => {
+  const v = (speechSynthesis.getVoices() || []).find(x => x.name === voiceSel.value);
+  if (!v) return;
+  ttsVoice = v; if (typeof unlockTTS === "function") unlockTTS();
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance("Good evening, MJ. J.A.R.V.I.S. at your service."); u.voice = v; u.lang = v.lang; u.rate = 0.95; u.pitch = 0.82; speechSynthesis.speak(u); } catch (_) {}
+});
 function stripHTML(html){ const d = document.createElement("div"); d.innerHTML = html; return (d.textContent || "").replace(/\s+/g, " ").trim(); }
 function speak(text){
   if (!VOICE_ON || !hasTTS || !text) return;
@@ -390,7 +419,7 @@ function speak(text){
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     if (ttsVoice) { u.voice = ttsVoice; u.lang = ttsVoice.lang; }
-    u.rate = 1.0; u.pitch = 0.9;
+    u.rate = 0.95; u.pitch = 0.82;
     speechSynthesis.speak(u);
   } catch (_) {}
 }
@@ -411,7 +440,7 @@ voiceBtn.addEventListener("click", () => {
   VOICE_ON = !VOICE_ON;
   voiceBtn.classList.toggle("on", VOICE_ON);
   voiceBtn.textContent = VOICE_ON ? "🔊 Voice on" : "🔇 Voice off";
-  if (VOICE_ON){ ttsVoice = ttsVoice || pickVoice(); speak("Voice online, sir. How can I help?"); }
+  if (VOICE_ON){ ttsVoice = ttsVoice || pickVoice(); speak("Voice online, MJ. How can I help?"); }
   else if (hasTTS){ speechSynthesis.cancel(); }
 });
 
