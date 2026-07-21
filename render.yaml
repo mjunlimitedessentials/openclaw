@@ -1,30 +1,60 @@
+# JARVIS 2 — Render.com blueprint (always-on cloud host)
+# ---------------------------------------------------------------------------
+# Deploy: Render Dashboard → New → Blueprint → pick this repo/branch.
+# Render reads this file, builds the Dockerfile, and starts JARVIS as an
+# always-on web service. You then set the secret values (marked sync:false)
+# in the Render dashboard — NEVER in git. See jarvis/RENDER.md for the full
+# step-by-step walkthrough.
+# ---------------------------------------------------------------------------
 services:
   - type: web
     name: jarvis-2
     runtime: docker
-    plan: starter
-    healthCheckPath: /health
+    plan: starter            # ~$7/mo, always-on, keeps the /data disk. Free tier sleeps + has no disk.
+    branch: claude/jarvis-2-ai-assistant-6g95ce
+    autoDeploy: true
+
+    # The gateway binds to loopback by default and refuses an external bind
+    # without auth. On Render we bind to 0.0.0.0 (lan) and rely on the
+    # generated OPENCLAW_GATEWAY_TOKEN / your OPENCLAW_GATEWAY_PASSWORD below.
+    dockerCommand: node openclaw.mjs gateway --allow-unconfigured --bind lan
+
     envVars:
+      # The port JARVIS listens on. Render routes external traffic here.
+      # PORT is Render convention; OPENCLAW_GATEWAY_PORT is what the gateway
+      # actually reads — keep them identical.
       - key: PORT
         value: "8080"
-      # Password you'll use to log into the JARVIS web control panel (set at deploy).
-      - key: SETUP_PASSWORD
+      - key: OPENCLAW_GATEWAY_PORT
+        value: "8080"
+
+      # Password you'll use to log into the JARVIS web control panel.
+      # Set it to something only you know when you deploy.
+      - key: OPENCLAW_GATEWAY_PASSWORD
         sync: false
+
+      # Auto-generated Bearer token for the API / live console (Authorization: Bearer ...).
+      - key: OPENCLAW_GATEWAY_TOKEN
+        generateValue: true
+
       # Your Claude key (sk-ant-...). Set it in the Render dashboard — never in git.
       - key: ANTHROPIC_API_KEY
         sync: false
-      # Optional: Telegram bot token (from @BotFather) so you can chat with JARVIS.
+
+      # Optional: Telegram bot token (from @BotFather) so you can text JARVIS.
       - key: TELEGRAM_BOT_TOKEN
         sync: false
-      # Optional: premium butler voice (ElevenLabs). Leave unset to use free voice.
+
+      # Optional: premium British butler voice (ElevenLabs). Leave unset for free voice.
       - key: ELEVENLABS_API_KEY
         sync: false
+
+      # Durable storage on the mounted disk (survives restarts/redeploys).
       - key: OPENCLAW_STATE_DIR
         value: /data/.openclaw
       - key: OPENCLAW_WORKSPACE_DIR
         value: /data/workspace
-      - key: OPENCLAW_GATEWAY_TOKEN
-        generateValue: true
+
     disk:
       name: openclaw-data
       mountPath: /data
