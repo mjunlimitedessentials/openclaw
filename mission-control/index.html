@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MJU MISSION CONTROL</title>
+<style>
+  :root{
+    --bg:#04070d; --panel:#0a1120; --panel2:#0d1628; --line:#1c2c47;
+    --grid:#0e1830; --green:#37e08b; --amber:#ffb545; --red:#ff5d5d;
+    --cyan:#4fd6ff; --text:#c9d7ee; --dim:#5f7398; --mono:"Courier New",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg) ;color:var(--text);font-family:var(--mono);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:42px 42px;min-height:100vh;padding:18px 22px 40px;
+  }
+  body::after{ /* scanlines */
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:99;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);
+  }
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:16px;border:1px solid var(--line);
+    background:linear-gradient(180deg,#0c1526,#070d19);padding:14px 20px;margin-bottom:16px;position:relative}
+  header .sig{width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  h1{font-size:20px;letter-spacing:6px;color:#eaf2ff;font-weight:700}
+  h1 span{color:var(--cyan)}
+  .sub{font-size:11px;color:var(--dim);letter-spacing:2px}
+  .spacer{flex:1}
+  .clock{font-size:22px;color:var(--green);letter-spacing:3px;text-shadow:0 0 8px rgba(55,224,139,.5)}
+  .stamp{font-size:10px;color:var(--dim);text-align:right;letter-spacing:1px}
+  .btn{cursor:pointer;border:1px solid var(--line);background:#0c1526;color:var(--text);
+    font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:9px 14px}
+  .btn.active{border-color:var(--amber);color:var(--amber);box-shadow:0 0 10px rgba(255,181,69,.25)}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .panel{grid-column:span 4;border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),#060b15);
+    padding:0;position:relative;min-height:120px}
+  .panel::before,.panel::after{content:"";position:absolute;width:10px;height:10px;border:2px solid var(--cyan);opacity:.6}
+  .panel::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+  .panel::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+  .panel.w6{grid-column:span 6}.panel.w8{grid-column:span 8}.panel.w12{grid-column:span 12}
+  @media(max-width:1100px){.panel,.panel.w6,.panel.w8{grid-column:span 6}}
+  @media(max-width:760px){.panel,.panel.w6,.panel.w8,.panel.w12{grid-column:span 12}}
+  .ph{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--line);background:rgba(20,32,56,.5)}
+  .ph .tag{font-size:10px;letter-spacing:3px;color:var(--cyan)}
+  .ph .name{font-size:12px;letter-spacing:2px;color:#eaf2ff;font-weight:700}
+  .led{width:8px;height:8px;border-radius:50%}
+  .led.on{background:var(--green);box-shadow:0 0 8px var(--green)}
+  .led.off{background:var(--red);box-shadow:0 0 8px var(--red)}
+  .led.auth{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  .pb{padding:12px 14px;font-size:12px;line-height:1.55}
+  .row{display:flex;gap:10px;padding:6px 0;border-bottom:1px dashed #14213a;align-items:baseline}
+  .row:last-child{border-bottom:none}
+  .k{color:var(--dim);font-size:10px;letter-spacing:1px;white-space:nowrap}
+  .v{color:var(--text)}
+  .big{font-size:34px;color:var(--green);text-shadow:0 0 10px rgba(55,224,139,.4);line-height:1.1}
+  .big.amber{color:var(--amber);text-shadow:0 0 10px rgba(255,181,69,.4)}
+  .unit{font-size:11px;color:var(--dim);letter-spacing:2px}
+  .chip{display:inline-block;font-size:9px;letter-spacing:1px;padding:2px 6px;border:1px solid var(--line);color:var(--dim);margin-left:6px}
+  .chip.SECURITY{border-color:var(--red);color:var(--red)}
+  .chip.ACTION{border-color:var(--amber);color:var(--amber)}
+  .chip.MONEY{border-color:var(--amber);color:var(--amber)}
+  .chip.COMMUNITY,.chip.NEWSLETTER{border-color:var(--line)}
+  .src{font-size:9px;color:var(--cyan);letter-spacing:1px}
+  .pri{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+    border:1px solid var(--cyan);color:var(--cyan);font-size:11px;margin-right:8px}
+  .action{padding:9px 0;border-bottom:1px dashed #14213a}
+  .action:last-child{border-bottom:none}
+  .action .t{color:#eaf2ff;font-weight:700}
+  .action .d{color:var(--dim);font-size:11px;margin-top:3px}
+  .statgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .stat{border:1px solid var(--line);padding:8px 10px;background:rgba(10,18,34,.6)}
+  .stat .n{font-size:11px;letter-spacing:1px;color:#eaf2ff;display:flex;align-items:center;gap:7px}
+  .stat .d{font-size:9px;color:var(--dim);margin-top:4px;letter-spacing:.5px}
+  .offline-note{color:var(--red);font-size:10px;letter-spacing:1px}
+  .money{transition:filter .25s}
+  body.privacy .money{filter:blur(9px)}
+  .nosig{color:var(--red);letter-spacing:3px;font-size:12px;text-align:center;padding:24px 0;opacity:.85}
+  .headline{color:var(--amber);border-left:3px solid var(--amber);padding:6px 10px;margin-bottom:10px;font-size:12px;background:rgba(255,181,69,.05)}
+  footer{margin-top:18px;font-size:10px;color:var(--dim);letter-spacing:1px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="sig"></div>
+  <div>
+    <h1>MJU <span>MISSION CONTROL</span></h1>
+    <div class="sub" id="opline">OPERATOR: —</div>
+  </div>
+  <div class="spacer"></div>
+  <div>
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="stamp" id="stamp">DATA: —</div>
+  </div>
+  <button class="btn" id="privacyBtn" onclick="togglePrivacy()">🔒 PRIVACY: OFF</button>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<footer>ALL TELEMETRY FROM LIVE CONNECTOR PROBES · FAILED SOURCES SHOWN AS NO SIGNAL · NO SIMULATED DATA</footer>
+
+<script src="dashboard-data.js"></script>
+<script>
+"use strict";
+// Defensive access: the page must render even with a missing or partial data file.
+var D = (typeof window !== "undefined" && window.MISSION_DATA) ? window.MISSION_DATA : {};
+function g(path, fb){ try{ var o=D; path.split(".").forEach(function(k){o=o[k];}); return (o===undefined||o===null)?fb:o; }catch(e){ return fb; } }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+
+function panel(cls, tag, name, ledClass, bodyHtml){
+  return '<section class="panel '+cls+'"><div class="ph"><span class="led '+ledClass+'"></span>'+
+    '<span class="tag">'+tag+'</span><span class="name">'+esc(name)+'</span></div>'+
+    '<div class="pb">'+bodyHtml+'</div></section>';
+}
+function nosig(msg){ return '<div class="nosig">■ NO SIGNAL — '+esc(msg||"SOURCE OFFLINE")+' ■</div>'; }
+
+function render(){
+  var html = "";
+  document.getElementById("opline").textContent =
+    "OPERATOR: " + g("operator.name","UNKNOWN") + " · " + g("operator.org","");
+  var ts = g("generatedAt","");
+  document.getElementById("stamp").textContent = "DATA: " + (ts ? ts.replace("T"," ").replace("Z"," UTC") : "UNAVAILABLE");
+
+  // 1 — AI MORNING BRIEFING
+  var acts = g("briefing.actions",[]);
+  if (acts.length){
+    var b = '<div class="headline">'+esc(g("briefing.headline",""))+'</div>';
+    acts.forEach(function(a){
+      b += '<div class="action'+(a.money?' money':'')+'"><span class="pri">'+esc(a.priority)+'</span>'+
+        '<span class="t">'+esc(a.title)+'</span>'+
+        '<div class="d">'+esc(a.detail)+' <span class="src">['+esc((a.sources||[]).join(" × "))+']</span></div></div>';
+    });
+    html += panel("w8","BRIEF-01","AI MORNING BRIEFING","on",b);
+  } else {
+    html += panel("w8","BRIEF-01","AI MORNING BRIEFING","off",nosig("BRIEFING NOT GENERATED"));
+  }
+
+  // 2 — SOURCE STATUS BOARD
+  var srcs = g("sources",[]);
+  if (srcs.length){
+    var on = srcs.filter(function(s){return s.status==="online";}).length;
+    var s = '<div class="row"><span class="k">LINK STATUS</span><span class="v">'+on+' / '+srcs.length+' ONLINE</span></div><div class="statgrid">';
+    srcs.forEach(function(x){
+      var led = x.status==="online" ? "on" : (x.status==="auth" ? "auth" : "off");
+      s += '<div class="stat"><div class="n"><span class="led '+led+'"></span>'+esc(x.name)+'</div><div class="d">'+esc(x.detail||x.status)+'</div></div>';
+    });
+    s += '</div>';
+    html += panel("w4","LINK-02","CONNECTOR ARRAY","on",s);
+  } else {
+    html += panel("w4","LINK-02","CONNECTOR ARRAY","off",nosig());
+  }
+
+  // 3 — SCHEDULE
+  var evs = g("calendar.events",[]);
+  if (evs.length){
+    var c = '<div class="row"><span class="k">TZ</span><span class="v">'+esc(g("calendar.timezone","?"))+'</span>'+
+            '<span class="k">CALENDARS</span><span class="v">'+esc(g("calendar.calendarCount","?"))+'</span></div>';
+    evs.forEach(function(e){
+      c += '<div class="row"><span class="k">'+esc(e.day)+' '+esc(e.time)+'</span><span class="v">'+esc(e.title)+
+        (e.note?'<span class="chip ACTION">'+esc(e.note)+'</span>':'')+'</span></div>';
+    });
+    html += panel("w6","SKED-03","MISSION SCHEDULE — 7 DAY","on",c);
+  } else {
+    html += panel("w6","SKED-03","MISSION SCHEDULE — 7 DAY","off",nosig());
+  }
+
+  // 4 — COMMS (GMAIL)
+  var th = g("gmail.threads",[]);
+  if (th.length){
+    var m = '<div class="row"><span class="big amber">'+esc(g("gmail.inboxEstimateLast3Days","—"))+'</span>'+
+            '<span class="unit">INBOX THREADS / 72H</span></div>';
+    th.forEach(function(t){
+      m += '<div class="row'+(t.money?' money':'')+'"><span class="k">'+esc((t.at||"").slice(11,16))+'Z</span>'+
+        '<span class="v">'+esc(t.from)+' — '+esc(t.subject)+'<span class="chip '+esc(t.tag)+'">'+esc(t.tag)+'</span></span></div>';
+    });
+    html += panel("w6","COMM-04","COMMS TRAFFIC — GMAIL","on",m);
+  } else {
+    html += panel("w6","COMM-04","COMMS TRAFFIC — GMAIL","off",nosig());
+  }
+
+  // 5 — TASK REACTOR (NOTION)
+  var openTasks = g("notion.openTasks",null);
+  if (openTasks!==null){
+    var n = '<div class="row"><span class="big">'+esc(openTasks)+'</span><span class="unit">OPEN TASKS — '+esc(g("notion.tasksDb",""))+'</span></div>';
+    n += '<div class="k" style="padding:6px 0 2px">RECENT PAGES</div>';
+    g("notion.recentPages",[]).forEach(function(p){
+      n += '<div class="row"><span class="k">'+esc(p.edited)+'</span><span class="v">'+esc(p.title)+'</span></div>';
+    });
+    html += panel("","TASK-05","TASK REACTOR — NOTION","on",n);
+  } else {
+    html += panel("","TASK-05","TASK REACTOR — NOTION","off",nosig());
+  }
+
+  // 6 — DOC BAY (DRIVE)
+  var fl = g("drive.files",[]);
+  if (fl.length){
+    var d = "";
+    fl.forEach(function(f){ d += '<div class="row"><span class="k">'+esc(f.when)+' · '+esc(f.type)+'</span><span class="v">'+esc(f.title)+'</span></div>'; });
+    html += panel("","DOCS-06","DOC BAY — DRIVE","on",d);
+  } else {
+    html += panel("","DOCS-06","DOC BAY — DRIVE","off",nosig());
+  }
+
+  // 7 — DESIGN STUDIO (CANVA)
+  var cd = g("canva.designs",[]);
+  if (cd.length){
+    var cv = "";
+    cd.forEach(function(x){ cv += '<div class="row"><span class="v">'+esc(x.title)+'</span><span class="k">'+esc(x.updated)+'</span></div>'; });
+    html += panel("","DSGN-07","DESIGN STUDIO — CANVA","on",cv);
+  } else {
+    html += panel("","DSGN-07","DESIGN STUDIO — CANVA","off",nosig());
+  }
+
+  // 8 — CREW COMMS (SLACK)
+  var ch = g("slack.channels",[]);
+  if (ch.length){
+    var sl = '<div class="row"><span class="k">WORKSPACE</span><span class="v">'+esc(g("slack.workspace","?"))+'</span></div>';
+    ch.forEach(function(x){
+      sl += '<div class="row"><span class="v">'+esc(x.name)+'</span><span class="k">'+esc(x.messages)+' MSGS · '+esc(x.purpose)+'</span></div>';
+    });
+    sl += '<div class="offline-note" style="color:var(--amber)">CHANNELS SILENT — AWAITING FIRST TRANSMISSION</div>';
+    html += panel("w6","CREW-08","CREW COMMS — SLACK","on",sl);
+  } else {
+    html += panel("w6","CREW-08","CREW COMMS — SLACK","off",nosig());
+  }
+
+  // 9 — FUEL (HIGGSFIELD CREDITS) — money-sensitive
+  var cr = g("higgsfield.credits",null);
+  if (cr!==null){
+    var f = '<div class="row money"><span class="big">'+esc(cr)+'</span><span class="unit">AI CREDITS · PLAN: '+esc(g("higgsfield.plan","?")).toUpperCase()+'</span></div>'+
+            '<div class="k">GENERATION FUEL FOR VIDEO / IMAGE / AUDIO MISSIONS</div>';
+    html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","on",f);
+  } else {
+    html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","off",nosig());
+  }
+
+  // 10 — FINANCE (blurred by privacy; honest about what's offline)
+  var fin = '<div class="row money"><span class="v">⚠ Collection notice in inbox (Midland Credit) — see COMMS</span></div>'+
+            '<div class="offline-note">STRIPE LINK OFFLINE — REVENUE TELEMETRY UNAVAILABLE (needs connector approval)</div>';
+  html += panel("w3","FIN-10","FINANCE WATCH","auth",fin);
+
+  document.getElementById("grid").innerHTML = html;
+}
+
+function togglePrivacy(){
+  document.body.classList.toggle("privacy");
+  var on = document.body.classList.contains("privacy");
+  var b = document.getElementById("privacyBtn");
+  b.textContent = on ? "🙈 PRIVACY: ON" : "🔒 PRIVACY: OFF";
+  b.classList.toggle("active", on);
+}
+
+function tick(){
+  var now = new Date();
+  try{
+    document.getElementById("clock").textContent =
+      now.toLocaleTimeString("en-US",{hour12:false,timeZone:(D.operator&&D.operator.timezone)||undefined}) + " ET";
+  }catch(e){
+    document.getElementById("clock").textContent = now.toLocaleTimeString("en-US",{hour12:false});
+  }
+}
+
+try{ render(); }catch(e){
+  document.getElementById("grid").innerHTML =
+    '<section class="panel w12"><div class="pb"><div class="nosig">RENDER FAULT — RAW FEED PRESERVED IN dashboard-data.js</div></div></section>';
+}
+tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
