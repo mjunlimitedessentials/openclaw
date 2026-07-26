@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-25T23:05:00Z",
+  generatedAt: "2026-07-26T02:35:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,56 +12,57 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Quiet task board, loud inbox: one security alert to clear, an RSVP pending, and an empty Slack + Notion pipeline that doesn't match a packed calendar.",
+    headline: "First revenue signals in the feed — Stripe payout reports and a $175 ELICM registration — plus a Tuesday-night double-booking and two security confirmations to clear.",
     actions: [
       {
         priority: 1,
-        title: "Verify the PayPal new-device login",
-        detail: "Two PayPal emails arrived at 6:42–6:43 PM ET: a new Chrome/Windows 11 device logged in, then that device was marked 'trusted, stay logged in'. If that wasn't you, change the PayPal password and revoke the trusted device tonight.",
-        sources: ["Gmail"]
+        title: "Resolve Tuesday's double-booking",
+        detail: "Build It, Launch It Challenge (Tue Jul 28, 6:55–8:25 PM) now overlaps the Brad Holcman 'Becoming the ONLY' webinar (7:00–9:00 PM, still only 'tentative' on your calendar). You just paid for Build It Launch It priority access — pick one, or plan to catch the Holcman replay.",
+        sources: ["Google Calendar", "Gmail"]
       },
       {
         priority: 2,
-        title: "RSVP to Tuesday's Brad Holcman webinar",
-        detail: "'Becoming the ONLY — Discovering Your Celebrity Factor' (Tue Jul 28, 7:00 PM ET) is still showing needsAction on your calendar. Register/accept so the Zoom link is locked in.",
-        sources: ["Google Calendar"]
+        title: "Verify the new ELICM registration + Zelle payment",
+        detail: "Jotform: Chris Henry registered for ELICM, 1 adult ticket ($175), paying by Zelle — but the form has placeholder contact info (none@none.com, 555-555-1212). Confirm the Zelle payment actually arrived and get real contact details.",
+        sources: ["Jotform", "Gmail"],
+        money: true
       },
       {
         priority: 3,
-        title: "Confirm the Juno assistant signup",
-        detail: "You signed into getjuno.com with Google at 6:15 PM ET and 'Juno, your go-to-market assistant' emailed a welcome. If intentional, add its address to contacts; if not, revoke access in Google Account → third-party access.",
-        sources: ["Gmail", "Google Account"]
+        title: "Confirm the GitHub passkey + 2FA were you",
+        detail: "At 7:22 PM ET a passkey was added and two-factor authentication enabled on your GitHub account from Chrome/Windows. That matches your GitHub activity today — if so, download and save the recovery codes now. If not, secure the account.",
+        sources: ["Gmail"]
       },
       {
         priority: 4,
-        title: "Rebuild the task pipeline in Notion",
-        detail: "Notion 'My Tasks' has 0 open items while the calendar carries 5+ commitments this week and the AI Summit tools sheet landed in Drive on Jul 22. Capture follow-ups (summit tools to trial, media-kit outreach) as tasks so the week is driven from one board.",
-        sources: ["Notion", "Google Calendar", "Google Drive"]
+        title: "PayPal new-device login — still unverified from yesterday",
+        detail: "Friday 6:42–6:43 PM ET: new Chrome/Windows 11 device logged in and was marked trusted. If that wasn't you, change the password and revoke the device.",
+        sources: ["Gmail"]
       },
       {
         priority: 5,
-        title: "Recover notes from the blocked Fireflies bot",
-        detail: "Your Fireflies notetaker was not admitted to 'AI Intensive Training Pre Party'. If you need that content, ask the host for the recording — and for Zoom-based events this week, admit the bot or use the desktop capture.",
-        sources: ["Gmail", "Google Calendar"]
+        title: "Sunday: StreamYard ready for Apostle Lynne's virtual service",
+        detail: "Apostle Ken's reminder: Apostle Lynne is preaching virtually tomorrow (Sunday) — please ensure StreamYard is available for the session. Apostle Stukes confirmed receipt; you haven't replied yet.",
+        sources: ["Gmail"]
       },
       {
         priority: 6,
-        title: "Put Higgsfield credits to work on the media kit push",
-        detail: "359.91 Higgsfield credits (Ultimate plan) are idle while the updated Media Kit PDF sits in Drive and Canva shows fresh ELICM/ThinkBox designs. One welcome/promo video this weekend would connect all three.",
-        sources: ["Higgsfield", "Google Drive", "Canva"]
+        title: "Stripe is alive — approve the connector to see revenue here",
+        detail: "Two Stripe reports for MJHairUnl landed at 10:27 PM (itemized payout + ending-balance reconciliation for Jul 25). The Stripe connector still needs approval in this environment, so the Finance panel can't show live numbers yet — the reports are in your inbox meanwhile.",
+        sources: ["Gmail", "Stripe"],
+        money: true
       },
       {
         priority: 7,
-        title: "Break the silence in the ThinkBox Slack",
-        detail: "Both channels (#all-thinkbox-ai-operating-systems, #social) have zero messages. Post a kickoff announcement — the workspace is connected and waiting.",
-        sources: ["Slack"]
+        title: "Delete the duplicate PRO Welcome Call",
+        detail: "Monday 1:00 PM still has two identical 'PRO Welcome Call' events (created twice in May 2025). Delete one copy. Note Monday evening also stacks: Build It Launch It 6:55 PM into Marqus Beaver Circle 8:00 PM.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 8,
-        title: "Money watch (blurred under privacy)",
-        detail: "A Midland Credit collection email is in the inbox ('Never think about this again'). Stripe is offline in this environment, so revenue can't be cross-checked — approve the Stripe connector if you want a live revenue tile here.",
-        sources: ["Gmail", "Stripe"],
-        money: true
+        title: "Task board and Slack still empty against a paid, packed week",
+        detail: "Notion 'My Tasks' has 0 open items and both ThinkBox Slack channels have zero messages, while this week now holds 8+ commitments including the challenge you just purchased. Capture the week as tasks and post the kickoff announcement.",
+        sources: ["Notion", "Slack", "Google Calendar"]
       }
     ]
   },
@@ -69,20 +70,20 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "online",  detail: "201 threads est. last 3 days" },
-    { name: "Google Calendar", status: "online",  detail: "6 calendars, ET timezone" },
-    { name: "Google Drive",    status: "online",  detail: "recent files feed OK" },
-    { name: "Notion",          status: "online",  detail: "My Tasks DB queried" },
+    { name: "Gmail",           status: "online",  detail: "201 threads est. last 24h" },
+    { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
+    { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK" },
     { name: "Higgsfield",      status: "online",  detail: "credits + plan OK" },
-    { name: "Stripe",          status: "offline", detail: "call requires approval" },
+    { name: "Google Drive",    status: "offline", detail: "call required approval this run" },
+    { name: "Stripe",          status: "offline", detail: "needs approval — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
     { name: "Zoom",            status: "offline", detail: "call requires approval" },
     { name: "Supabase",        status: "offline", detail: "call requires approval" },
     { name: "vidIQ",           status: "offline", detail: "call requires approval" },
     { name: "Gamma",           status: "offline", detail: "call requires approval" },
-    { name: "Jotform",         status: "offline", detail: "call requires approval" },
+    { name: "Jotform",         status: "offline", detail: "connector blocked — data via Gmail" },
     { name: "Lovable",         status: "offline", detail: "call requires approval" },
     { name: "Adobe AEM",       status: "offline", detail: "not probed — no env access" },
     { name: "Unnamed server",  status: "auth",    detail: "needs OAuth re-authorization" }
@@ -90,16 +91,16 @@ window.MISSION_DATA = {
 
   gmail: {
     inboxEstimateLast3Days: 201,
-    unreadShown: 15,
+    unreadShown: 12,
     threads: [
-      { at: "2026-07-25T22:43Z", from: "PayPal", subject: "Login from a new device", tag: "SECURITY" },
-      { at: "2026-07-25T22:42Z", from: "PayPal", subject: "Stay logged in on this trusted device", tag: "SECURITY" },
-      { at: "2026-07-25T22:30Z", from: "Juno (getjuno.com)", subject: "Hello from Juno — your new go-to-market assistant", tag: "ACTION" },
-      { at: "2026-07-25T22:15Z", from: "Google", subject: "You shared some Google Account data with getjuno.com", tag: "ACTION" },
-      { at: "2026-07-25T21:05Z", from: "Fireflies.ai", subject: "Your Fireflies bot wasn't admitted to your meeting", tag: "ACTION" },
-      { at: "2026-07-25T20:08Z", from: "Midland Credit", subject: "Never think about this again.", tag: "MONEY", money: true },
-      { at: "2026-07-25T18:52Z", from: "Circle (PRO)", subject: "Officially monetizing 2 Channels", tag: "COMMUNITY" },
-      { at: "2026-07-25T22:32Z", from: "Crypto Intel / EliteTrade / TechStock", subject: "7 finance-newsletter blasts today", tag: "NEWSLETTER" }
+      { at: "2026-07-26T02:27Z", from: "Stripe", subject: "MJHairUnl payout reconciliation reports ready (×2)", tag: "MONEY", money: true },
+      { at: "2026-07-26T01:49Z", from: "Jotform", subject: "New ELICM Registration — Chris Henry, $175 adult ticket, Zelle", tag: "MONEY", money: true },
+      { at: "2026-07-25T23:22Z", from: "GitHub", subject: "Passkey added + 2FA enabled (Chrome on Windows)", tag: "SECURITY" },
+      { at: "2026-07-25T22:43Z", from: "PayPal", subject: "Login from a new device (Chrome, Windows 11)", tag: "SECURITY" },
+      { at: "2026-07-25T23:24Z", from: "Apostle Ken", subject: "Virtual Service tomorrow — ensure StreamYard is available", tag: "ACTION" },
+      { at: "2026-07-25T23:16Z", from: "AI Marketing Summit", subject: "Build It, Launch It upgrade confirmed — Priority Access + receipt", tag: "MONEY", money: true },
+      { at: "2026-07-25T23:30Z", from: "Juno (getjuno.com)", subject: "Follow-up: growth ideas for the agency workspace", tag: "ACTION" },
+      { at: "2026-07-26T02:05Z", from: "EliteTrade / Crypto Intel / beehiiv", subject: "6+ finance-newsletter blasts overnight", tag: "NEWSLETTER" }
     ]
   },
 
@@ -108,12 +109,15 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SAT 07/26", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
-      { day: "MON 07/27", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicated on calendar — delete one copy" },
-      { day: "MON 07/27", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "" },
-      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "RSVP pending (needsAction)" },
+      { day: "SUN 07/26", time: "AM", title: "Virtual service — Apostle Lynne (StreamYard needed)", loc: "StreamYard", note: "from Gmail — not on calendar" },
+      { day: "SUN 07/26", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
+      { day: "MON 07/27", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicated — delete one copy" },
+      { day: "MON 07/27", time: "6:55 PM", title: "Build It, Launch It Challenge — Alicia Lyttle", loc: "Zoom", note: "new — runs into 8PM Circle" },
+      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It Challenge — Alicia Lyttle", loc: "Zoom", note: "CONFLICT with 7PM Holcman" },
+      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "RSVP tentative" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
-      { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" }
+      { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" }
     ]
   },
 
@@ -128,16 +132,8 @@ window.MISSION_DATA = {
     ]
   },
 
-  drive: {
-    files: [
-      { title: "Copy of AI for Business Summit — Resource Tools", type: "Sheet", when: "2026-07-22" },
-      { title: "Silent — The Story of Tamar", type: "Doc", when: "2026-07-20" },
-      { title: "Mona_Jackson-Ham_Media_Kit_updated.pdf", type: "PDF", when: "2026-07-17" },
-      { title: "PISOTA Board Committees FY26-27 (shared)", type: "PDF", when: "2026-07-16" },
-      { title: "Rachel Ham — Math practice set (2 docs)", type: "Docs", when: "2026-07-16" },
-      { title: "Coaching Your Team to Greatness (2 decks)", type: "Slides", when: "2026-07-15" }
-    ]
-  },
+  // Google Drive probe was approval-blocked this run — panel shows NO SIGNAL.
+  drive: { files: [] },
 
   canva: {
     designs: [
@@ -146,7 +142,7 @@ window.MISSION_DATA = {
       { title: "Black White & Yellow Modern Welcome Video", updated: "recent" },
       { title: "Thinkbox A.I. Studios Inc Training", updated: "7 pages" },
       { title: "MJUnlimited AI Animation Package", updated: "6 pages" },
-      { title: "Welcome to ThinkBox AI Studios (deck)", updated: "8 pages" }
+      { title: "Black Grey Gradient Zoom Virtual Background", updated: "3 pages" }
     ]
   },
 
