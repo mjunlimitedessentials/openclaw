@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-26T02:35:00Z",
+  generatedAt: "2026-07-27T11:15:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,57 +12,57 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "First revenue signals in the feed — Stripe payout reports and a $175 ELICM registration — plus a Tuesday-night double-booking and two security confirmations to clear.",
+    headline: "Two VA candidates applied to your Upwork post overnight, Tuesday evening is now triple-booked, and Higgsfield dropped 78 fresh credits into the tank.",
     actions: [
       {
         priority: 1,
-        title: "Resolve Tuesday's double-booking",
-        detail: "Build It, Launch It Challenge (Tue Jul 28, 6:55–8:25 PM) now overlaps the Brad Holcman 'Becoming the ONLY' webinar (7:00–9:00 PM, still only 'tentative' on your calendar). You just paid for Build It Launch It priority access — pick one, or plan to catch the Holcman replay.",
-        sources: ["Google Calendar", "Gmail"]
+        title: "Review the two Upwork VA proposals",
+        detail: "Naneth M. (12:15 AM) and Patrick S. (10:15 PM + follow-up 1 AM) both submitted proposals for your 'Virtual Assistant — GoHighLevel, Social Media & Zoom Event Support' post, and both sent direct messages. Candidates who hear back within a day accept more often — review and reply today.",
+        sources: ["Gmail", "Upwork"]
       },
       {
         priority: 2,
-        title: "Verify the new ELICM registration + Zelle payment",
-        detail: "Jotform: Chris Henry registered for ELICM, 1 adult ticket ($175), paying by Zelle — but the form has placeholder contact info (none@none.com, 555-555-1212). Confirm the Zelle payment actually arrived and get real contact details.",
-        sources: ["Jotform", "Gmail"],
-        money: true
+        title: "Untangle Tuesday night — three overlapping commitments",
+        detail: "Tue Jul 28: Build It Launch It Challenge 6:55–8:25 PM, Brad Holcman 'Becoming the ONLY' 7:00–9:00 PM (still tentative), and Marqus Beaver Circle 8:00–10:00 PM. All three overlap. Pick your primary, decline or replay the rest.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 3,
-        title: "Confirm the GitHub passkey + 2FA were you",
-        detail: "At 7:22 PM ET a passkey was added and two-factor authentication enabled on your GitHub account from Chrome/Windows. That matches your GitHub activity today — if so, download and save the recovery codes now. If not, secure the account.",
-        sources: ["Gmail"]
+        title: "Tonight: Build It, Launch It kickoff at 6:55 PM",
+        detail: "Day 1 of the challenge you bought Priority Access for (Alicia Lyttle). Reminders set for 30/15 min before. The 8 PM Marqus Beaver Circle doesn't appear on today's calendar, so the evening is clear after 8:25.",
+        sources: ["Google Calendar", "Gmail"]
       },
       {
         priority: 4,
-        title: "PayPal new-device login — still unverified from yesterday",
-        detail: "Friday 6:42–6:43 PM ET: new Chrome/Windows 11 device logged in and was marked trusted. If that wasn't you, change the password and revoke the device.",
-        sources: ["Gmail"]
+        title: "78 new Higgsfield credits — fuel for the media-kit video",
+        detail: "Balance rose from 359.91 to 437.91 on the Ultimate plan. Still unspent while the Media Kit PDF and the fresh ELICM/ThinkBox Canva designs wait — one welcome/promo video would put them to work.",
+        sources: ["Higgsfield", "Canva"],
+        money: true
       },
       {
         priority: 5,
-        title: "Sunday: StreamYard ready for Apostle Lynne's virtual service",
-        detail: "Apostle Ken's reminder: Apostle Lynne is preaching virtually tomorrow (Sunday) — please ensure StreamYard is available for the session. Apostle Stukes confirmed receipt; you haven't replied yet.",
-        sources: ["Gmail"]
+        title: "Delete the duplicate PRO Welcome Call (today 1 PM ×2)",
+        detail: "The duplicate pair also repeats next Monday Aug 3 — it's a recurring double entry. Delete one recurring series and Mondays stay clean permanently.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 6,
-        title: "Stripe is alive — approve the connector to see revenue here",
-        detail: "Two Stripe reports for MJHairUnl landed at 10:27 PM (itemized payout + ending-balance reconciliation for Jul 25). The Stripe connector still needs approval in this environment, so the Finance panel can't show live numbers yet — the reports are in your inbox meanwhile.",
+        title: "Stripe reports keep landing — connector still unapproved",
+        detail: "Jul 26 payout + ending-balance reconciliations for MJHairUnl arrived at 10:39 PM. Reports are in the inbox; the Finance panel stays dark until the Stripe connector is approved.",
         sources: ["Gmail", "Stripe"],
         money: true
       },
       {
         priority: 7,
-        title: "Delete the duplicate PRO Welcome Call",
-        detail: "Monday 1:00 PM still has two identical 'PRO Welcome Call' events (created twice in May 2025). Delete one copy. Note Monday evening also stacks: Build It Launch It 6:55 PM into Marqus Beaver Circle 8:00 PM.",
-        sources: ["Google Calendar"]
+        title: "Weekend security items — close them out if you haven't",
+        detail: "Friday's PayPal new-device login and Saturday's GitHub passkey/2FA change are still unconfirmed in this feed. If both were you, you're done; if not, act now.",
+        sources: ["Gmail"]
       },
       {
         priority: 8,
-        title: "Task board and Slack still empty against a paid, packed week",
-        detail: "Notion 'My Tasks' has 0 open items and both ThinkBox Slack channels have zero messages, while this week now holds 8+ commitments including the challenge you just purchased. Capture the week as tasks and post the kickoff announcement.",
-        sources: ["Notion", "Slack", "Google Calendar"]
+        title: "Task board and Slack still at zero",
+        detail: "Notion 'My Tasks' has 0 open items and both ThinkBox channels are silent while the week holds the challenge, two webinars, and a hiring decision. Ten minutes capturing these as tasks would make tomorrow's briefing sharper.",
+        sources: ["Notion", "Slack"]
       }
     ]
   },
@@ -91,16 +91,16 @@ window.MISSION_DATA = {
 
   gmail: {
     inboxEstimateLast3Days: 201,
-    unreadShown: 12,
+    unreadShown: 14,
     threads: [
-      { at: "2026-07-26T02:27Z", from: "Stripe", subject: "MJHairUnl payout reconciliation reports ready (×2)", tag: "MONEY", money: true },
-      { at: "2026-07-26T01:49Z", from: "Jotform", subject: "New ELICM Registration — Chris Henry, $175 adult ticket, Zelle", tag: "MONEY", money: true },
-      { at: "2026-07-25T23:22Z", from: "GitHub", subject: "Passkey added + 2FA enabled (Chrome on Windows)", tag: "SECURITY" },
-      { at: "2026-07-25T22:43Z", from: "PayPal", subject: "Login from a new device (Chrome, Windows 11)", tag: "SECURITY" },
-      { at: "2026-07-25T23:24Z", from: "Apostle Ken", subject: "Virtual Service tomorrow — ensure StreamYard is available", tag: "ACTION" },
-      { at: "2026-07-25T23:16Z", from: "AI Marketing Summit", subject: "Build It, Launch It upgrade confirmed — Priority Access + receipt", tag: "MONEY", money: true },
-      { at: "2026-07-25T23:30Z", from: "Juno (getjuno.com)", subject: "Follow-up: growth ideas for the agency workspace", tag: "ACTION" },
-      { at: "2026-07-26T02:05Z", from: "EliteTrade / Crypto Intel / beehiiv", subject: "6+ finance-newsletter blasts overnight", tag: "NEWSLETTER" }
+      { at: "2026-07-27T05:15Z", from: "Upwork", subject: "Naneth M. — proposal + message for your VA post (GHL/Social/Zoom)", tag: "ACTION" },
+      { at: "2026-07-27T02:10Z", from: "Upwork", subject: "Patrick S. — proposal + 2 messages for your VA post", tag: "ACTION" },
+      { at: "2026-07-27T02:40Z", from: "Stripe", subject: "MJHairUnl payout + balance reconciliation for Jul 26 (×2)", tag: "MONEY", money: true },
+      { at: "2026-07-27T08:22Z", from: "Otter.ai", subject: "Your upcoming meetings — week-ahead summary", tag: "ACTION" },
+      { at: "2026-07-27T05:05Z", from: "Jotform", subject: "Welcome to Jotform ChatGPT App", tag: "COMMUNITY" },
+      { at: "2026-07-27T03:16Z", from: "MarketingSecrets / MINAS", subject: "Last-call deadline blasts (FHL bonuses, MINAS pricing)", tag: "NEWSLETTER" },
+      { at: "2026-07-27T08:01Z", from: "EliteTrade (×4 overnight)", subject: "Stock-tip blasts — heavy volume continues", tag: "NEWSLETTER" },
+      { at: "2026-07-27T08:13Z", from: "Creative Space Academy", subject: "Creative AI community digest — week in review", tag: "COMMUNITY" }
     ]
   },
 
@@ -109,15 +109,15 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SUN 07/26", time: "AM", title: "Virtual service — Apostle Lynne (StreamYard needed)", loc: "StreamYard", note: "from Gmail — not on calendar" },
-      { day: "SUN 07/26", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
-      { day: "MON 07/27", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicated — delete one copy" },
-      { day: "MON 07/27", time: "6:55 PM", title: "Build It, Launch It Challenge — Alicia Lyttle", loc: "Zoom", note: "new — runs into 8PM Circle" },
-      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It Challenge — Alicia Lyttle", loc: "Zoom", note: "CONFLICT with 7PM Holcman" },
-      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "RSVP tentative" },
+      { day: "MON 07/27", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicated — recurring ×2" },
+      { day: "MON 07/27", time: "6:55 PM", title: "Build It, Launch It Challenge — Day 1", loc: "Zoom", note: "priority access · tonight" },
+      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It Challenge — Day 2", loc: "Zoom", note: "TRIPLE-BOOKED evening" },
+      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "RSVP still tentative" },
+      { day: "TUE 07/28", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "overlaps both above" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
       { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
-      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" }
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
+      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate repeats here too" }
     ]
   },
 
@@ -125,10 +125,10 @@ window.MISSION_DATA = {
     openTasks: 0,
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
+      { title: "Day 3 — Attendee notes (AI Summit)", edited: "2026-07-10" },
+      { title: "Day 1 — Attendee Notes! (AI Summit)", edited: "2026-07-10" },
       { title: "Google Gemini Master Prompt List", edited: "2026-07-10" },
-      { title: "AI Business Summit Day 1", edited: "2026-07-10" },
-      { title: "AI Business Summit: Quick Start Tools", edited: "2026-07-08" },
-      { title: "AIVA Prompt Handout", edited: "2026-07-07" }
+      { title: "AI Business Summit: Quick Start Tools", edited: "2026-07-08" }
     ]
   },
 
@@ -155,7 +155,7 @@ window.MISSION_DATA = {
   },
 
   higgsfield: {
-    credits: 359.91,
+    credits: 437.91,
     plan: "Ultimate"
   }
 };
