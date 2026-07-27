@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-27T11:15:00Z",
+  generatedAt: "2026-07-27T15:15:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,57 +12,56 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Two VA candidates applied to your Upwork post overnight, Tuesday evening is now triple-booked, and Higgsfield dropped 78 fresh credits into the tank.",
+    headline: "Midday check: a Sphere Rocket VA intro call landed for Wednesday, tonight's challenge needs Base44 set up before 7 PM, and the two Upwork candidates are still waiting on replies.",
     actions: [
       {
         priority: 1,
-        title: "Review the two Upwork VA proposals",
-        detail: "Naneth M. (12:15 AM) and Patrick S. (10:15 PM + follow-up 1 AM) both submitted proposals for your 'Virtual Assistant — GoHighLevel, Social Media & Zoom Event Support' post, and both sent direct messages. Candidates who hear back within a day accept more often — review and reply today.",
-        sources: ["Gmail", "Upwork"]
+        title: "Tonight 7 PM: Build It Launch It Day 1 — set up Base44 first",
+        detail: "Alicia Lyttle's Day-1 email says come with Base44 already set up so you can follow along live. Calendar reminder fires at 6:25/6:40 PM; do the account setup this afternoon.",
+        sources: ["Gmail", "Google Calendar"]
       },
       {
         priority: 2,
-        title: "Untangle Tuesday night — three overlapping commitments",
-        detail: "Tue Jul 28: Build It Launch It Challenge 6:55–8:25 PM, Brad Holcman 'Becoming the ONLY' 7:00–9:00 PM (still tentative), and Marqus Beaver Circle 8:00–10:00 PM. All three overlap. Pick your primary, decline or replay the rest.",
-        sources: ["Google Calendar"]
+        title: "Respond to the Wednesday VA intro call invite",
+        detail: "Cullum Tilbury (Sphere Rocket — the VA placement company) sent a calendar invite for Wed Jul 29, 5:00–5:45 PM ET. Gmail flagged it 'unknown sender' so it is NOT on your calendar until you accept. Pairs with your Upwork VA search — accept if you want to compare options.",
+        sources: ["Gmail", "Google Calendar"]
       },
       {
         priority: 3,
-        title: "Tonight: Build It, Launch It kickoff at 6:55 PM",
-        detail: "Day 1 of the challenge you bought Priority Access for (Alicia Lyttle). Reminders set for 30/15 min before. The 8 PM Marqus Beaver Circle doesn't appear on today's calendar, so the evening is clear after 8:25.",
-        sources: ["Google Calendar", "Gmail"]
+        title: "Upwork candidates still unanswered",
+        detail: "Naneth M. and Patrick S. proposals + messages from overnight are still open from this morning's briefing. Reply before tonight's class swallows the evening.",
+        sources: ["Gmail", "Upwork"]
       },
       {
         priority: 4,
-        title: "78 new Higgsfield credits — fuel for the media-kit video",
-        detail: "Balance rose from 359.91 to 437.91 on the Ultimate plan. Still unspent while the Media Kit PDF and the fresh ELICM/ThinkBox Canva designs wait — one welcome/promo video would put them to work.",
-        sources: ["Higgsfield", "Canva"],
-        money: true
+        title: "Tuesday triple-booking still unresolved",
+        detail: "Tomorrow: Build It Day 2 (6:55–8:25), Brad Holcman webinar (7–9, RSVP still tentative), Marqus Beaver Circle (8–10). Rainmakers' 'First AI Hire' challenge also starts Tue 12 PM ET if you registered. Decide your primary tonight.",
+        sources: ["Google Calendar", "Gmail"]
       },
       {
         priority: 5,
-        title: "Delete the duplicate PRO Welcome Call (today 1 PM ×2)",
-        detail: "The duplicate pair also repeats next Monday Aug 3 — it's a recurring double entry. Delete one recurring series and Mondays stay clean permanently.",
-        sources: ["Google Calendar"]
+        title: "Review GitHub app permission request (Manus Connector)",
+        detail: "The GitHub App 'Manus Connector' is requesting expanded access to your account (9:37 AM email). Only approve if you actively use it — otherwise ignore/deny in GitHub → Settings → Applications.",
+        sources: ["Gmail"]
       },
       {
         priority: 6,
-        title: "Stripe reports keep landing — connector still unapproved",
-        detail: "Jul 26 payout + ending-balance reconciliations for MJHairUnl arrived at 10:39 PM. Reports are in the inbox; the Finance panel stays dark until the Stripe connector is approved.",
-        sources: ["Gmail", "Stripe"],
-        money: true
+        title: "Grab your AI Business Summit VIP recordings",
+        detail: "Alicia Lyttle's team sent the VIP/Platinum recordings access email at 10:02 AM. Save the link to Drive or Notion so it doesn't drown in the inbox.",
+        sources: ["Gmail"]
       },
       {
         priority: 7,
-        title: "Weekend security items — close them out if you haven't",
-        detail: "Friday's PayPal new-device login and Saturday's GitHub passkey/2FA change are still unconfirmed in this feed. If both were you, you're done; if not, act now.",
+        title: "Confirmed: your Claude sign-in worked",
+        detail: "Google's notice at 8:32 AM ('You shared account data with Claude') matches you signing in to fix the dashboard link — no action needed, just closing the loop.",
         sources: ["Gmail"]
       },
       {
         priority: 8,
-        title: "Task board and Slack still at zero",
-        detail: "Notion 'My Tasks' has 0 open items and both ThinkBox channels are silent while the week holds the challenge, two webinars, and a hiring decision. Ten minutes capturing these as tasks would make tomorrow's briefing sharper.",
-        sources: ["Notion", "Slack"]
+        title: "437.91 Higgsfield credits idle · Slack and task board still silent",
+        detail: "No change since 7 AM: credits unspent, both ThinkBox channels at zero messages, Notion My Tasks empty against a packed week. Also FYI: Higgsfield ToS update takes effect Aug 27.",
+        sources: ["Higgsfield", "Slack", "Notion"],
+        money: true
       }
     ]
   },
@@ -93,14 +92,14 @@ window.MISSION_DATA = {
     inboxEstimateLast3Days: 201,
     unreadShown: 14,
     threads: [
-      { at: "2026-07-27T05:15Z", from: "Upwork", subject: "Naneth M. — proposal + message for your VA post (GHL/Social/Zoom)", tag: "ACTION" },
-      { at: "2026-07-27T02:10Z", from: "Upwork", subject: "Patrick S. — proposal + 2 messages for your VA post", tag: "ACTION" },
-      { at: "2026-07-27T02:40Z", from: "Stripe", subject: "MJHairUnl payout + balance reconciliation for Jul 26 (×2)", tag: "MONEY", money: true },
-      { at: "2026-07-27T08:22Z", from: "Otter.ai", subject: "Your upcoming meetings — week-ahead summary", tag: "ACTION" },
-      { at: "2026-07-27T05:05Z", from: "Jotform", subject: "Welcome to Jotform ChatGPT App", tag: "COMMUNITY" },
-      { at: "2026-07-27T03:16Z", from: "MarketingSecrets / MINAS", subject: "Last-call deadline blasts (FHL bonuses, MINAS pricing)", tag: "NEWSLETTER" },
-      { at: "2026-07-27T08:01Z", from: "EliteTrade (×4 overnight)", subject: "Stock-tip blasts — heavy volume continues", tag: "NEWSLETTER" },
-      { at: "2026-07-27T08:13Z", from: "Creative Space Academy", subject: "Creative AI community digest — week in review", tag: "COMMUNITY" }
+      { at: "2026-07-27T15:05Z", from: "Cullum Tilbury (Sphere Rocket)", subject: "Meeting invite: Mona + Cullum, Wed Jul 29 5:00 PM — not on calendar yet", tag: "ACTION" },
+      { at: "2026-07-27T15:03Z", from: "AI Marketing Summit", subject: "Build It Day 1 tonight 7 PM — set up Base44 before class", tag: "ACTION" },
+      { at: "2026-07-27T14:02Z", from: "Alicia Lyttle", subject: "AI Business Summit — VIP/Platinum recordings access", tag: "ACTION" },
+      { at: "2026-07-27T13:37Z", from: "GitHub", subject: "Manus Connector requesting updated permissions", tag: "SECURITY" },
+      { at: "2026-07-27T12:36Z", from: "Google", subject: "You shared account data with Claude (your 8:32 AM sign-in)", tag: "SECURITY" },
+      { at: "2026-07-27T14:58Z", from: "Juno (getjuno.com)", subject: "4 deeper tasks to sharpen your agency's edge", tag: "ACTION" },
+      { at: "2026-07-27T13:09Z", from: "Higgsfield", subject: "Terms & Privacy update — effective Aug 27", tag: "COMMUNITY" },
+      { at: "2026-07-27T15:10Z", from: "EliteTrade / beehiiv (×8 today)", subject: "Finance + AI newsletter volume continues heavy", tag: "NEWSLETTER" }
     ]
   },
 
@@ -110,14 +109,14 @@ window.MISSION_DATA = {
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
       { day: "MON 07/27", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicated — recurring ×2" },
-      { day: "MON 07/27", time: "6:55 PM", title: "Build It, Launch It Challenge — Day 1", loc: "Zoom", note: "priority access · tonight" },
-      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It Challenge — Day 2", loc: "Zoom", note: "TRIPLE-BOOKED evening" },
+      { day: "MON 07/27", time: "6:55 PM", title: "Build It, Launch It — Day 1", loc: "Zoom", note: "TONIGHT · Base44 setup first" },
+      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It — Day 2", loc: "Zoom", note: "TRIPLE-BOOKED evening" },
       { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "RSVP still tentative" },
       { day: "TUE 07/28", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "overlaps both above" },
+      { day: "WED 07/29", time: "5:00 PM", title: "Mona + Cullum Tilbury (Sphere Rocket VA)", loc: "invite in Gmail", note: "pending accept — not on calendar" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
       { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
-      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
-      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate repeats here too" }
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" }
     ]
   },
 
