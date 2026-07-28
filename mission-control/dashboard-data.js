@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-28T11:09:00Z",
+  generatedAt: "2026-07-28T15:09:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,57 +12,57 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Money morning: a $46 WebStarts payment declined, Perplexity Pro canceled, a Runway receipt — and tonight is still a three-way pileup that you've now RSVP'd into.",
+    headline: "Midday check: Rainmakers goes live at noon, Lori's session is at 1, your Build It Priority Pass resources just dropped — and tonight's three-way pileup is unchanged.",
     actions: [
       {
         priority: 1,
-        title: "Tonight 3 events collide — and Holcman is now accepted",
-        detail: "Build It Launch It Day 2 (6:55–8:25), Brad Holcman webinar (7:00–9:00 — you accepted the Gmail-created copy last night at 7:13 PM), and Marqus Beaver Circle (8:00–10:00) all overlap. You can realistically do one, maybe 1.5. Pick now: Build It live + Holcman replay is the common play.",
-        sources: ["Google Calendar", "Gmail"]
-      },
-      {
-        priority: 2,
-        title: "WebStarts payment declined — $46.00 due, no card on file",
-        detail: "Email at 3:14 AM says your WebStarts subscription renewal failed. Don't click the email's links — log in at webstarts.com directly. If you still use that site, update the card; if not, cancel it before dunning fees stack.",
-        sources: ["Gmail"],
-        money: true
-      },
-      {
-        priority: 3,
-        title: "Today 1 PM: Lori's live session — registration + market research",
-        detail: "Lori (WBH) says do the market-research exercise before today's 1:00 PM ET Zoom — and yesterday Janet flagged that your registration was missing. Confirm you're actually registered, then skim the 12-program research sheet. Rainmakers' 'First AI Hire' challenge also goes live around noon ET.",
+        title: "Next 2 hours: Rainmakers at 12, Lori at 1",
+        detail: "The 'First AI Hire' challenge join link arrived at 10:59 AM (live at 12:00 ET), and Lori's WBH session starts at 1:00 with the market-research sheet expected done. If both matter, Rainmakers usually posts replays — Lori's registration issue from yesterday makes hers the one to attend live.",
         sources: ["Gmail"]
       },
       {
-        priority: 4,
-        title: "Confirm the Base44 + Supabase access grants were you",
-        detail: "Two Google security alerts (4:57 and 5:02 AM) say Base44 got access to your Google account, and Supabase reports a new OAuth app authorized on your org. That matches last night's Build It setup homework — if so, ignore; if not, revoke in Google third-party access and Supabase settings.",
-        sources: ["Gmail", "Supabase"]
+        priority: 2,
+        title: "Grab your Build It Priority Pass resources before tonight",
+        detail: "Alicia's team released your Priority Pass resource bundle at 10:51 AM. Day 2 (AI Super Agents) goes live 7:00 PM — skim the resources this afternoon so tonight is hands-on, not catch-up.",
+        sources: ["Gmail", "Google Calendar"]
       },
       {
-        priority: 5,
-        title: "Subscription ledger moved overnight",
-        detail: "Perplexity Pro canceled (account now Free), a Runway AI receipt (#2584-8401) landed at 1:59 AM, and Stripe's Jul 27 payout + balance reports for MJHairUnl are in the inbox. Worth one pass in a spreadsheet: what's canceled, what renewed, what it totals monthly.",
+        priority: 3,
+        title: "Tonight is still triple-booked — decide by 6:30",
+        detail: "Build It Day 2 (6:55–8:25), Brad Holcman extended session (7:00–9:00, accepted), Marqus Beaver Circle (8:00–10:00). The Holcman camp emailed a reminder at 7:45 AM calling tonight 'the one'. Pick your live seat and queue replays for the rest.",
+        sources: ["Google Calendar", "Gmail"]
+      },
+      {
+        priority: 4,
+        title: "This morning's money items — still open",
+        detail: "WebStarts $46 declined payment (log in directly, don't click email links), Perplexity Pro canceled, Runway receipt filed, Stripe Jul 27 reports in inbox. Ten minutes closes all four.",
         sources: ["Gmail", "Stripe"],
         money: true
       },
       {
+        priority: 5,
+        title: "Hiring pipeline idle while options accumulate",
+        detail: "Upwork: Naneth M. and Patrick S. still unanswered (day 2). Sphere Rocket intro call tomorrow 5:00 PM still an unaccepted invite. Rainmakers' challenge at noon is literally about making your first AI hire — decide the channel this week.",
+        sources: ["Gmail", "Upwork", "Google Calendar"]
+      },
+      {
         priority: 6,
-        title: "Fix the IONOS mailbox backup error",
-        detail: "IONOS reports it can't back up help@mjuemvirtualproperties.com (archiving error at 9:48 PM). Usually a password/auth issue — log into IONOS and re-authenticate the mailbox so your business email stays archived.",
+        title: "IONOS mailbox backup still failing",
+        detail: "The archiving error for help@mjuemvirtualproperties.com from last night hasn't been re-tested. Re-authenticate the mailbox in IONOS when you're at a desk.",
         sources: ["Gmail"]
       },
       {
         priority: 7,
-        title: "Hiring thread: Upwork replies + tomorrow's Sphere Rocket call",
-        detail: "Naneth M. and Patrick S. are still waiting on responses from Sunday night, and the Sphere Rocket intro call (Wed 5:00 PM) is still an unaccepted invite in Gmail — it's not on your calendar until you accept.",
-        sources: ["Gmail", "Upwork", "Google Calendar"]
+        title: "Higgsfield fuel untouched at 437.91",
+        detail: "Credits idle for a third day while the media kit and fresh Canva designs wait. Tonight's Build It session is about AI agents — the promo-video task would pair well as this week's build project.",
+        sources: ["Higgsfield", "Canva"],
+        money: true
       },
       {
         priority: 8,
-        title: "Radio recording delivered — loop closed late last night",
-        detail: "You sent Apostle Ken the trimmed 50-minute MP4 (8:12 PM) and the MP3 (9:32 PM) for Tanya's radio slot. Nothing to do unless no confirmation arrives by tomorrow. Meanwhile Notion tasks and both Slack channels remain at zero.",
-        sources: ["Gmail", "Notion", "Slack"]
+        title: "Boards still silent",
+        detail: "Notion My Tasks: 0 items. Both ThinkBox Slack channels: 0 messages. This week's commitments live only in email and calendar — capture them once and the morning briefings get sharper.",
+        sources: ["Notion", "Slack"]
       }
     ]
   },
@@ -76,7 +76,7 @@ window.MISSION_DATA = {
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK" },
     { name: "Higgsfield",      status: "online",  detail: "credits + plan OK" },
-    { name: "Google Drive",    status: "offline", detail: "call blocked this run" },
+    { name: "Google Drive",    status: "offline", detail: "blocked on recent runs — needs approval" },
     { name: "Stripe",          status: "offline", detail: "needs approval — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
     { name: "Zoom",            status: "offline", detail: "call requires approval" },
@@ -91,16 +91,16 @@ window.MISSION_DATA = {
 
   gmail: {
     inboxEstimateLast3Days: 201,
-    unreadShown: 15,
+    unreadShown: 16,
     threads: [
-      { at: "2026-07-28T07:14Z", from: "WebStarts", subject: "Payment declined — $46.00 due, no card on file", tag: "MONEY", money: true },
-      { at: "2026-07-28T06:57Z", from: "Perplexity", subject: "Pro subscription canceled — account now on Free plan", tag: "MONEY", money: true },
-      { at: "2026-07-28T05:59Z", from: "Runway AI", subject: "Receipt #2584-8401", tag: "MONEY", money: true },
-      { at: "2026-07-28T02:23Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 27 (×2)", tag: "MONEY", money: true },
-      { at: "2026-07-28T08:57Z", from: "Google (×2)", subject: "Base44 was granted access to your Google account", tag: "SECURITY" },
-      { at: "2026-07-28T09:01Z", from: "Supabase", subject: "New OAuth application authorized on your org", tag: "SECURITY" },
-      { at: "2026-07-28T11:02Z", from: "Lori (WBH)", subject: "Market research before today's 1 PM live session", tag: "ACTION" },
-      { at: "2026-07-28T01:48Z", from: "IONOS", subject: "Mailbox backup error — help@mjuemvirtualproperties.com", tag: "ACTION" }
+      { at: "2026-07-28T14:59Z", from: "Rainmakers", subject: "We start in 1 hour — join link inside (12 PM ET)", tag: "ACTION" },
+      { at: "2026-07-28T14:51Z", from: "AI Marketing Summit", subject: "Build It Priority Pass resources are ready", tag: "ACTION" },
+      { at: "2026-07-28T15:02Z", from: "AI Marketing Summit", subject: "Day 2 tonight 7 PM — AI Super Agents", tag: "ACTION" },
+      { at: "2026-07-28T11:45Z", from: "AI for Business", subject: "Tonight 7 PM — Brad Holcman extended session", tag: "ACTION" },
+      { at: "2026-07-28T11:02Z", from: "Lori (WBH)", subject: "Market research before today's 1 PM session", tag: "ACTION" },
+      { at: "2026-07-28T07:14Z", from: "WebStarts", subject: "Payment declined — $46.00 due (from this morning)", tag: "MONEY", money: true },
+      { at: "2026-07-28T12:37Z", from: "Laura (Joy Brand Creative)", subject: "Mona, question for you — personal outreach", tag: "ACTION" },
+      { at: "2026-07-28T13:15Z", from: "beehiiv / EliteTrade (×10 today)", subject: "Stock-tip and AI newsletter volume stays heavy", tag: "NEWSLETTER" }
     ]
   },
 
@@ -109,15 +109,15 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "TUE 07/28", time: "1:00 PM", title: "Lori (WBH) live session — market research first", loc: "Zoom", note: "from Gmail — confirm registration" },
-      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It — Day 2", loc: "Zoom", note: "3-way overlap tonight" },
-      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "accepted last night" },
+      { day: "TUE 07/28", time: "12:00 PM", title: "Rainmakers — First AI Hire challenge (Day 1)", loc: "join link in Gmail", note: "starts in minutes" },
+      { day: "TUE 07/28", time: "1:00 PM", title: "Lori (WBH) live session", loc: "Zoom", note: "market research first" },
+      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It — Day 2 (AI Super Agents)", loc: "Zoom", note: "3-way overlap tonight" },
+      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman (extended)", loc: "Zoom webinar", note: "accepted" },
       { day: "TUE 07/28", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "overlaps both above" },
       { day: "WED 07/29", time: "5:00 PM", title: "Sphere Rocket VA intro — Cullum Tilbury", loc: "invite in Gmail", note: "still pending accept" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
       { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
-      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
-      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "recurring duplicate ×2 persists" }
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" }
     ]
   },
 
@@ -128,11 +128,11 @@ window.MISSION_DATA = {
       { title: "Google Gemini Master Prompt List", edited: "2026-07-10" },
       { title: "AI Business Summit Day 1 — AIVA Prompt Handout", edited: "2026-07-10" },
       { title: "Day 3 — Attendee notes (AI Summit)", edited: "2026-07-10" },
-      { title: "Tool Demo Prompts", edited: "2026-05-12" }
+      { title: "Today's Notes! AI Agents Bootcamps", edited: "2026-05-18" }
     ]
   },
 
-  // Google Drive probe was blocked this run — panel shows NO SIGNAL.
+  // Google Drive probe blocked on recent runs — panel shows NO SIGNAL.
   drive: { files: [] },
 
   canva: {
