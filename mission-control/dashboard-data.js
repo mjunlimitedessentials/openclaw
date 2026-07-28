@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-27T15:15:00Z",
+  generatedAt: "2026-07-28T11:09:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,56 +12,57 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Midday check: a Sphere Rocket VA intro call landed for Wednesday, tonight's challenge needs Base44 set up before 7 PM, and the two Upwork candidates are still waiting on replies.",
+    headline: "Money morning: a $46 WebStarts payment declined, Perplexity Pro canceled, a Runway receipt — and tonight is still a three-way pileup that you've now RSVP'd into.",
     actions: [
       {
         priority: 1,
-        title: "Tonight 7 PM: Build It Launch It Day 1 — set up Base44 first",
-        detail: "Alicia Lyttle's Day-1 email says come with Base44 already set up so you can follow along live. Calendar reminder fires at 6:25/6:40 PM; do the account setup this afternoon.",
-        sources: ["Gmail", "Google Calendar"]
-      },
-      {
-        priority: 2,
-        title: "Respond to the Wednesday VA intro call invite",
-        detail: "Cullum Tilbury (Sphere Rocket — the VA placement company) sent a calendar invite for Wed Jul 29, 5:00–5:45 PM ET. Gmail flagged it 'unknown sender' so it is NOT on your calendar until you accept. Pairs with your Upwork VA search — accept if you want to compare options.",
-        sources: ["Gmail", "Google Calendar"]
-      },
-      {
-        priority: 3,
-        title: "Upwork candidates still unanswered",
-        detail: "Naneth M. and Patrick S. proposals + messages from overnight are still open from this morning's briefing. Reply before tonight's class swallows the evening.",
-        sources: ["Gmail", "Upwork"]
-      },
-      {
-        priority: 4,
-        title: "Tuesday triple-booking still unresolved",
-        detail: "Tomorrow: Build It Day 2 (6:55–8:25), Brad Holcman webinar (7–9, RSVP still tentative), Marqus Beaver Circle (8–10). Rainmakers' 'First AI Hire' challenge also starts Tue 12 PM ET if you registered. Decide your primary tonight.",
+        title: "Tonight 3 events collide — and Holcman is now accepted",
+        detail: "Build It Launch It Day 2 (6:55–8:25), Brad Holcman webinar (7:00–9:00 — you accepted the Gmail-created copy last night at 7:13 PM), and Marqus Beaver Circle (8:00–10:00) all overlap. You can realistically do one, maybe 1.5. Pick now: Build It live + Holcman replay is the common play.",
         sources: ["Google Calendar", "Gmail"]
       },
       {
-        priority: 5,
-        title: "Review GitHub app permission request (Manus Connector)",
-        detail: "The GitHub App 'Manus Connector' is requesting expanded access to your account (9:37 AM email). Only approve if you actively use it — otherwise ignore/deny in GitHub → Settings → Applications.",
+        priority: 2,
+        title: "WebStarts payment declined — $46.00 due, no card on file",
+        detail: "Email at 3:14 AM says your WebStarts subscription renewal failed. Don't click the email's links — log in at webstarts.com directly. If you still use that site, update the card; if not, cancel it before dunning fees stack.",
+        sources: ["Gmail"],
+        money: true
+      },
+      {
+        priority: 3,
+        title: "Today 1 PM: Lori's live session — registration + market research",
+        detail: "Lori (WBH) says do the market-research exercise before today's 1:00 PM ET Zoom — and yesterday Janet flagged that your registration was missing. Confirm you're actually registered, then skim the 12-program research sheet. Rainmakers' 'First AI Hire' challenge also goes live around noon ET.",
         sources: ["Gmail"]
       },
       {
+        priority: 4,
+        title: "Confirm the Base44 + Supabase access grants were you",
+        detail: "Two Google security alerts (4:57 and 5:02 AM) say Base44 got access to your Google account, and Supabase reports a new OAuth app authorized on your org. That matches last night's Build It setup homework — if so, ignore; if not, revoke in Google third-party access and Supabase settings.",
+        sources: ["Gmail", "Supabase"]
+      },
+      {
+        priority: 5,
+        title: "Subscription ledger moved overnight",
+        detail: "Perplexity Pro canceled (account now Free), a Runway AI receipt (#2584-8401) landed at 1:59 AM, and Stripe's Jul 27 payout + balance reports for MJHairUnl are in the inbox. Worth one pass in a spreadsheet: what's canceled, what renewed, what it totals monthly.",
+        sources: ["Gmail", "Stripe"],
+        money: true
+      },
+      {
         priority: 6,
-        title: "Grab your AI Business Summit VIP recordings",
-        detail: "Alicia Lyttle's team sent the VIP/Platinum recordings access email at 10:02 AM. Save the link to Drive or Notion so it doesn't drown in the inbox.",
+        title: "Fix the IONOS mailbox backup error",
+        detail: "IONOS reports it can't back up help@mjuemvirtualproperties.com (archiving error at 9:48 PM). Usually a password/auth issue — log into IONOS and re-authenticate the mailbox so your business email stays archived.",
         sources: ["Gmail"]
       },
       {
         priority: 7,
-        title: "Confirmed: your Claude sign-in worked",
-        detail: "Google's notice at 8:32 AM ('You shared account data with Claude') matches you signing in to fix the dashboard link — no action needed, just closing the loop.",
-        sources: ["Gmail"]
+        title: "Hiring thread: Upwork replies + tomorrow's Sphere Rocket call",
+        detail: "Naneth M. and Patrick S. are still waiting on responses from Sunday night, and the Sphere Rocket intro call (Wed 5:00 PM) is still an unaccepted invite in Gmail — it's not on your calendar until you accept.",
+        sources: ["Gmail", "Upwork", "Google Calendar"]
       },
       {
         priority: 8,
-        title: "437.91 Higgsfield credits idle · Slack and task board still silent",
-        detail: "No change since 7 AM: credits unspent, both ThinkBox channels at zero messages, Notion My Tasks empty against a packed week. Also FYI: Higgsfield ToS update takes effect Aug 27.",
-        sources: ["Higgsfield", "Slack", "Notion"],
-        money: true
+        title: "Radio recording delivered — loop closed late last night",
+        detail: "You sent Apostle Ken the trimmed 50-minute MP4 (8:12 PM) and the MP3 (9:32 PM) for Tanya's radio slot. Nothing to do unless no confirmation arrives by tomorrow. Meanwhile Notion tasks and both Slack channels remain at zero.",
+        sources: ["Gmail", "Notion", "Slack"]
       }
     ]
   },
@@ -75,7 +76,7 @@ window.MISSION_DATA = {
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK" },
     { name: "Higgsfield",      status: "online",  detail: "credits + plan OK" },
-    { name: "Google Drive",    status: "offline", detail: "call required approval this run" },
+    { name: "Google Drive",    status: "offline", detail: "call blocked this run" },
     { name: "Stripe",          status: "offline", detail: "needs approval — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
     { name: "Zoom",            status: "offline", detail: "call requires approval" },
@@ -90,16 +91,16 @@ window.MISSION_DATA = {
 
   gmail: {
     inboxEstimateLast3Days: 201,
-    unreadShown: 14,
+    unreadShown: 15,
     threads: [
-      { at: "2026-07-27T15:05Z", from: "Cullum Tilbury (Sphere Rocket)", subject: "Meeting invite: Mona + Cullum, Wed Jul 29 5:00 PM — not on calendar yet", tag: "ACTION" },
-      { at: "2026-07-27T15:03Z", from: "AI Marketing Summit", subject: "Build It Day 1 tonight 7 PM — set up Base44 before class", tag: "ACTION" },
-      { at: "2026-07-27T14:02Z", from: "Alicia Lyttle", subject: "AI Business Summit — VIP/Platinum recordings access", tag: "ACTION" },
-      { at: "2026-07-27T13:37Z", from: "GitHub", subject: "Manus Connector requesting updated permissions", tag: "SECURITY" },
-      { at: "2026-07-27T12:36Z", from: "Google", subject: "You shared account data with Claude (your 8:32 AM sign-in)", tag: "SECURITY" },
-      { at: "2026-07-27T14:58Z", from: "Juno (getjuno.com)", subject: "4 deeper tasks to sharpen your agency's edge", tag: "ACTION" },
-      { at: "2026-07-27T13:09Z", from: "Higgsfield", subject: "Terms & Privacy update — effective Aug 27", tag: "COMMUNITY" },
-      { at: "2026-07-27T15:10Z", from: "EliteTrade / beehiiv (×8 today)", subject: "Finance + AI newsletter volume continues heavy", tag: "NEWSLETTER" }
+      { at: "2026-07-28T07:14Z", from: "WebStarts", subject: "Payment declined — $46.00 due, no card on file", tag: "MONEY", money: true },
+      { at: "2026-07-28T06:57Z", from: "Perplexity", subject: "Pro subscription canceled — account now on Free plan", tag: "MONEY", money: true },
+      { at: "2026-07-28T05:59Z", from: "Runway AI", subject: "Receipt #2584-8401", tag: "MONEY", money: true },
+      { at: "2026-07-28T02:23Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 27 (×2)", tag: "MONEY", money: true },
+      { at: "2026-07-28T08:57Z", from: "Google (×2)", subject: "Base44 was granted access to your Google account", tag: "SECURITY" },
+      { at: "2026-07-28T09:01Z", from: "Supabase", subject: "New OAuth application authorized on your org", tag: "SECURITY" },
+      { at: "2026-07-28T11:02Z", from: "Lori (WBH)", subject: "Market research before today's 1 PM live session", tag: "ACTION" },
+      { at: "2026-07-28T01:48Z", from: "IONOS", subject: "Mailbox backup error — help@mjuemvirtualproperties.com", tag: "ACTION" }
     ]
   },
 
@@ -108,15 +109,15 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "MON 07/27", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicated — recurring ×2" },
-      { day: "MON 07/27", time: "6:55 PM", title: "Build It, Launch It — Day 1", loc: "Zoom", note: "TONIGHT · Base44 setup first" },
-      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It — Day 2", loc: "Zoom", note: "TRIPLE-BOOKED evening" },
-      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "RSVP still tentative" },
+      { day: "TUE 07/28", time: "1:00 PM", title: "Lori (WBH) live session — market research first", loc: "Zoom", note: "from Gmail — confirm registration" },
+      { day: "TUE 07/28", time: "6:55 PM", title: "Build It, Launch It — Day 2", loc: "Zoom", note: "3-way overlap tonight" },
+      { day: "TUE 07/28", time: "7:00 PM", title: "Becoming the ONLY — Brad Holcman", loc: "Zoom webinar", note: "accepted last night" },
       { day: "TUE 07/28", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "overlaps both above" },
-      { day: "WED 07/29", time: "5:00 PM", title: "Mona + Cullum Tilbury (Sphere Rocket VA)", loc: "invite in Gmail", note: "pending accept — not on calendar" },
+      { day: "WED 07/29", time: "5:00 PM", title: "Sphere Rocket VA intro — Cullum Tilbury", loc: "invite in Gmail", note: "still pending accept" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
       { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
-      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" }
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
+      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "recurring duplicate ×2 persists" }
     ]
   },
 
@@ -124,14 +125,14 @@ window.MISSION_DATA = {
     openTasks: 0,
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
-      { title: "Day 3 — Attendee notes (AI Summit)", edited: "2026-07-10" },
-      { title: "Day 1 — Attendee Notes! (AI Summit)", edited: "2026-07-10" },
       { title: "Google Gemini Master Prompt List", edited: "2026-07-10" },
-      { title: "AI Business Summit: Quick Start Tools", edited: "2026-07-08" }
+      { title: "AI Business Summit Day 1 — AIVA Prompt Handout", edited: "2026-07-10" },
+      { title: "Day 3 — Attendee notes (AI Summit)", edited: "2026-07-10" },
+      { title: "Tool Demo Prompts", edited: "2026-05-12" }
     ]
   },
 
-  // Google Drive probe was approval-blocked this run — panel shows NO SIGNAL.
+  // Google Drive probe was blocked this run — panel shows NO SIGNAL.
   drive: { files: [] },
 
   canva: {
