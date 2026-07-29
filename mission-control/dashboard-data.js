@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-29T11:07:00Z",
+  generatedAt: "2026-07-29T15:07:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,58 +12,58 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Second declined card this week ($26.49 to Captions), Naneth followed up a third time on Upwork, and today's 5 PM Sphere Rocket call still isn't on your calendar.",
+    headline: "Midday check: quiet inbox stretch — the 5 PM Sphere Rocket call is still unconfirmed, this morning's card-decline and Upwork items remain open, and your CRM report shows outreach at near-zero.",
     actions: [
       {
         priority: 1,
-        title: "Decide on today's 5 PM Sphere Rocket call — this morning",
-        detail: "Cullum Tilbury's intro-call invite for TODAY 5:00–5:45 PM is still sitting unaccepted in Gmail, so it's not on your calendar and he has no confirmation. Accept it or send a quick reschedule note — leaving a VA vendor hanging costs leverage.",
+        title: "5 PM Sphere Rocket call — still unconfirmed with 6 hours left",
+        detail: "Cullum's invite for today 5:00–5:45 PM remains unaccepted in Gmail. Their nurture emails kept arriving this morning, so the meeting is presumably still on their books. Accept, or send a two-line reschedule before lunch.",
         sources: ["Gmail", "Google Calendar"]
       },
       {
         priority: 2,
-        title: "Two declined charges in 3 days — check the card, not the apps",
-        detail: "Captions.ai failed to charge $26.49 last night, after Monday's $46 WebStarts decline. Two different vendors failing points to an expired or replaced card. Fix the card once (or consciously cancel both tools) before more subscriptions bounce.",
+        title: "Your CRM weekly report: 2 outbound emails, everything else zero",
+        detail: "The GoHighLevel account summary for Jul 22–28 landed at 9:10 AM: 0 calls, 0 SMS, 2 emails, 0 social touches. Whoever you hire from this week's VA pipeline, outbound follow-up is the first job to hand them — the report is your baseline.",
+        sources: ["Gmail"]
+      },
+      {
+        priority: 3,
+        title: "Still open from 7 AM: card declines and Upwork replies",
+        detail: "Captions.ai ($26.49) and WebStarts ($46) declines both point at one card to fix; Naneth M. (3 messages) and Patrick S. still await answers. None of these got harder since this morning — they just got older.",
+        sources: ["Gmail", "Upwork"],
+        money: true
+      },
+      {
+        priority: 4,
+        title: "Tonight: Wisdom Wednesday 7:30 vs Beaver Circle 8:00",
+        detail: "The Grant Mastery community's Wisdom Wednesday call is 7:30 PM ET (reminder at 10:08 AM); the nightly Circle starts 8:00. Thirty-minute overlap — pick one or plan the handoff.",
+        sources: ["Gmail", "Google Calendar"]
+      },
+      {
+        priority: 5,
+        title: "Jacksonville + Pro bundle pricing ends tomorrow night",
+        detail: "The AI for Business team says the event-ticket + Pro bundle closes in ~24 hours (9:25 AM email). Only act if Jacksonville was already on your radar — deadline marketing is doing its job here.",
         sources: ["Gmail"],
         money: true
       },
       {
-        priority: 3,
-        title: "Naneth has now reached out 3 times — answer or close the post",
-        detail: "Another Upwork message from Naneth M. arrived at 10:45 PM (day 3 unanswered; Patrick S. also waiting). Fifteen minutes today: shortlist, reply, or close the job post — silence burns goodwill with every hour.",
-        sources: ["Gmail", "Upwork"]
-      },
-      {
-        priority: 4,
-        title: "IONOS backup failed again — second night in a row",
-        detail: "The archiving error for help@mjuemvirtualproperties.com repeated at 9:38 PM. It won't fix itself: log into IONOS, re-enter the mailbox credentials, and the nightly errors stop.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 5,
-        title: "Your HeyGen avatar is ready — the video pipeline is now fully stocked",
-        detail: "HeyGen finished 'Elegant woman at sunset writing' overnight. You now have: a personal avatar, 437.91 idle Higgsfield credits, fresh Canva brand designs, and the media kit in Drive. Everything for the promo video exists — it just needs an hour.",
-        sources: ["Gmail", "Higgsfield", "Canva"],
-        money: true
-      },
-      {
         priority: 6,
-        title: "AI Agents Course unlocked from the Build It challenge",
-        detail: "Alicia's AI Agents Course opened last night (8:19 PM email). Bookmark access now while the link is fresh — course links have a way of vanishing into inbox depth by the weekend.",
-        sources: ["Gmail"]
+        title: "Video pipeline stays stocked and unused",
+        detail: "HeyGen avatar ready since overnight, 437.91 Higgsfield credits idle, Canva brand kit fresh. Thursday afternoon (after AI4B at 3 PM) is the first open block to spend an hour on the promo video.",
+        sources: ["Higgsfield", "Canva", "Gmail"],
+        money: true
       },
       {
         priority: 7,
-        title: "Stripe reports keep stacking unread",
-        detail: "Jul 28 payout + ending-balance reconciliations landed at 10:37 PM — the fourth consecutive daily pair in the inbox. The Finance panel stays NO SIGNAL until the Stripe connector is approved; until then these emails are your only revenue telemetry.",
-        sources: ["Gmail", "Stripe"],
-        money: true
+        title: "Housekeeping carried forward",
+        detail: "IONOS mailbox backup error (2 nights running), Stripe daily reports unread in inbox, PRO Welcome Call duplicate repeats next Monday, AI Agents Course link still unbookmarked.",
+        sources: ["Gmail", "Stripe", "Google Calendar"]
       },
       {
         priority: 8,
-        title: "Calendar breathes today; Thursday is the next crunch",
-        detail: "Today only the 8 PM Beaver Circle is booked (plus the pending 5 PM call). Thursday stacks AI4B Fail Forward at 3 PM against the nightly Circle. Notion tasks and Slack remain at zero — the week is still steering itself from the inbox.",
-        sources: ["Google Calendar", "Notion", "Slack"]
+        title: "Boards silent, day 5",
+        detail: "Notion My Tasks: 0. ThinkBox Slack: 0 messages in both channels. The dashboard keeps reporting what the inbox decides — a 10-minute task capture would flip that relationship.",
+        sources: ["Notion", "Slack"]
       }
     ]
   },
@@ -71,13 +71,13 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "online",  detail: "201 threads est. last 24h" },
+    { name: "Gmail",           status: "online",  detail: "35 threads est. last 12h" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK" },
     { name: "Higgsfield",      status: "online",  detail: "credits + plan OK" },
-    { name: "Google Drive",    status: "offline", detail: "call required approval this run" },
+    { name: "Google Drive",    status: "offline", detail: "approval pending — not probed this run" },
     { name: "Stripe",          status: "offline", detail: "needs approval — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
     { name: "Zoom",            status: "offline", detail: "call requires approval" },
@@ -91,17 +91,16 @@ window.MISSION_DATA = {
   ],
 
   gmail: {
-    inboxEstimateLast3Days: 201,
-    unreadShown: 15,
+    inboxEstimateLast3Days: 35,
+    unreadShown: 14,
     threads: [
-      { at: "2026-07-28T23:47Z", from: "Captions.ai", subject: "$26.49 payment unsuccessful — card declined", tag: "MONEY", money: true },
-      { at: "2026-07-29T02:45Z", from: "Upwork", subject: "Naneth M. sent you a message (3rd follow-up)", tag: "ACTION" },
-      { at: "2026-07-29T02:37Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 28 (×2)", tag: "MONEY", money: true },
-      { at: "2026-07-29T01:38Z", from: "IONOS", subject: "Mailbox backup error — 2nd consecutive night", tag: "ACTION" },
-      { at: "2026-07-29T05:24Z", from: "HeyGen", subject: "Your avatar 'Elegant woman at sunset writing' is ready", tag: "ACTION" },
-      { at: "2026-07-29T00:19Z", from: "AI Marketing Summit", subject: "The AI Agents Course is open", tag: "ACTION" },
-      { at: "2026-07-29T02:04Z", from: "vidIQ", subject: "3 rules now decide if YouTube pays you", tag: "COMMUNITY" },
-      { at: "2026-07-29T08:01Z", from: "EliteTrade / beehiiv (×8 overnight)", subject: "Stock-tip newsletter volume continues heavy", tag: "NEWSLETTER" }
+      { at: "2026-07-29T13:10Z", from: "GoHighLevel (AI4B)", subject: "Weekly account summary — 2 outbound emails, all other channels 0", tag: "ACTION" },
+      { at: "2026-07-29T14:08Z", from: "Grant Mastery", subject: "Wisdom Wednesday call tonight 7:30 PM ET", tag: "ACTION" },
+      { at: "2026-07-29T13:25Z", from: "AI for Business", subject: "Jacksonville + Pro bundle — pricing ends tomorrow night", tag: "MONEY", money: true },
+      { at: "2026-07-29T14:00Z", from: "Sphere Rocket", subject: "Nurture emails continue — today's 5 PM call still unconfirmed", tag: "ACTION" },
+      { at: "2026-07-29T13:02Z", from: "Lori (WBH)", subject: "Signature-program pitch follow-up from yesterday's session", tag: "COMMUNITY" },
+      { at: "2026-07-29T12:03Z", from: "Circle (AI4B)", subject: "WINsDay community thread + Revven bug reports", tag: "COMMUNITY" },
+      { at: "2026-07-29T13:30Z", from: "Newsletters (×12 this morning)", subject: "Stock tips + AI tools volume unchanged", tag: "NEWSLETTER" }
     ]
   },
 
@@ -111,6 +110,7 @@ window.MISSION_DATA = {
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
       { day: "WED 07/29", time: "5:00 PM", title: "Sphere Rocket VA intro — Cullum Tilbury", loc: "invite in Gmail", note: "TODAY — still pending accept" },
+      { day: "WED 07/29", time: "7:30 PM", title: "Wisdom Wednesday — Grant Mastery community", loc: "from Gmail", note: "overlaps 8 PM Circle" },
       { day: "WED 07/29", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
       { day: "THU 07/30", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "" },
@@ -131,7 +131,7 @@ window.MISSION_DATA = {
     ]
   },
 
-  // Google Drive probe was approval-blocked this run — panel shows NO SIGNAL.
+  // Google Drive probe not attempted this run — approval still pending from prior runs.
   drive: { files: [] },
 
   canva: {
