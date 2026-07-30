@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-30T11:07:00Z",
+  generatedAt: "2026-07-30T15:06:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,55 +12,56 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Your first HeyGen avatar video finished overnight — plus a new Kit account to confirm, Naneth's 4th follow-up, and AI4B Fail Forward at 3 PM today.",
+    headline: "Third vendor bounced off the card this week — PosterMyWall $9.95 'declined again' — and today holds AI4B at 3 PM plus the Holcman encore at 7.",
     actions: [
       {
         priority: 1,
-        title: "Watch your finished HeyGen video — the pipeline finally produced",
-        detail: "HeyGen says your AI video is ready (5:23 AM). This is the first output from the avatar you created Tuesday night. Review it, and if it's good, this is the template for the media-kit promo — 437.91 Higgsfield credits are still waiting for the polish pass.",
-        sources: ["Gmail", "Higgsfield"]
-      },
-      {
-        priority: 2,
-        title: "Confirm (or revoke) the new Kit email-marketing account",
-        detail: "A Kit (ConvertKit) account was created at 11:03 PM and the confirm-your-email link is still unclicked. If that was you starting an email list — confirm it and note it pairs with Tuesday's 'signature program' push from Lori. If it wasn't you, ignore the confirmation and the account dies.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 3,
-        title: "Naneth's 4th message — this decision is now overdue",
-        detail: "Another Upwork message at 9:45 PM. Four contacts across four days with no reply reads as a no — if she's a maybe, say so today; if not, close the loop so she can move on. Yesterday's Sphere Rocket call outcome isn't visible in email either — if it happened, compare notes while fresh.",
-        sources: ["Gmail", "Upwork"]
-      },
-      {
-        priority: 4,
-        title: "Today 3 PM: AI4B Fail Forward with Patrick Precourt",
-        detail: "On the calendar with a 10-minute reminder. Also in the noon hour: Eno Eka's session for Ashley Kirkwood ticketholders — her email says you've missed 11 of 18 sessions, so decide deliberately whether this program still earns your time.",
-        sources: ["Google Calendar", "Gmail"]
-      },
-      {
-        priority: 5,
-        title: "IONOS backup error — third consecutive night",
-        detail: "Same archiving failure for help@mjuemvirtualproperties.com at 9:44 PM. Three nights of errors usually means the mailbox password changed. Five minutes in the IONOS panel closes this recurring item for good.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 6,
-        title: "Money ledger quiet but unresolved",
-        detail: "No new declines overnight — but Captions ($26.49) and WebStarts ($46) are still unfixed, and Stripe's Jul 29 report pair landed at 10:35 PM (fifth consecutive unread pair). Lori's DFY BOGO deadline hits tomorrow morning if that offer was on your list.",
+        title: "The card is definitively the problem — 3 vendors, 4 declines",
+        detail: "PosterMyWall failed $9.95 at 10:28 AM marked 'unsuccessful AGAIN', joining Captions ($26.49) and WebStarts ($46). Three unrelated vendors means the card on file is dead. One update at each vendor — or one new card everywhere — ends this week's dunning cascade.",
         sources: ["Gmail", "Stripe"],
         money: true
       },
       {
+        priority: 2,
+        title: "Today 3 PM: AI4B Fail Forward · 7 PM: Holcman encore",
+        detail: "Fail Forward with Patrick Precourt at 3:00 (10-min reminder set). The Brad Holcman 'extended session' encore airs 7:00 PM — billed as possibly the last live run; you attended Tuesday's, so only rewatch if you want the Q&A. Circle at 8 as usual.",
+        sources: ["Google Calendar", "Gmail"]
+      },
+      {
+        priority: 3,
+        title: "Hiring loop still open — and new options keep arriving",
+        detail: "Naneth (4 messages) and Patrick S. remain unanswered on Upwork; OnlineJobs.ph pitched 'AI finds your VA' this morning. The longer the decision floats, the more channels pile up. One 15-minute block today: pick, reply, close.",
+        sources: ["Gmail", "Upwork"]
+      },
+      {
+        priority: 4,
+        title: "Juno wants to renovate your agency website",
+        detail: "Juno's 9:16 AM email lists specific website projects for Mjunlimitedessentialmktg and asks which to tackle first. If you're keeping Juno, reply with one priority; if not, revoke its Google access — it's been emailing for five days.",
+        sources: ["Gmail"]
+      },
+      {
+        priority: 5,
+        title: "Your classroom wall chart is live in Canva",
+        detail: "The 'Step-by-step guide for seamless AI integration' infographic (your ThinkBox training wall chart) now tops your Canva recents, edited today. Resize → Whiteboard when you're ready to project it.",
+        sources: ["Canva"]
+      },
+      {
+        priority: 6,
+        title: "Adobe MAX early-bird ends tomorrow",
+        detail: "$700 off registration expires July 31 (Adobe's 10:00 AM email). Only relevant if Miami in October was already on your radar — otherwise let it pass.",
+        sources: ["Gmail"],
+        money: true
+      },
+      {
         priority: 7,
-        title: "Ministry thread: Apostolic Masterclass forward",
-        detail: "The Apostolic Masterclass details were forwarded to you last night via the family/ministry thread (from Apostle Tresti via Apostle Ken's account). Worth a read before the weekend services.",
+        title: "Quiet wins: no security events, no new subscriptions",
+        detail: "Overnight was clean — no new device logins, no OAuth grants. IONOS didn't error last night either (first clean night since Monday); watch tonight to confirm it healed.",
         sources: ["Gmail"]
       },
       {
         priority: 8,
-        title: "Boards still at zero — day 6",
-        detail: "Notion My Tasks: 0. ThinkBox Slack: silent. Meanwhile this briefing tracks 7 open loops from email alone. The 10-minute capture session remains the highest-leverage block on the board.",
+        title: "Boards at zero, day 7 — the streak nobody wants",
+        detail: "Notion My Tasks: 0. ThinkBox Slack: silent. Advanced-track capstone idea from your own curriculum: posting the teach-back video would give the channel its first transmission.",
         sources: ["Notion", "Slack"]
       }
     ]
@@ -69,7 +70,7 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "online",  detail: "201 threads est. last 24h" },
+    { name: "Gmail",           status: "online",  detail: "39 threads est. last 12h" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
@@ -89,17 +90,16 @@ window.MISSION_DATA = {
   ],
 
   gmail: {
-    inboxEstimateLast3Days: 201,
+    inboxEstimateLast3Days: 39,
     unreadShown: 15,
     threads: [
-      { at: "2026-07-30T09:23Z", from: "HeyGen", subject: "Your AI video is ready! (first avatar output)", tag: "ACTION" },
-      { at: "2026-07-30T03:03Z", from: "Kit (ConvertKit)", subject: "New account created — confirm your email address", tag: "SECURITY" },
-      { at: "2026-07-30T01:45Z", from: "Upwork", subject: "Naneth M. sent you a message (4th follow-up)", tag: "ACTION" },
-      { at: "2026-07-30T02:35Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 29 (×2)", tag: "MONEY", money: true },
-      { at: "2026-07-30T01:44Z", from: "IONOS", subject: "Mailbox backup error — 3rd consecutive night", tag: "ACTION" },
-      { at: "2026-07-30T01:47Z", from: "Apostle Tresti (fwd)", subject: "Apostolic Masterclass details", tag: "COMMUNITY" },
-      { at: "2026-07-30T09:59Z", from: "Lori (WBH)", subject: "DFY FAQs — BOGO deadline in 24 hours", tag: "MONEY", money: true },
-      { at: "2026-07-30T11:00Z", from: "Newsletters (×10 overnight)", subject: "Stock tips + AI tools volume unchanged", tag: "NEWSLETTER" }
+      { at: "2026-07-30T14:28Z", from: "PosterMyWall / Stripe", subject: "$9.95 payment declined AGAIN — 3rd vendor this week", tag: "MONEY", money: true },
+      { at: "2026-07-30T11:55Z", from: "AI for Business", subject: "Holcman encore tonight 7 PM — possibly final live run", tag: "ACTION" },
+      { at: "2026-07-30T13:16Z", from: "Juno (getjuno.com)", subject: "Website improvement projects — which first?", tag: "ACTION" },
+      { at: "2026-07-30T12:00Z", from: "OnlineJobs.ph", subject: "AI finds your VA — hiring channel #3 appears", tag: "ACTION" },
+      { at: "2026-07-30T14:00Z", from: "Adobe", subject: "MAX early-bird $700 off — ends July 31", tag: "MONEY", money: true },
+      { at: "2026-07-30T13:39Z", from: "Filmpac", subject: "Vertical 9:16 stock footage library launched", tag: "COMMUNITY" },
+      { at: "2026-07-30T14:39Z", from: "Newsletters (×11 this morning)", subject: "Stock tips + AI tools volume unchanged", tag: "NEWSLETTER" }
     ]
   },
 
@@ -108,8 +108,8 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "THU 07/30", time: "12:00 PM", title: "Eno Eka session (Kirkwood ticketholders)", loc: "from Gmail", note: "11 of 18 sessions missed" },
       { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY" },
+      { day: "THU 07/30", time: "7:00 PM", title: "Brad Holcman encore (extended session)", loc: "from Gmail", note: "optional rewatch" },
       { day: "THU 07/30", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
       { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
       { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
@@ -134,12 +134,12 @@ window.MISSION_DATA = {
 
   canva: {
     designs: [
+      { title: "ThinkBox training wall chart (AI integration guide)", updated: "today" },
       { title: "ELICM Website", updated: "recent" },
       { title: "www.EternalLifeInChristMinistries.org", updated: "recent" },
       { title: "Black White & Yellow Modern Welcome Video", updated: "recent" },
       { title: "Thinkbox A.I. Studios Inc Training", updated: "7 pages" },
-      { title: "MJUnlimited AI Animation Package", updated: "6 pages" },
-      { title: "Black Grey Gradient Zoom Virtual Background", updated: "3 pages" }
+      { title: "MJUnlimited AI Animation Package", updated: "6 pages" }
     ]
   },
 
