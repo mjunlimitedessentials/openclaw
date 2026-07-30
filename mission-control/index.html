@@ -103,6 +103,22 @@
   .offline-note{color:var(--red);font-size:10px;letter-spacing:1px}
   .money{transition:filter .25s}
   body.privacy .money{filter:blur(9px)}
+  /* TEXT+ large-print mode — bigger, simpler reading; visual layer only */
+  body.bigtext .pb{font-size:15px;line-height:1.65}
+  body.bigtext .ph .name{font-size:15px}
+  body.bigtext .ph .tag{font-size:12px}
+  body.bigtext .k{font-size:12.5px}
+  body.bigtext .action .t{font-size:15px}
+  body.bigtext .action .d{font-size:13.5px}
+  body.bigtext .headline{font-size:15px}
+  body.bigtext .big{font-size:42px}
+  body.bigtext .unit{font-size:13px}
+  body.bigtext .chip{font-size:11px}
+  body.bigtext .src{font-size:11px}
+  body.bigtext .stat .n{font-size:13px}
+  body.bigtext .stat .d{font-size:11px}
+  body.bigtext .nosig{font-size:15px}
+  body.bigtext .swp::before{display:none} /* calmer read: no glare sweeps in large-print mode */
   .nosig{color:var(--red);letter-spacing:3px;font-size:12px;text-align:center;padding:24px 0;opacity:.85;animation:nosigflk 3.4s steps(2) infinite}
   @keyframes nosigflk{50%{opacity:.45}}
   .headline{color:var(--amber);border-left:3px solid var(--amber);padding:6px 10px;margin-bottom:10px;font-size:12px;background:rgba(255,181,69,.05);min-height:2.6em}
@@ -148,6 +164,7 @@
     <div class="clock" id="clock">--:--:--</div>
     <div class="stamp" id="stamp">DATA: —</div>
   </div>
+  <button class="btn" id="textBtn" onclick="toggleText()">🔎 TEXT: STD</button>
   <button class="btn" id="privacyBtn" onclick="togglePrivacy()">🔒 PRIVACY: OFF</button>
 </header>
 
@@ -311,6 +328,14 @@ function togglePrivacy(){
   var on = document.body.classList.contains("privacy");
   var b = document.getElementById("privacyBtn");
   b.textContent = on ? "🙈 PRIVACY: ON" : "🔒 PRIVACY: OFF";
+  b.classList.toggle("active", on);
+}
+
+function toggleText(){
+  document.body.classList.toggle("bigtext");
+  var on = document.body.classList.contains("bigtext");
+  var b = document.getElementById("textBtn");
+  b.textContent = on ? "🔍 TEXT: LARGE" : "🔎 TEXT: STD";
   b.classList.toggle("active", on);
 }
 
