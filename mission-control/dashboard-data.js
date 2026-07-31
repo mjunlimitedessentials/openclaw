@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-30T15:06:00Z",
+  generatedAt: "2026-07-31T11:06:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,57 +12,58 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Third vendor bounced off the card this week — PosterMyWall $9.95 'declined again' — and today holds AI4B at 3 PM plus the Holcman encore at 7.",
+    headline: "New on today's board: OriginOne orientation at 2:45, prayer call tonight — plus a 3:41 AM Facebook code to double-check and the $67 resilience-box payment confirmed sent.",
     actions: [
       {
         priority: 1,
-        title: "The card is definitively the problem — 3 vendors, 4 declines",
-        detail: "PosterMyWall failed $9.95 at 10:28 AM marked 'unsuccessful AGAIN', joining Captions ($26.49) and WebStarts ($46). Three unrelated vendors means the card on file is dead. One update at each vendor — or one new card everywhere — ends this week's dunning cascade.",
-        sources: ["Gmail", "Stripe"],
-        money: true
-      },
-      {
-        priority: 2,
-        title: "Today 3 PM: AI4B Fail Forward · 7 PM: Holcman encore",
-        detail: "Fail Forward with Patrick Precourt at 3:00 (10-min reminder set). The Brad Holcman 'extended session' encore airs 7:00 PM — billed as possibly the last live run; you attended Tuesday's, so only rewatch if you want the Q&A. Circle at 8 as usual.",
-        sources: ["Google Calendar", "Gmail"]
-      },
-      {
-        priority: 3,
-        title: "Hiring loop still open — and new options keep arriving",
-        detail: "Naneth (4 messages) and Patrick S. remain unanswered on Upwork; OnlineJobs.ph pitched 'AI finds your VA' this morning. The longer the decision floats, the more channels pile up. One 15-minute block today: pick, reply, close.",
-        sources: ["Gmail", "Upwork"]
-      },
-      {
-        priority: 4,
-        title: "Juno wants to renovate your agency website",
-        detail: "Juno's 9:16 AM email lists specific website projects for Mjunlimitedessentialmktg and asks which to tackle first. If you're keeping Juno, reply with one priority; if not, revoke its Google access — it's been emailing for five days.",
+        title: "Confirm the 3:41 AM Facebook code was you",
+        detail: "Facebook emailed confirmation code 148772 at 3:41 AM after 'someone' requested account confirmation — one minute after another Base44-access alert. If you were up working overnight, all good, never share the code. If not, change your Facebook password today.",
         sources: ["Gmail"]
       },
       {
-        priority: 5,
-        title: "Your classroom wall chart is live in Canva",
-        detail: "The 'Step-by-step guide for seamless AI integration' infographic (your ThinkBox training wall chart) now tops your Canva recents, edited today. Resize → Whiteboard when you're ready to project it.",
-        sources: ["Canva"]
+        priority: 2,
+        title: "Today 2:45 PM: OriginOne Orientation with Camela & team",
+        detail: "You added this Teams meeting at 4:46 AM (2:45–4:15 PM ET, 30-min reminder). It's the first new-business meeting on the calendar since the VA search began — prep any onboarding questions this morning.",
+        sources: ["Google Calendar"]
       },
       {
-        priority: 6,
-        title: "Adobe MAX early-bird ends tomorrow",
-        detail: "$700 off registration expires July 31 (Adobe's 10:00 AM email). Only relevant if Miami in October was already on your radar — otherwise let it pass.",
+        priority: 3,
+        title: "$67 to Arianna Mirabal — sent and settled",
+        detail: "Square request received 11:55 PM, paid 12:00 AM for the 'resilience box'. Logged here so the ledger stays complete; no action needed.",
         sources: ["Gmail"],
         money: true
       },
       {
+        priority: 4,
+        title: "Two purchase deadlines expire tonight",
+        detail: "Lori's DFY BOGO vaults at 9:00 PM ET (all 12 programs off sale), and GoHighLevel's LevelUp 2026 flash pricing ($997 GA) ends today. Decide deliberately or let them pass — both are real deadlines, not fake scarcity this time.",
+        sources: ["Gmail"],
+        money: true
+      },
+      {
+        priority: 5,
+        title: "Tonight: Prophet Call Prayer — you're praying at 8 PM",
+        detail: "On the calendar 6:30 PM with 60/30-minute reminders. Instagram also shows 4 unread DMs including one from Apostle Tresti — worth clearing before the call.",
+        sources: ["Google Calendar", "Gmail"]
+      },
+      {
+        priority: 6,
+        title: "Card fix still pending — no new declines overnight",
+        detail: "Quiet night on the dunning front, but Captions, WebStarts, and PosterMyWall are all still waiting on the card update. Stripe's Jul 30 reports (×2) landed as usual at 10:30 PM.",
+        sources: ["Gmail", "Stripe"],
+        money: true
+      },
+      {
         priority: 7,
-        title: "Quiet wins: no security events, no new subscriptions",
-        detail: "Overnight was clean — no new device logins, no OAuth grants. IONOS didn't error last night either (first clean night since Monday); watch tonight to confirm it healed.",
-        sources: ["Gmail"]
+        title: "Hiring thread: quiet day 5",
+        detail: "No new Upwork messages overnight — Naneth appears to have stopped following up. The Sphere Rocket call outcome remains unlogged. If OriginOne today is the staffing answer, close the Upwork post after the orientation.",
+        sources: ["Gmail", "Upwork"]
       },
       {
         priority: 8,
-        title: "Boards at zero, day 7 — the streak nobody wants",
-        detail: "Notion My Tasks: 0. ThinkBox Slack: silent. Advanced-track capstone idea from your own curriculum: posting the teach-back video would give the channel its first transmission.",
-        sources: ["Notion", "Slack"]
+        title: "Weekend setup: light calendar, loaded toolkit",
+        detail: "After today: Saturday 10 AM Circle is the only weekend commitment. HeyGen video, 437.91 Higgsfield credits, and the Canva brand kit are still queued for the media-kit promo — the weekend block is the opening.",
+        sources: ["Google Calendar", "Higgsfield", "Canva"]
       }
     ]
   },
@@ -70,7 +71,7 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "online",  detail: "39 threads est. last 12h" },
+    { name: "Gmail",           status: "online",  detail: "201 threads est. last 24h" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
@@ -90,16 +91,17 @@ window.MISSION_DATA = {
   ],
 
   gmail: {
-    inboxEstimateLast3Days: 39,
-    unreadShown: 15,
+    inboxEstimateLast3Days: 201,
+    unreadShown: 16,
     threads: [
-      { at: "2026-07-30T14:28Z", from: "PosterMyWall / Stripe", subject: "$9.95 payment declined AGAIN — 3rd vendor this week", tag: "MONEY", money: true },
-      { at: "2026-07-30T11:55Z", from: "AI for Business", subject: "Holcman encore tonight 7 PM — possibly final live run", tag: "ACTION" },
-      { at: "2026-07-30T13:16Z", from: "Juno (getjuno.com)", subject: "Website improvement projects — which first?", tag: "ACTION" },
-      { at: "2026-07-30T12:00Z", from: "OnlineJobs.ph", subject: "AI finds your VA — hiring channel #3 appears", tag: "ACTION" },
-      { at: "2026-07-30T14:00Z", from: "Adobe", subject: "MAX early-bird $700 off — ends July 31", tag: "MONEY", money: true },
-      { at: "2026-07-30T13:39Z", from: "Filmpac", subject: "Vertical 9:16 stock footage library launched", tag: "COMMUNITY" },
-      { at: "2026-07-30T14:39Z", from: "Newsletters (×11 this morning)", subject: "Stock tips + AI tools volume unchanged", tag: "NEWSLETTER" }
+      { at: "2026-07-31T07:41Z", from: "Facebook", subject: "Confirmation code 148772 requested at 3:41 AM — verify it was you", tag: "SECURITY" },
+      { at: "2026-07-31T07:40Z", from: "Google", subject: "Base44 access granted again (3:40 AM)", tag: "SECURITY" },
+      { at: "2026-07-31T04:00Z", from: "Square / Cash App", subject: "Paid Arianna Mirabal $67 — resilience box", tag: "MONEY", money: true },
+      { at: "2026-07-31T02:30Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 30 (×2)", tag: "MONEY", money: true },
+      { at: "2026-07-31T11:02Z", from: "Lori (WBH)", subject: "BOGO ends tonight 9 PM — all 12 programs vault", tag: "MONEY", money: true },
+      { at: "2026-07-31T02:06Z", from: "GoHighLevel", subject: "LevelUp 2026 flash pricing ends today ($997 GA)", tag: "MONEY", money: true },
+      { at: "2026-07-31T05:28Z", from: "Instagram", subject: "4 unread DMs incl. Apostle Tresti (eternal_life_in_christ_min)", tag: "ACTION" },
+      { at: "2026-07-31T10:01Z", from: "Newsletters (×9 overnight)", subject: "Stock tips + AI digest volume unchanged", tag: "NEWSLETTER" }
     ]
   },
 
@@ -108,13 +110,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "THU 07/30", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY" },
-      { day: "THU 07/30", time: "7:00 PM", title: "Brad Holcman encore (extended session)", loc: "from Gmail", note: "optional rewatch" },
-      { day: "THU 07/30", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
+      { day: "FRI 07/31", time: "2:45 PM", title: "OriginOne Orientation — Camela & team", loc: "Teams", note: "NEW — added 4:46 AM today" },
       { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
-      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "only weekend commitment" },
+      { day: "SUN 08/02", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
       { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "recurring duplicate ×2 persists" },
-      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — next session", loc: "Zoom", note: "" }
+      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" }
     ]
   },
 
@@ -134,7 +135,7 @@ window.MISSION_DATA = {
 
   canva: {
     designs: [
-      { title: "ThinkBox training wall chart (AI integration guide)", updated: "today" },
+      { title: "ThinkBox training wall chart (AI integration guide)", updated: "this week" },
       { title: "ELICM Website", updated: "recent" },
       { title: "www.EternalLifeInChristMinistries.org", updated: "recent" },
       { title: "Black White & Yellow Modern Welcome Video", updated: "recent" },
