@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-07-31T11:06:00Z",
+  generatedAt: "2026-08-01T11:05:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,58 +12,58 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "New on today's board: OriginOne orientation at 2:45, prayer call tonight — plus a 3:41 AM Facebook code to double-check and the $67 resilience-box payment confirmed sent.",
+    headline: "The dead card reached Claude itself overnight — $106 failed, access briefly paused, then a receipt landed — and your ThinkBox Intensive next Saturday is double-booked on the calendar.",
     actions: [
       {
         priority: 1,
-        title: "Confirm the 3:41 AM Facebook code was you",
-        detail: "Facebook emailed confirmation code 148772 at 3:41 AM after 'someone' requested account confirmation — one minute after another Base44-access alert. If you were up working overnight, all good, never share the code. If not, change your Facebook password today.",
-        sources: ["Gmail"]
+        title: "Verify your Claude subscription is active again",
+        detail: "2:01 AM: Anthropic's $106 charge failed and access was PAUSED. 2:08 AM: a receipt (#2768-2328-7710) arrived, suggesting payment went through on retry. Open claude.ai → Settings → Billing to confirm — this subscription powers this very dashboard's automation. And this is the 4th vendor the old card has bounced: replace it everywhere today.",
+        sources: ["Gmail"],
+        money: true
       },
       {
         priority: 2,
-        title: "Today 2:45 PM: OriginOne Orientation with Camela & team",
-        detail: "You added this Teams meeting at 4:46 AM (2:45–4:15 PM ET, 30-min reminder). It's the first new-business meeting on the calendar since the VA search began — prep any onboarding questions this morning.",
+        title: "Delete the duplicate ThinkBox Intensive event (Sat Aug 8)",
+        detail: "Your 'ThinkBox AI Intensive Live Training' (Sat Aug 8, 6–9 PM, Zoom 824 0301 7297) sits on the calendar TWICE — two identical events created seconds apart on Jul 25. Delete one so attendees syncing your calendar don't see a double.",
         sources: ["Google Calendar"]
       },
       {
         priority: 3,
-        title: "$67 to Arianna Mirabal — sent and settled",
-        detail: "Square request received 11:55 PM, paid 12:00 AM for the 'resilience box'. Logged here so the ledger stays complete; no action needed.",
-        sources: ["Gmail"],
+        title: "Your test ELICM registration went through",
+        detail: "The 10:42 PM Jotform entry — Mona Ham, thinkboxaistudios@gmail.com, 1 adult ticket ($175), phone (240) 653-1400 — looks like your own end-to-end test of the registration form. It works. Chris Henry's Zelle from last week still needs confirming.",
+        sources: ["Gmail", "Jotform"],
         money: true
       },
       {
         priority: 4,
-        title: "Two purchase deadlines expire tonight",
-        detail: "Lori's DFY BOGO vaults at 9:00 PM ET (all 12 programs off sale), and GoHighLevel's LevelUp 2026 flash pricing ($997 GA) ends today. Decide deliberately or let them pass — both are real deadlines, not fake scarcity this time.",
-        sources: ["Gmail"],
-        money: true
-      },
-      {
-        priority: 5,
-        title: "Tonight: Prophet Call Prayer — you're praying at 8 PM",
-        detail: "On the calendar 6:30 PM with 60/30-minute reminders. Instagram also shows 4 unread DMs including one from Apostle Tresti — worth clearing before the call.",
-        sources: ["Google Calendar", "Gmail"]
-      },
-      {
-        priority: 6,
-        title: "Card fix still pending — no new declines overnight",
-        detail: "Quiet night on the dunning front, but Captions, WebStarts, and PosterMyWall are all still waiting on the card update. Stripe's Jul 30 reports (×2) landed as usual at 10:30 PM.",
+        title: "Overnight money movement — all yours, all logged",
+        detail: "$240 Square transfer to yourself (2:48 AM), ElevenLabs receipt (10:59 PM), Cash App Green status lapsed (under $500 spend last month), Stripe Jul 31 reports in inbox. Lead Connector (GoHighLevel) got Google access at 12:52 AM — expected if that was your CRM setup.",
         sources: ["Gmail", "Stripe"],
         money: true
       },
       {
+        priority: 5,
+        title: "One week to your Intensive — the teaching kit is ready",
+        detail: "ThinkBox AI Intensive is Saturday Aug 8, 6–9 PM. In the repo: the 10-page curriculum PDF (Beginner + Advanced), large-print handout, cinematic guide; in Canva: the wall chart. This weekend's prep block: rehearse the 3-prompt live demo with your own dashboard as the finale.",
+        sources: ["Google Calendar", "Canva"]
+      },
+      {
+        priority: 6,
+        title: "Today is light: Circle at 10 AM, then open",
+        detail: "Marqus Beaver morning Circle 10:00–12:00. Nothing else booked all weekend. The media-kit promo video (HeyGen avatar + 437.91 credits + Canva kit) is still the highest-value open project for the free hours.",
+        sources: ["Google Calendar", "Higgsfield"]
+      },
+      {
         priority: 7,
-        title: "Hiring thread: quiet day 5",
-        detail: "No new Upwork messages overnight — Naneth appears to have stopped following up. The Sphere Rocket call outcome remains unlogged. If OriginOne today is the staffing answer, close the Upwork post after the orientation.",
-        sources: ["Gmail", "Upwork"]
+        title: "Monday cleanup carried forward",
+        detail: "PRO Welcome Call duplicate (Mon 1 PM ×2) persists into its 4th week. Upwork thread stayed quiet again — close the post if OriginOne answered the staffing question at Friday's orientation.",
+        sources: ["Google Calendar", "Upwork"]
       },
       {
         priority: 8,
-        title: "Weekend setup: light calendar, loaded toolkit",
-        detail: "After today: Saturday 10 AM Circle is the only weekend commitment. HeyGen video, 437.91 Higgsfield credits, and the Canva brand kit are still queued for the media-kit promo — the weekend block is the opening.",
-        sources: ["Google Calendar", "Higgsfield", "Canva"]
+        title: "Boards silent — but next Saturday could fix that",
+        detail: "Notion 0 tasks, Slack 0 messages, day 9. Your Intensive's Advanced-track capstone literally assigns students to post in #all-thinkbox-ai-operating-systems — the channel's first transmission may come from your own class.",
+        sources: ["Notion", "Slack"]
       }
     ]
   },
@@ -92,16 +92,16 @@ window.MISSION_DATA = {
 
   gmail: {
     inboxEstimateLast3Days: 201,
-    unreadShown: 16,
+    unreadShown: 15,
     threads: [
-      { at: "2026-07-31T07:41Z", from: "Facebook", subject: "Confirmation code 148772 requested at 3:41 AM — verify it was you", tag: "SECURITY" },
-      { at: "2026-07-31T07:40Z", from: "Google", subject: "Base44 access granted again (3:40 AM)", tag: "SECURITY" },
-      { at: "2026-07-31T04:00Z", from: "Square / Cash App", subject: "Paid Arianna Mirabal $67 — resilience box", tag: "MONEY", money: true },
-      { at: "2026-07-31T02:30Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 30 (×2)", tag: "MONEY", money: true },
-      { at: "2026-07-31T11:02Z", from: "Lori (WBH)", subject: "BOGO ends tonight 9 PM — all 12 programs vault", tag: "MONEY", money: true },
-      { at: "2026-07-31T02:06Z", from: "GoHighLevel", subject: "LevelUp 2026 flash pricing ends today ($997 GA)", tag: "MONEY", money: true },
-      { at: "2026-07-31T05:28Z", from: "Instagram", subject: "4 unread DMs incl. Apostle Tresti (eternal_life_in_christ_min)", tag: "ACTION" },
-      { at: "2026-07-31T10:01Z", from: "Newsletters (×9 overnight)", subject: "Stock tips + AI digest volume unchanged", tag: "NEWSLETTER" }
+      { at: "2026-08-01T06:01Z", from: "Anthropic", subject: "$106 payment failed → access paused → receipt 7 min later — verify billing", tag: "MONEY", money: true },
+      { at: "2026-08-01T02:42Z", from: "Jotform", subject: "New ELICM registration — your own $175 test entry (thinkboxaistudios@)", tag: "MONEY", money: true },
+      { at: "2026-08-01T06:48Z", from: "Square", subject: "$240 transfer to yourself · Green status lapsed", tag: "MONEY", money: true },
+      { at: "2026-08-01T02:59Z", from: "ElevenLabs", subject: "Receipt #2796-4940-3631", tag: "MONEY", money: true },
+      { at: "2026-08-01T04:52Z", from: "Google", subject: "Lead Connector (GoHighLevel) granted Google access at 12:52 AM", tag: "SECURITY" },
+      { at: "2026-08-01T02:47Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Jul 31 (×2)", tag: "MONEY", money: true },
+      { at: "2026-08-01T11:02Z", from: "Lori (WBH)", subject: "Impact Scholarship applications open today", tag: "ACTION" },
+      { at: "2026-08-01T08:03Z", from: "Newsletters (×8 overnight)", subject: "Stock tips + AI digest volume unchanged", tag: "NEWSLETTER" }
     ]
   },
 
@@ -110,12 +110,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "FRI 07/31", time: "2:45 PM", title: "OriginOne Orientation — Camela & team", loc: "Teams", note: "NEW — added 4:46 AM today" },
-      { day: "FRI 07/31", time: "6:30 PM", title: "Mona praying in Prophet Call Prayer @8pm", loc: "Prayerline", note: "reminders 60/30 min" },
-      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "only weekend commitment" },
+      { day: "SAT 08/01", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "TODAY — only commitment" },
       { day: "SUN 08/02", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
-      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "recurring duplicate ×2 persists" },
-      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" }
+      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 4th week" },
+      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
+      { day: "SAT 08/08", time: "6:00 PM", title: "ThinkBox AI Intensive Live Training", loc: "Zoom 824 0301 7297", note: "DUPLICATED — delete one copy" },
+      { day: "SAT 08/08", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" }
     ]
   },
 
