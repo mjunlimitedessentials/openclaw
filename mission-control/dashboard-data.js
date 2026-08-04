@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-03T11:20:00Z",
+  generatedAt: "2026-08-04T11:20:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,57 +12,57 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "The dead card reached Higgsfield overnight — the dashboard's own fuel tank — plus AI InnoVision and a second Captions strike, making 8 vendors. Today: the twice-listed PRO Welcome Call at 1 PM, and 5 days to the Intensive.",
+    headline: "First quiet night on the dunning front in a week — and the Upwork hiring thread just woke up: Naneth M. messaged at 8:01 PM. Four days to the Intensive; the duplicate event and the 8-vendor card fix are still open.",
     actions: [
       {
         priority: 1,
-        title: "Higgsfield says update your payment — vendor #8 on the dead card",
-        detail: "1:10 AM: 'Action needed: Update your Higgsfield payment.' Your 437.91 credits still show and the plan is active, but the renewal will fail without a card fix. Overnight also: AI InnoVision $47 failed (3:36 PM) and Captions $26.49 failed AGAIN (10:47 PM). The cascade is now 8 vendors deep — one card update ends all of it.",
+        title: "Upwork revival: Naneth M. sent a message last night",
+        detail: "8:01 PM, after six silent days. If the VA search is still live, reply today while the thread is warm; if OriginOne solved staffing, close the post and tell her directly. Either way, don't let it sit another week.",
+        sources: ["Gmail", "Upwork"]
+      },
+      {
+        priority: 2,
+        title: "No new card failures overnight — but 8 vendors still wait",
+        detail: "First clean night since Jul 28. Higgsfield's 'update your payment' from yesterday is still pending (credits 437.91 active), plus Captions ×2, WebStarts, PosterMyWall, Anthropic, Descript, HeyGen, AI InnoVision. The quiet night is the window: fix the card before the next billing wave.",
         sources: ["Gmail", "Higgsfield"],
         money: true
       },
       {
-        priority: 2,
-        title: "Today 1 PM: PRO Welcome Call — still listed twice",
-        detail: "The duplicate survives into its 5th Monday. While you're in the calendar deleting one copy, kill the second ThinkBox Intensive entry too (Sat Aug 8, 6–9 PM is also still doubled, 5 days out).",
-        sources: ["Google Calendar"]
-      },
-      {
         priority: 3,
-        title: "OpenAI approved you into Ads Manager Beta, then rejected the advertiser account",
-        detail: "11:45 PM: 'Welcome to Ads Manager Beta.' 11:50 PM: 'Your advertiser account was not approved.' Read the rejection reason (ref C-NgQQCHpr4zbS) — usually missing business verification — and resubmit if you want ChatGPT ads for ThinkBox.",
+        title: "Tresti is waiting on a reply — email AND Instagram",
+        detail: "10:29 PM personal email: 'Fwd: Apostolic Masterclass — Let me know if you get this,' sent to you and three others. Instagram still shows 4 unread DMs including hers. A two-line reply clears both channels.",
         sources: ["Gmail"]
       },
       {
         priority: 4,
-        title: "Impact Scholarship deadline is Thursday Aug 6",
-        detail: "Lori's morning email: 'I don't want you to disqualify yourself' — applications close Aug 6, the same day as AI4B Fail Forward at 3 PM. Also expiring: the AI4B replay comes down TONIGHT at 11:59 PM if you meant to watch it.",
-        sources: ["Gmail", "Google Calendar"]
-      },
-      {
-        priority: 5,
-        title: "5 days to the ThinkBox Intensive — prep week starts now",
-        detail: "Teaching kit (10-page curriculum, large-print handout, cinematic guide, Canva wall chart) is ready. This week's blocks: rehearse the 3-prompt live demo, confirm Zoom 824 0301 7297, and decide whether the promo video ships before Saturday — it needs the Higgsfield/HeyGen card fix first.",
-        sources: ["Google Calendar", "Canva", "Higgsfield"]
-      },
-      {
-        priority: 6,
-        title: "Facebook momentum: 'Baddies in AI' membership + a 274-view Reel",
-        detail: "You joined Baddies in AI (Artificial Intelligence) last night, and your Aug 2 training-registration Reel hit 274 views / 4 reactions — your best post this week. Cross-post it to the group ahead of Saturday's Intensive.",
+        title: "OpenAI now says 'Launch your first campaign' — check if the ads door reopened",
+        detail: "1:03 AM email with campaign-launch tips for Ads Manager Beta, two days after the advertiser-account rejection. Log into Ads Manager to see the real status; if approved, a small ThinkBox campaign before Saturday could fill Intensive seats.",
         sources: ["Gmail"]
       },
       {
+        priority: 5,
+        title: "4 days to the Intensive — today is the rehearsal window",
+        detail: "Nothing on the calendar until Circle at 8 PM. The Saturday 6–9 PM event is still DUPLICATED (delete one copy). Kit is ready; run the 3-prompt live demo end-to-end once today.",
+        sources: ["Google Calendar", "Canva"]
+      },
+      {
+        priority: 6,
+        title: "Thursday stacks up: AI4B at 3 PM + scholarship deadline",
+        detail: "Lori's Impact Scholarship closes Thursday Aug 6 — same day as AI4B Fail Forward with Patrick Precourt. If you're applying, draft it today or tomorrow, not Thursday afternoon.",
+        sources: ["Gmail", "Google Calendar"]
+      },
+      {
         priority: 7,
-        title: "Ledger: Stripe Aug 2 reports in; ionos backup still erroring",
-        detail: "MJHairUnl payout + balance reconciliation (×2) landed 10:31 PM. IONOS reported the help@mjuemvirtualproperties.com mailbox backup failing again — second night in a row; worth a password/config check on that account.",
-        sources: ["Gmail", "Stripe"],
-        money: true
+        title: "Community pulse: Circle is active, your SEO report is in",
+        detail: "PRO Discussions overnight: Sheri Kaplan asking when the 8-week course runs, Stacey James sharing a Kling 2.6 pet video. Semrush's weekly position report for mjunlimitedessentialmktg.com landed at 5:49 AM.",
+        sources: ["Gmail"]
       },
       {
         priority: 8,
-        title: "Boards silent day 11 — Saturday could be their first transmission",
-        detail: "Notion 0 open tasks, Slack #all-thinkbox-ai-operating-systems verified empty again this morning. The Advanced-track capstone posts there during Saturday's class — 5 days to first signal.",
-        sources: ["Notion", "Slack"]
+        title: "Boards silent day 12 · Stripe Aug 3 reports in · IONOS error night 3",
+        detail: "Notion and Slack unchanged (0 tasks, 0 messages — Saturday's capstone is the cure). Stripe MJHairUnl reports (×2) at 10:33 PM. The help@mjuemvirtualproperties.com backup failed a third straight night — that mailbox config needs five minutes.",
+        sources: ["Notion", "Slack", "Gmail", "Stripe"],
+        money: true
       }
     ]
   },
@@ -75,7 +75,7 @@ window.MISSION_DATA = {
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK" },
-    { name: "Higgsfield",      status: "online",  detail: "credits + plan OK — billing email flagged" },
+    { name: "Higgsfield",      status: "online",  detail: "credits + plan OK — billing email pending" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -93,14 +93,14 @@ window.MISSION_DATA = {
     inboxEstimateLast3Days: 201,
     unreadShown: 15,
     threads: [
-      { at: "2026-08-03T05:10Z", from: "Higgsfield", subject: "Action needed: update payment — vendor #8 on the dead card", tag: "MONEY", money: true },
-      { at: "2026-08-02T19:36Z", from: "Stripe / AI InnoVision", subject: "$47.00 payment unsuccessful — vendor #7", tag: "MONEY", money: true },
-      { at: "2026-08-03T02:47Z", from: "Captions", subject: "$26.49 unsuccessful AGAIN — second strike", tag: "MONEY", money: true },
-      { at: "2026-08-03T03:50Z", from: "OpenAI", subject: "Ads Manager Beta welcome at 11:45 PM → advertiser account NOT approved at 11:50 PM", tag: "ACTION" },
-      { at: "2026-08-03T11:02Z", from: "Lori (WBH)", subject: "Impact Scholarship — deadline Thursday Aug 6", tag: "ACTION" },
-      { at: "2026-08-03T02:31Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Aug 2 (×2)", tag: "MONEY", money: true },
-      { at: "2026-08-02T22:56Z", from: "Facebook", subject: "Joined 'Baddies in AI' · Reel hit 274 views", tag: "ACTION" },
-      { at: "2026-08-03T08:03Z", from: "Newsletters (×12 overnight)", subject: "Stock tips + AI digest volume unchanged", tag: "NEWSLETTER" }
+      { at: "2026-08-04T00:01Z", from: "Upwork", subject: "Naneth M. sent you a message — hiring thread revived after 6 days", tag: "ACTION" },
+      { at: "2026-08-04T02:29Z", from: "Tresti Cunningham", subject: "Fwd: Apostolic Masterclass — 'Let me know if you get this'", tag: "ACTION" },
+      { at: "2026-08-04T05:03Z", from: "OpenAI", subject: "Launch your first campaign in Ads Manager Beta — after Saturday's rejection?", tag: "ACTION" },
+      { at: "2026-08-04T02:33Z", from: "Stripe", subject: "MJHairUnl payout + balance reports for Aug 3 (×2)", tag: "MONEY", money: true },
+      { at: "2026-08-04T09:49Z", from: "Semrush", subject: "Weekly position tracking — mjunlimitedessentialmktg.com", tag: "ACTION" },
+      { at: "2026-08-04T01:49Z", from: "IONOS", subject: "Mailbox backup failed 3rd night — help@mjuemvirtualproperties.com", tag: "SECURITY" },
+      { at: "2026-08-04T00:37Z", from: "Circle (PRO Discussions)", subject: "Sheri Kaplan: '8 week course is when?' + Kling 2.6 pet video", tag: "ACTION" },
+      { at: "2026-08-04T08:54Z", from: "Newsletters (×12 overnight)", subject: "Stock tips + AI digest volume unchanged", tag: "NEWSLETTER" }
     ]
   },
 
@@ -109,12 +109,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "MON 08/03", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "TODAY — duplicate ×2, 5th week" },
-      { day: "MON–FRI", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
-      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "same day: scholarship deadline" },
+      { day: "TUE 08/04", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "TODAY — only commitment" },
+      { day: "WED 08/05", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
+      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "scholarship deadline same day" },
       { day: "SAT 08/08", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
       { day: "SAT 08/08", time: "6:00 PM", title: "ThinkBox AI Intensive Live Training", loc: "Zoom 824 0301 7297", note: "DUPLICATED — delete one copy" },
-      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate recurs next week too" }
+      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 6th week" }
     ]
   },
 
@@ -122,10 +122,10 @@ window.MISSION_DATA = {
     openTasks: 0,
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
-      { title: "AI Business Summit Day 1", edited: "2026-07-10" },
-      { title: "Google Gemini Master Prompt List", edited: "2026-07-10" },
+      { title: "Day 3 — Attendee notes", edited: "2026-07-10" },
+      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" },
       { title: "Tool Demo Prompts", edited: "2026-05-12" },
-      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-12" }
+      { title: "To Do List", edited: "2026-05-12" }
     ]
   },
 
