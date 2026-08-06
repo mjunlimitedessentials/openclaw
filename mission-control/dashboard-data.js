@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-05T11:15:00Z",
+  generatedAt: "2026-08-06T11:15:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,55 +12,55 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Gmail sat out this probe — its first blank panel since launch — so today's board runs on calendar and boards: three days to the Intensive, the duplicate event still up, and tomorrow is a double-header.",
+    headline: "You enrolled in a Claude Code Bootcamp overnight — pre-install session TONIGHT at 6 — stacking today into a triple-header, while Saturday's Intensive (2 days out) is still double-listed and Gmail sat out a second probe.",
     actions: [
       {
         priority: 1,
-        title: "3 days to the ThinkBox Intensive — the duplicate must go this week",
-        detail: "Saturday Aug 8, 6–9 PM (Zoom 824 0301 7297) is still on the calendar TWICE, unchanged since Jul 25. Anyone syncing your calendar sees a double booking. Two minutes in Google Calendar today; the teaching kit and Ultra slide deck are ready in the repo.",
-        sources: ["Google Calendar"]
-      },
-      {
-        priority: 2,
-        title: "Gmail link down this probe — email intel is one cycle behind",
-        detail: "The Gmail connector required approval this morning (twice), so its panel shows NO SIGNAL — the first Gmail outage since the dashboard launched. Nothing is lost: the inbox is untouched and tonight's refresh re-probes automatically. As of yesterday's read, 8 vendors still awaited the card fix.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 3,
-        title: "Tomorrow stacks: AI4B Fail Forward 3 PM + scholarship deadline",
-        detail: "Thursday Aug 6 is both AI4B Fail Forward with Patrick Precourt (3–4 PM) and — per Monday's email from Lori — the Impact Scholarship application deadline. If you're applying, today is the day to draft it.",
+        title: "Tonight is a triple-header — pace the day for it",
+        detail: "3:00 PM AI4B Fail Forward (Patrick Precourt) → 6:00–7:30 PM Claude Code Bootcamp Pre-Installation with Kaila (Zoom 831 5260 7635, added at 12:21 AM) → 8:00 PM Circle. If Lori's Impact Scholarship is still on your list, its deadline is today — draft it this morning.",
         sources: ["Google Calendar", "Gmail (Aug 4 probe)"]
       },
       {
+        priority: 2,
+        title: "Claude Code Bootcamp booked: Mon–Thu next week, 5–7 PM ET",
+        detail: "Vibe Coding Incubator workshop runs Aug 10–13. Pre-work required BEFORE Day 1: sign in at portal.vcinc.ai → Learning tab → Claude Code Pre-Work Course; the Zoom webinar link arrived by email from Zoom — bookmark it. This connects to the vcinc.ai '$0.67/day development team' email you starred Aug 1.",
+        sources: ["Google Calendar"]
+      },
+      {
+        priority: 3,
+        title: "2 days to the ThinkBox Intensive — duplicate STILL on the calendar",
+        detail: "Saturday 6–9 PM (Zoom 824 0301 7297) remains listed twice since Jul 25. With registrations presumably arriving, delete one copy today. Kit, Ultra deck, and wall chart are all ready in the repo and Canva.",
+        sources: ["Google Calendar", "Canva"]
+      },
+      {
         priority: 4,
-        title: "Card cascade status: unverifiable this morning, fix still open",
-        detail: "With Gmail dark this probe, no new failed-payment alerts are visible — but as of Tuesday the dead card had bounced 8 vendors (Captions ×2, WebStarts, PosterMyWall, Anthropic, Descript, HeyGen, AI InnoVision, Higgsfield). Higgsfield's plan and 437.91 credits still show active. One card update ends it.",
-        sources: ["Higgsfield", "Gmail (Aug 4 probe)"],
-        money: true
+        title: "Gmail dark for a 2nd probe — approve it to restore email intel",
+        detail: "The Gmail connector required approval again this morning; its panel stays NO SIGNAL and the card-cascade status is now two cycles stale (8 vendors as of Tuesday). Opening this Claude session and tapping Allow on the pending Gmail permission restores it on the next refresh.",
+        sources: ["Gmail"]
       },
       {
         priority: 5,
-        title: "Today is the last full open day before the Intensive push",
-        detail: "Only commitment: Circle at 8 PM. Best block this week for the 3-prompt demo rehearsal and any promo posts — after today, Thursday is stacked and Friday is prep-adjacent.",
+        title: "Next week is the heaviest on record — protect the evenings",
+        detail: "Mon Aug 10 alone: PRO Welcome Call 1 PM (still duplicated ×2, week 6), Bootcamp 5–7 PM, Circle 8 PM. Then Bootcamp every evening through Thursday, plus AI4B Thursday 3 PM. Do the bootcamp pre-work this weekend or it collides with Intensive recovery.",
         sources: ["Google Calendar"]
       },
       {
         priority: 6,
-        title: "Carried forward: Naneth (Upwork) and Tresti still await replies",
-        detail: "From Monday night's probe: Naneth M. re-opened the Upwork hiring thread, and Tresti's 'let me know if you get this' email plus 4 unread Instagram DMs are still pending. Both are quick replies.",
-        sources: ["Gmail (Aug 4 probe)"]
+        title: "Higgsfield still active — billing fix window holds",
+        detail: "Credits 437.91 and Ultimate plan verified live this morning despite Sunday's 'update payment' email. The renewal will eventually retry — the card update remains the highest-leverage fix (8 vendors as of last Gmail read).",
+        sources: ["Higgsfield", "Gmail (Aug 4 probe)"],
+        money: true
       },
       {
         priority: 7,
-        title: "Monday ahead: PRO Welcome Call duplicate enters week 6",
-        detail: "Aug 10, 1 PM — still listed twice. Same cleanup pass as the Intensive duplicate: one calendar session clears both recurring ghosts.",
-        sources: ["Google Calendar"]
+        title: "Carried forward: Naneth (Upwork) and Tresti replies",
+        detail: "Both threads were awaiting replies at the last successful Gmail probe (Mon night): Naneth M.'s revived hiring message, and Tresti's 'let me know if you get this' email + 4 Instagram DMs.",
+        sources: ["Gmail (Aug 4 probe)"]
       },
       {
         priority: 8,
-        title: "Boards silent day 13 — Saturday's class is the planned first signal",
-        detail: "Notion workspace unchanged (nothing edited since Jul 10), Slack #all-thinkbox-ai-operating-systems verified empty again. The Advanced-track capstone posts there during Saturday's Intensive.",
+        title: "Boards silent day 14 — two days to the planned first transmission",
+        detail: "Notion unchanged since Jul 10; Slack #all-thinkbox-ai-operating-systems verified empty again. Saturday's Advanced-track capstone posts the channel's first message.",
         sources: ["Notion", "Slack"]
       }
     ]
@@ -69,7 +69,7 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "offline", detail: "approval blocked this probe — first outage since launch" },
+    { name: "Gmail",           status: "offline", detail: "approval blocked — 2nd probe in a row" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
@@ -88,7 +88,7 @@ window.MISSION_DATA = {
     { name: "Unnamed server",  status: "auth",    detail: "needs OAuth re-authorization" }
   ],
 
-  // Gmail probe approval-blocked this run — panel shows NO SIGNAL.
+  // Gmail probe approval-blocked again this run — panel shows NO SIGNAL.
   gmail: {
     inboxEstimateLast3Days: null,
     unreadShown: null,
@@ -100,12 +100,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "WED 08/05", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "TODAY — only commitment" },
-      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "scholarship deadline same day" },
-      { day: "FRI 08/07", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" },
-      { day: "SAT 08/08", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
-      { day: "SAT 08/08", time: "6:00 PM", title: "ThinkBox AI Intensive Live Training", loc: "Zoom 824 0301 7297", note: "IN 3 DAYS — still duplicated ×2" },
-      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 6th week" }
+      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY" },
+      { day: "THU 08/06", time: "6:00 PM", title: "Claude Code Bootcamp — Pre-Installation w/ Kaila", loc: "Zoom 831 5260 7635", note: "TODAY — NEW, added 12:21 AM" },
+      { day: "THU 08/06", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "third event tonight" },
+      { day: "SAT 08/08", time: "6:00 PM", title: "ThinkBox AI Intensive Live Training", loc: "Zoom 824 0301 7297", note: "IN 2 DAYS — still duplicated ×2" },
+      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call (duplicate ×2) + Bootcamp 5 PM + Circle 8 PM", loc: "Zoom", note: "heaviest day of the week" },
+      { day: "MON–THU", time: "5:00 PM", title: "Vibe Coding Incubator — Claude Code Workshop (Aug 10–13)", loc: "Zoom webinar", note: "pre-work at portal.vcinc.ai first" }
     ]
   },
 
@@ -113,10 +113,10 @@ window.MISSION_DATA = {
     openTasks: 0,
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
-      { title: "Google Gemini Master Prompt List", edited: "2026-07-10" },
-      { title: "AI Business Summit Day 1 — AIVA Prompt Handout", edited: "2026-07-10" },
-      { title: "Tool Demo Prompts", edited: "2026-05-12" },
-      { title: "My Tasks (database)", edited: "2026-04-04" }
+      { title: "Day 1 — Attendee Notes!", edited: "2026-07-10" },
+      { title: "Day 3 — Attendee notes", edited: "2026-07-10" },
+      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" },
+      { title: "Tool Demo Prompts", edited: "2026-05-12" }
     ]
   },
 
