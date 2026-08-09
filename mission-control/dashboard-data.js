@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-06T11:15:00Z",
+  generatedAt: "2026-08-09T02:55:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,56 +12,56 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "You enrolled in a Claude Code Bootcamp overnight — pre-install session TONIGHT at 6 — stacking today into a triple-header, while Saturday's Intensive (2 days out) is still double-listed and Gmail sat out a second probe.",
+    headline: "The Intensive is in the books — and the dead-card saga just broke: Higgsfield renewed and dropped 1,200 fresh credits. Monday opens bootcamp week with a triple-booked evening.",
     actions: [
       {
         priority: 1,
-        title: "Tonight is a triple-header — pace the day for it",
-        detail: "3:00 PM AI4B Fail Forward (Patrick Precourt) → 6:00–7:30 PM Claude Code Bootcamp Pre-Installation with Kaila (Zoom 831 5260 7635, added at 12:21 AM) → 8:00 PM Circle. If Lori's Impact Scholarship is still on your list, its deadline is today — draft it this morning.",
-        sources: ["Google Calendar", "Gmail (Aug 4 probe)"]
+        title: "Higgsfield renewed — the card fix worked",
+        detail: "Credits jumped 437.91 → 1,637.91 and the Ultimate plan renewed cleanly, ending the 'update your payment' threat from Aug 3. If the new card is the same one you gave the other vendors, Captions, Descript, HeyGen, and the rest should clear on their next retry — watch for their confirmation emails.",
+        sources: ["Higgsfield"],
+        money: true
       },
       {
         priority: 2,
-        title: "Claude Code Bootcamp booked: Mon–Thu next week, 5–7 PM ET",
-        detail: "Vibe Coding Incubator workshop runs Aug 10–13. Pre-work required BEFORE Day 1: sign in at portal.vcinc.ai → Learning tab → Claude Code Pre-Work Course; the Zoom webinar link arrived by email from Zoom — bookmark it. This connects to the vcinc.ai '$0.67/day development team' email you starred Aug 1.",
+        title: "ThinkBox AI Intensive: delivered tonight — run the wrap-up play",
+        detail: "The 6–9 PM class is done (both calendar copies now in the past). Within 48h: send the replay/recording to registrants, post the capstone assignment, and note what to change before the next cohort while it's fresh.",
         sources: ["Google Calendar"]
       },
       {
         priority: 3,
-        title: "2 days to the ThinkBox Intensive — duplicate STILL on the calendar",
-        detail: "Saturday 6–9 PM (Zoom 824 0301 7297) remains listed twice since Jul 25. With registrations presumably arriving, delete one copy today. Kit, Ultra deck, and wall chart are all ready in the repo and Canva.",
-        sources: ["Google Calendar", "Canva"]
-      },
-      {
-        priority: 4,
-        title: "Gmail dark for a 2nd probe — approve it to restore email intel",
-        detail: "The Gmail connector required approval again this morning; its panel stays NO SIGNAL and the card-cascade status is now two cycles stale (8 vendors as of Tuesday). Opening this Claude session and tapping Allow on the pending Gmail permission restores it on the next refresh.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 5,
-        title: "Next week is the heaviest on record — protect the evenings",
-        detail: "Mon Aug 10 alone: PRO Welcome Call 1 PM (still duplicated ×2, week 6), Bootcamp 5–7 PM, Circle 8 PM. Then Bootcamp every evening through Thursday, plus AI4B Thursday 3 PM. Do the bootcamp pre-work this weekend or it collides with Intensive recovery.",
+        title: "Bootcamp week starts Monday — pre-work is due first",
+        detail: "Claude Code Bootcamp runs Mon–Thu 5–7 PM. Monday alone: PRO Welcome Call 1 PM (still duplicated, week 6), Bootcamp Day 1 at 5, Circle at 8. Sunday is your only open day — do the pre-work at portal.vcinc.ai → Learning tab, and bookmark the Zoom webinar link from your inbox.",
         sources: ["Google Calendar"]
       },
       {
+        priority: 4,
+        title: "Slack stayed silent through the Intensive",
+        detail: "#all-thinkbox-ai-operating-systems still shows zero messages after tonight's class — the Advanced-track capstone post didn't land. If students hit a wall joining the workspace, that's the first follow-up item; the channel's first transmission is still waiting.",
+        sources: ["Slack"]
+      },
+      {
+        priority: 5,
+        title: "Gmail dark a 3rd probe — email intel frozen since Monday",
+        detail: "The connector needed approval again on this run, so failed-payment confirmations, registration emails, and Intensive replies are all invisible to the dashboard. Open this Claude session and approve the pending Gmail call, or say 'refresh' after approving connectors at claude.ai → Settings.",
+        sources: ["Gmail"]
+      },
+      {
         priority: 6,
-        title: "Higgsfield still active — billing fix window holds",
-        detail: "Credits 437.91 and Ultimate plan verified live this morning despite Sunday's 'update payment' email. The renewal will eventually retry — the card update remains the highest-leverage fix (8 vendors as of last Gmail read).",
-        sources: ["Higgsfield", "Gmail (Aug 4 probe)"],
-        money: true
+        title: "New in Canva: a 2-page Business Conference Ticket design",
+        detail: "Created Aug 7 ('Blue and White Modern Business Conference Ticket') — if that's ticketing for the next paid event, pair it with the working Jotform registration flow you tested on Aug 1.",
+        sources: ["Canva"]
       },
       {
         priority: 7,
-        title: "Carried forward: Naneth (Upwork) and Tresti replies",
-        detail: "Both threads were awaiting replies at the last successful Gmail probe (Mon night): Naneth M.'s revived hiring message, and Tresti's 'let me know if you get this' email + 4 Instagram DMs.",
-        sources: ["Gmail (Aug 4 probe)"]
+        title: "Dashboard ops: Friday–Saturday refreshes were interrupted",
+        detail: "Infrastructure restarts killed the Fri 7 AM, Fri evening, and Sat morning cycles mid-run — this refresh is the catch-up. The Routine itself is intact; no data was lost, and the normal 7 AM cadence resumes tomorrow.",
+        sources: ["System"]
       },
       {
         priority: 8,
-        title: "Boards silent day 14 — two days to the planned first transmission",
-        detail: "Notion unchanged since Jul 10; Slack #all-thinkbox-ai-operating-systems verified empty again. Saturday's Advanced-track capstone posts the channel's first message.",
-        sources: ["Notion", "Slack"]
+        title: "Sunday: one commitment, then bootcamp eve",
+        detail: "Circle at 8 PM is the only booking. Best split: morning recovery, afternoon bootcamp pre-work, evening replay-email to Intensive attendees.",
+        sources: ["Google Calendar"]
       }
     ]
   },
@@ -69,12 +69,12 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "offline", detail: "approval blocked — 2nd probe in a row" },
+    { name: "Gmail",           status: "offline", detail: "approval blocked — 3rd probe in a row" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
-    { name: "Canva",           status: "online",  detail: "design list OK" },
-    { name: "Higgsfield",      status: "online",  detail: "credits + plan OK — billing email pending" },
+    { name: "Canva",           status: "online",  detail: "design list OK — new ticket design" },
+    { name: "Higgsfield",      status: "online",  detail: "RENEWED — 1,637.91 credits, Ultimate" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -84,7 +84,7 @@ window.MISSION_DATA = {
     { name: "Gamma",           status: "offline", detail: "call requires approval" },
     { name: "Jotform",         status: "offline", detail: "connector blocked — data via Gmail" },
     { name: "Lovable",         status: "offline", detail: "call requires approval" },
-    { name: "Adobe AEM",       status: "offline", detail: "not probed — no env access" },
+    { name: "Adobe AEM",       status: "offline", detail: "needs authorization" },
     { name: "Unnamed server",  status: "auth",    detail: "needs OAuth re-authorization" }
   ],
 
@@ -100,12 +100,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "THU 08/06", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY" },
-      { day: "THU 08/06", time: "6:00 PM", title: "Claude Code Bootcamp — Pre-Installation w/ Kaila", loc: "Zoom 831 5260 7635", note: "TODAY — NEW, added 12:21 AM" },
-      { day: "THU 08/06", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "third event tonight" },
-      { day: "SAT 08/08", time: "6:00 PM", title: "ThinkBox AI Intensive Live Training", loc: "Zoom 824 0301 7297", note: "IN 2 DAYS — still duplicated ×2" },
-      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call (duplicate ×2) + Bootcamp 5 PM + Circle 8 PM", loc: "Zoom", note: "heaviest day of the week" },
-      { day: "MON–THU", time: "5:00 PM", title: "Vibe Coding Incubator — Claude Code Workshop (Aug 10–13)", loc: "Zoom webinar", note: "pre-work at portal.vcinc.ai first" }
+      { day: "SUN 08/09", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "only Sunday commitment" },
+      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 6th week" },
+      { day: "MON 08/10", time: "5:00 PM", title: "Claude Code Bootcamp — Day 1 (Vibe Coding Incubator)", loc: "Zoom webinar", note: "pre-work due first: portal.vcinc.ai" },
+      { day: "TUE–THU", time: "5:00 PM", title: "Claude Code Bootcamp — Days 2–4 (Aug 11–13)", loc: "Zoom webinar", note: "nightly through Thursday" },
+      { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "back-to-back with Bootcamp Day 4" },
+      { day: "MON–SAT", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" }
     ]
   },
 
@@ -114,9 +114,9 @@ window.MISSION_DATA = {
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
       { title: "Day 1 — Attendee Notes!", edited: "2026-07-10" },
+      { title: "Day 2 — Attendee notes", edited: "2026-07-10" },
       { title: "Day 3 — Attendee notes", edited: "2026-07-10" },
-      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" },
-      { title: "Tool Demo Prompts", edited: "2026-05-12" }
+      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" }
     ]
   },
 
@@ -125,10 +125,10 @@ window.MISSION_DATA = {
 
   canva: {
     designs: [
+      { title: "Blue & White Business Conference Ticket (2 pages)", updated: "NEW — Aug 7" },
       { title: "ThinkBox training wall chart (AI integration guide)", updated: "Jul 30" },
       { title: "ELICM Website", updated: "recent" },
       { title: "www.EternalLifeInChristMinistries.org", updated: "recent" },
-      { title: "Black White & Yellow Modern Welcome Video", updated: "recent" },
       { title: "Thinkbox A.I. Studios Inc Training", updated: "7 pages" },
       { title: "MJUnlimited AI Animation Package", updated: "6 pages" }
     ]
@@ -137,13 +137,13 @@ window.MISSION_DATA = {
   slack: {
     workspace: "thinkboxaiope",
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — verified empty today" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — still silent post-Intensive" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
 
   higgsfield: {
-    credits: 437.91,
+    credits: 1637.91,
     plan: "Ultimate"
   }
 };
