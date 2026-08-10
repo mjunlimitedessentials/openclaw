@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-09T02:55:00Z",
+  generatedAt: "2026-08-09T19:10:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,56 +12,56 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "The Intensive is in the books — and the dead-card saga just broke: Higgsfield renewed and dropped 1,200 fresh credits. Monday opens bootcamp week with a triple-booked evening.",
+    headline: "Bootcamp eve: the pre-work at portal.vcinc.ai is the one thing due before tomorrow's triple-header — and your Higgsfield credits just logged their first post-renewal activity.",
     actions: [
       {
         priority: 1,
-        title: "Higgsfield renewed — the card fix worked",
-        detail: "Credits jumped 437.91 → 1,637.91 and the Ultimate plan renewed cleanly, ending the 'update your payment' threat from Aug 3. If the new card is the same one you gave the other vendors, Captions, Descript, HeyGen, and the rest should clear on their next retry — watch for their confirmation emails.",
-        sources: ["Higgsfield"],
-        money: true
+        title: "Bootcamp pre-work due before tomorrow 5 PM",
+        detail: "Claude Code Bootcamp Day 1 is Monday 5–7 PM. Required first: portal.vcinc.ai → Learning tab → Claude Code Pre-Work Course, and bookmark the Zoom webinar link from your inbox. Tonight after Circle or tomorrow morning are the only windows.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 2,
-        title: "ThinkBox AI Intensive: delivered tonight — run the wrap-up play",
-        detail: "The 6–9 PM class is done (both calendar copies now in the past). Within 48h: send the replay/recording to registrants, post the capstone assignment, and note what to change before the next cohort while it's fresh.",
+        title: "Monday is a triple-header — plan the energy",
+        detail: "PRO Welcome Call 1 PM (still listed twice, week 6 — delete one copy while you're in the calendar), Bootcamp Day 1 at 5, Circle at 8. Same shape repeats Tue–Thu with Bootcamp nightly, plus AI4B Thursday 3 PM back-to-back into Day 4.",
         sources: ["Google Calendar"]
       },
       {
         priority: 3,
-        title: "Bootcamp week starts Monday — pre-work is due first",
-        detail: "Claude Code Bootcamp runs Mon–Thu 5–7 PM. Monday alone: PRO Welcome Call 1 PM (still duplicated, week 6), Bootcamp Day 1 at 5, Circle at 8. Sunday is your only open day — do the pre-work at portal.vcinc.ai → Learning tab, and bookmark the Zoom webinar link from your inbox.",
-        sources: ["Google Calendar"]
+        title: "Higgsfield: first credits spent since the renewal",
+        detail: "Balance moved 1,637.91 → 1,618.41 (−19.5) since last night — generation activity on the refreshed Ultimate plan. The renewal itself confirmed the new card works; the media-kit promo video now has both fuel and a working HeyGen path to verify.",
+        sources: ["Higgsfield"],
+        money: true
       },
       {
         priority: 4,
-        title: "Slack stayed silent through the Intensive",
-        detail: "#all-thinkbox-ai-operating-systems still shows zero messages after tonight's class — the Advanced-track capstone post didn't land. If students hit a wall joining the workspace, that's the first follow-up item; the channel's first transmission is still waiting.",
+        title: "Post-Intensive follow-through: replay + the silent channel",
+        detail: "Slack #all-thinkbox-ai-operating-systems is STILL at zero messages the morning after class (day 17). Send the replay email to attendees today and re-issue the capstone with a direct workspace invite link — the first transmission is one student away.",
         sources: ["Slack"]
       },
       {
         priority: 5,
-        title: "Gmail dark a 3rd probe — email intel frozen since Monday",
-        detail: "The connector needed approval again on this run, so failed-payment confirmations, registration emails, and Intensive replies are all invisible to the dashboard. Open this Claude session and approve the pending Gmail call, or say 'refresh' after approving connectors at claude.ai → Settings.",
+        title: "Gmail dark a 4th probe — one reconnect fixes the blind spot",
+        detail: "Email intel has been frozen since Mon Aug 3: registration emails, payment-retry confirmations from the other 7 vendors, and Intensive replies are all invisible here. Reconnect Gmail at claude.ai → Settings → Connectors (or approve the pending call in this session), then say 'refresh'.",
         sources: ["Gmail"]
       },
       {
         priority: 6,
-        title: "New in Canva: a 2-page Business Conference Ticket design",
-        detail: "Created Aug 7 ('Blue and White Modern Business Conference Ticket') — if that's ticketing for the next paid event, pair it with the working Jotform registration flow you tested on Aug 1.",
-        sources: ["Canva"]
+        title: "Tonight: Circle at 8 PM — otherwise open",
+        detail: "The only Sunday commitment. The pre-work block (action 1) and the replay email (action 4) both fit before it.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 7,
-        title: "Dashboard ops: Friday–Saturday refreshes were interrupted",
-        detail: "Infrastructure restarts killed the Fri 7 AM, Fri evening, and Sat morning cycles mid-run — this refresh is the catch-up. The Routine itself is intact; no data was lost, and the normal 7 AM cadence resumes tomorrow.",
-        sources: ["System"]
+        title: "The Conference Ticket design is staged for your next paid event",
+        detail: "The 2-page Blue & White ticket created Aug 7 pairs naturally with the Jotform registration flow you verified Aug 1 ($175 test ticket). If a fall event follows the Intensive, the ticketing pipeline is already built.",
+        sources: ["Canva"]
       },
       {
         priority: 8,
-        title: "Sunday: one commitment, then bootcamp eve",
-        detail: "Circle at 8 PM is the only booking. Best split: morning recovery, afternoon bootcamp pre-work, evening replay-email to Intensive attendees.",
-        sources: ["Google Calendar"]
+        title: "Notion untouched since Jul 10 — bootcamp is the natural restart",
+        detail: "Four straight weeks with no edits. A 'Claude Code Bootcamp notes' page Monday evening would break the streak and give the week's learning a home.",
+        sources: ["Notion"]
       }
     ]
   },
@@ -69,12 +69,12 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "offline", detail: "approval blocked — 3rd probe in a row" },
+    { name: "Gmail",           status: "offline", detail: "approval blocked — 4th probe in a row" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
-    { name: "Canva",           status: "online",  detail: "design list OK — new ticket design" },
-    { name: "Higgsfield",      status: "online",  detail: "RENEWED — 1,637.91 credits, Ultimate" },
+    { name: "Canva",           status: "online",  detail: "design list OK" },
+    { name: "Higgsfield",      status: "online",  detail: "1,618.41 credits — active use post-renewal" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -100,12 +100,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SUN 08/09", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "only Sunday commitment" },
+      { day: "SUN 08/09", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "TONIGHT — only commitment" },
       { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 6th week" },
-      { day: "MON 08/10", time: "5:00 PM", title: "Claude Code Bootcamp — Day 1 (Vibe Coding Incubator)", loc: "Zoom webinar", note: "pre-work due first: portal.vcinc.ai" },
+      { day: "MON 08/10", time: "5:00 PM", title: "Claude Code Bootcamp — Day 1", loc: "Zoom webinar", note: "pre-work due first" },
       { day: "TUE–THU", time: "5:00 PM", title: "Claude Code Bootcamp — Days 2–4 (Aug 11–13)", loc: "Zoom webinar", note: "nightly through Thursday" },
-      { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "back-to-back with Bootcamp Day 4" },
-      { day: "MON–SAT", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring nightly" }
+      { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "back-to-back into Bootcamp Day 4" },
+      { day: "NIGHTLY", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring" }
     ]
   },
 
@@ -113,10 +113,10 @@ window.MISSION_DATA = {
     openTasks: 0,
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
-      { title: "Day 1 — Attendee Notes!", edited: "2026-07-10" },
-      { title: "Day 2 — Attendee notes", edited: "2026-07-10" },
       { title: "Day 3 — Attendee notes", edited: "2026-07-10" },
-      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" }
+      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" },
+      { title: "AI Business Summit Notes and Prompts (copy)", edited: "2026-05-12" },
+      { title: "AI Business Summit Notes and Prompts (copy 2)", edited: "2026-04-04" }
     ]
   },
 
@@ -125,12 +125,12 @@ window.MISSION_DATA = {
 
   canva: {
     designs: [
-      { title: "Blue & White Business Conference Ticket (2 pages)", updated: "NEW — Aug 7" },
+      { title: "Blue & White Business Conference Ticket (2 pages)", updated: "Aug 7" },
       { title: "ThinkBox training wall chart (AI integration guide)", updated: "Jul 30" },
       { title: "ELICM Website", updated: "recent" },
       { title: "www.EternalLifeInChristMinistries.org", updated: "recent" },
-      { title: "Thinkbox A.I. Studios Inc Training", updated: "7 pages" },
-      { title: "MJUnlimited AI Animation Package", updated: "6 pages" }
+      { title: "Black White & Yellow Modern Welcome Video", updated: "recent" },
+      { title: "Thinkbox A.I. Studios Inc Training", updated: "7 pages" }
     ]
   },
 
@@ -143,7 +143,7 @@ window.MISSION_DATA = {
   },
 
   higgsfield: {
-    credits: 1637.91,
+    credits: 1618.41,
     plan: "Ultimate"
   }
 };
