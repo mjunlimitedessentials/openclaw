@@ -3,11 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-<<<<<<< Updated upstream
-  generatedAt: "2026-08-09T19:10:00Z",
-=======
   generatedAt: "2026-08-10T19:10:00Z",
->>>>>>> Stashed changes
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -16,35 +12,16 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-<<<<<<< Updated upstream
-    headline: "Bootcamp eve: the pre-work at portal.vcinc.ai is the one thing due before tomorrow's triple-header — and your Higgsfield credits just logged their first post-renewal activity.",
-    actions: [
-      {
-        priority: 1,
-        title: "Bootcamp pre-work due before tomorrow 5 PM",
-        detail: "Claude Code Bootcamp Day 1 is Monday 5–7 PM. Required first: portal.vcinc.ai → Learning tab → Claude Code Pre-Work Course, and bookmark the Zoom webinar link from your inbox. Tonight after Circle or tomorrow morning are the only windows.",
-=======
     headline: "Bootcamp Day 1 is tonight at 5 — and your Canva board lit up with a second ticket concept ('Beyond the Stars', two versions) while Gmail sits dark a fifth probe.",
     actions: [
       {
         priority: 1,
         title: "Tonight 5–7 PM: Claude Code Bootcamp Day 1",
         detail: "Vibe Coding Incubator, Zoom webinar link from your inbox. If the pre-work at portal.vcinc.ai isn't done, the 3–5 PM window is the last chance. Circle follows at 8 — a double evening, repeated nightly through Thursday.",
->>>>>>> Stashed changes
         sources: ["Google Calendar"]
       },
       {
         priority: 2,
-<<<<<<< Updated upstream
-        title: "Monday is a triple-header — plan the energy",
-        detail: "PRO Welcome Call 1 PM (still listed twice, week 6 — delete one copy while you're in the calendar), Bootcamp Day 1 at 5, Circle at 8. Same shape repeats Tue–Thu with Bootcamp nightly, plus AI4B Thursday 3 PM back-to-back into Day 4.",
-        sources: ["Google Calendar"]
-      },
-      {
-        priority: 3,
-        title: "Higgsfield: first credits spent since the renewal",
-        detail: "Balance moved 1,637.91 → 1,618.41 (−19.5) since last night — generation activity on the refreshed Ultimate plan. The renewal itself confirmed the new card works; the media-kit promo video now has both fuel and a working HeyGen path to verify.",
-=======
         title: "New event brewing? 'Beyond the Stars' tickets landed in Canva",
         detail: "Two versions of a Pink/Black/White 'Beyond the Stars' ticket plus one untitled design were created in the last day, following the Blue/White Conference Ticket from Aug 7. If a paid event is forming, the proven Jotform registration flow ($175 test on Aug 1) is ready to wire up.",
         sources: ["Canva"]
@@ -65,46 +42,17 @@ window.MISSION_DATA = {
         priority: 5,
         title: "Higgsfield steady at 1,618.41 — fuel parked and paid for",
         detail: "No credit burn since Sunday morning; the renewed Ultimate plan is stable. The media-kit promo video remains the highest-value use of that balance once bootcamp week settles.",
->>>>>>> Stashed changes
         sources: ["Higgsfield"],
         money: true
       },
       {
-<<<<<<< Updated upstream
-        priority: 4,
-        title: "Post-Intensive follow-through: replay + the silent channel",
-        detail: "Slack #all-thinkbox-ai-operating-systems is STILL at zero messages the morning after class (day 17). Send the replay email to attendees today and re-issue the capstone with a direct workspace invite link — the first transmission is one student away.",
-        sources: ["Slack"]
-      },
-      {
-        priority: 5,
-        title: "Gmail dark a 4th probe — one reconnect fixes the blind spot",
-        detail: "Email intel has been frozen since Mon Aug 3: registration emails, payment-retry confirmations from the other 7 vendors, and Intensive replies are all invisible here. Reconnect Gmail at claude.ai → Settings → Connectors (or approve the pending call in this session), then say 'refresh'.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 6,
-        title: "Tonight: Circle at 8 PM — otherwise open",
-        detail: "The only Sunday commitment. The pre-work block (action 1) and the replay email (action 4) both fit before it.",
-=======
         priority: 6,
         title: "Thursday is the crunch point of the week",
         detail: "AI4B Fail Forward 3–4 PM rolls straight into Bootcamp Day 4 at 5, then Circle at 8 — three commitments back-to-back. Protect the afternoon; nothing else books on Thursday.",
->>>>>>> Stashed changes
         sources: ["Google Calendar"]
       },
       {
         priority: 7,
-<<<<<<< Updated upstream
-        title: "The Conference Ticket design is staged for your next paid event",
-        detail: "The 2-page Blue & White ticket created Aug 7 pairs naturally with the Jotform registration flow you verified Aug 1 ($175 test ticket). If a fall event follows the Intensive, the ticketing pipeline is already built.",
-        sources: ["Canva"]
-      },
-      {
-        priority: 8,
-        title: "Notion untouched since Jul 10 — bootcamp is the natural restart",
-        detail: "Four straight weeks with no edits. A 'Claude Code Bootcamp notes' page Monday evening would break the streak and give the week's learning a home.",
-=======
         title: "PRO Welcome duplicate hit week 6 today — and week 7 is queued",
         detail: "Today's 1 PM call was listed twice again, and next Monday already shows the same double. Two minutes in Google Calendar deletes the duplicate recurring series for good.",
         sources: ["Google Calendar"]
@@ -113,7 +61,6 @@ window.MISSION_DATA = {
         priority: 8,
         title: "Notion: give bootcamp week a notes page",
         detail: "You kept 'Today's Notes! AI Agents Bootcamps' pages for the May bootcamp — same move tonight would end the 4-week edit drought and capture the Claude Code material while it's live.",
->>>>>>> Stashed changes
         sources: ["Notion"]
       }
     ]
@@ -122,21 +69,12 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-<<<<<<< Updated upstream
-    { name: "Gmail",           status: "offline", detail: "approval blocked — 4th probe in a row" },
-    { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
-    { name: "Notion",          status: "online",  detail: "workspace search OK" },
-    { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
-    { name: "Canva",           status: "online",  detail: "design list OK" },
-    { name: "Higgsfield",      status: "online",  detail: "1,618.41 credits — active use post-renewal" },
-=======
     { name: "Gmail",           status: "offline", detail: "approval blocked — 5th probe in a row" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "3 new designs since yesterday" },
     { name: "Higgsfield",      status: "online",  detail: "1,618.41 credits — Ultimate stable" },
->>>>>>> Stashed changes
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -162,21 +100,12 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-<<<<<<< Updated upstream
-      { day: "SUN 08/09", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "TONIGHT — only commitment" },
-      { day: "MON 08/10", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 6th week" },
-      { day: "MON 08/10", time: "5:00 PM", title: "Claude Code Bootcamp — Day 1", loc: "Zoom webinar", note: "pre-work due first" },
-      { day: "TUE–THU", time: "5:00 PM", title: "Claude Code Bootcamp — Days 2–4 (Aug 11–13)", loc: "Zoom webinar", note: "nightly through Thursday" },
-      { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "back-to-back into Bootcamp Day 4" },
-      { day: "NIGHTLY", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "recurring" }
-=======
       { day: "MON 08/10", time: "5:00 PM", title: "Claude Code Bootcamp — Day 1", loc: "Zoom webinar", note: "TONIGHT — pre-work first" },
       { day: "MON 08/10", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "double evening" },
       { day: "TUE 08/11", time: "5:00 PM", title: "Claude Code Bootcamp — Day 2", loc: "Zoom webinar", note: "" },
       { day: "WED 08/12", time: "5:00 PM", title: "Claude Code Bootcamp — Day 3", loc: "Zoom webinar", note: "" },
       { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward → Bootcamp Day 4 (5 PM) → Circle (8 PM)", loc: "Zoom", note: "crunch day — 3 back-to-back" },
       { day: "MON 08/17", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — 7th week queued" }
->>>>>>> Stashed changes
     ]
   },
 
@@ -184,15 +113,10 @@ window.MISSION_DATA = {
     openTasks: 0,
     tasksDb: "My Tasks (assigned to me, To-do + In progress)",
     recentPages: [
+      { title: "Day 1 — Attendee Notes!", edited: "2026-07-10" },
       { title: "Day 3 — Attendee notes", edited: "2026-07-10" },
-<<<<<<< Updated upstream
-      { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" },
-      { title: "AI Business Summit Notes and Prompts (copy)", edited: "2026-05-12" },
-      { title: "AI Business Summit Notes and Prompts (copy 2)", edited: "2026-04-04" }
-=======
       { title: "Today's Notes! AI Agents Bootcamps", edited: "2026-05-18" },
       { title: "AI Business Summit Notes and Prompts", edited: "2026-05-15" }
->>>>>>> Stashed changes
     ]
   },
 
@@ -201,32 +125,19 @@ window.MISSION_DATA = {
 
   canva: {
     designs: [
-<<<<<<< Updated upstream
-      { title: "Blue & White Business Conference Ticket (2 pages)", updated: "Aug 7" },
-      { title: "ThinkBox training wall chart (AI integration guide)", updated: "Jul 30" },
-      { title: "ELICM Website", updated: "recent" },
-      { title: "www.EternalLifeInChristMinistries.org", updated: "recent" },
-      { title: "Black White & Yellow Modern Welcome Video", updated: "recent" },
-      { title: "Thinkbox A.I. Studios Inc Training", updated: "7 pages" }
-=======
       { title: "Beyond the Stars Ticket — Pink/Black/White (v1)", updated: "NEW — last 24h" },
       { title: "Beyond the Stars Ticket — Pink/Black/White (v2)", updated: "NEW — last 24h" },
       { title: "Untitled design (1 page)", updated: "NEW — last 24h" },
       { title: "Blue & White Business Conference Ticket (2 pages)", updated: "Aug 7" },
       { title: "ThinkBox training wall chart (AI integration guide)", updated: "Jul 30" },
       { title: "ELICM Website", updated: "recent" }
->>>>>>> Stashed changes
     ]
   },
 
   slack: {
     workspace: "thinkboxaiope",
     channels: [
-<<<<<<< Updated upstream
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — still silent post-Intensive" },
-=======
       { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 18 silent" },
->>>>>>> Stashed changes
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
