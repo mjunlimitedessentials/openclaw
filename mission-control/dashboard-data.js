@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-13T16:15:00Z",
+  generatedAt: "2026-08-12T19:30:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,56 +12,56 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Bootcamp graduation day: AI4B at 3, then the Claude Code finale at 5 — after tonight, the calendar finally breathes. Slack hit day 21 silent and Gmail remains dark an 8th cycle.",
+    headline: "Tonight's 6 PM hour is now TRIPLE-booked — Bootcamp Day 3's second hour, the Phoenix RISE Roundtable, and a just-added Clubhouse session all collide — with a second Clubhouse session at 9.",
     actions: [
       {
         priority: 1,
-        title: "Today: AI4B 3–4 PM → Bootcamp Day 4 finale 5–7 PM",
-        detail: "The crunch ends tonight. Back-to-back Zooms with a 60-minute gap; after Day 4 wraps, the four-day Claude Code Bootcamp is complete — bring a capstone question to the finale if you have one.",
+        title: "Pick tonight's 6 PM lane — three events want the same hour",
+        detail: "6–7 PM: Bootcamp Day 3 (hour 2) vs Phoenix RISE Roundtable #1 vs Clubhouse 'Warning Concerning Weather' (added 12:38 PM today). One can be live, one recorded, one skipped — decide before 5 so Day 3's first hour isn't spent deciding. The 9 PM 'God Is Speaking' Clubhouse session follows.",
         sources: ["Google Calendar"]
       },
       {
         priority: 2,
-        title: "Tomorrow is the first open day in a week — pre-assign it",
-        detail: "Friday has nothing booked until Circle 8 PM. The queue, in value order: Intensive replay email + Slack invite (day 21 silent), Beyond the Stars ticket wiring (Jotform + Canva assets ready), PRO Welcome duplicate cleanup before its week-7 Monday, and the media-kit promo (1,618.41 Higgsfield credits idle).",
-        sources: ["Google Calendar", "Canva", "Slack", "Higgsfield"]
+        title: "Bootcamp Day 3 starts 5 PM — capstone eve",
+        detail: "Tomorrow is Day 4 (final), stacked behind AI4B at 3 PM. Whatever ships as your bootcamp project, this dashboard is a ready-made candidate — you already run a production Claude Code build.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 3,
-        title: "Gmail dark an 8th cycle — 10 days of email blindness",
-        detail: "Inbox intel frozen since Aug 3. Reconnect at claude.ai → Settings → Connectors → Gmail, then say 'refresh' — the COMMS panel and the dead-card vendor tracker come back on the very next run.",
-        sources: ["Gmail"]
+        title: "Circle nights thinned out — calendar was pruned Tuesday",
+        detail: "The nightly Business Circle no longer appears tonight or Thursday (next: Friday 8 PM). If that pruning was you, the bootcamp evenings just got saner; if not, check the recurring series edit from Aug 11.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 4,
-        title: "Slack: 21 days, zero messages — the streak is a decision now",
-        detail: "Verified empty again at 12:10 PM. Either the replay email revives it, or fold announcements into email/Circle and let the workspace wait for cohort 2. Both are valid; pick one Friday.",
-        sources: ["Slack"]
+        title: "Gmail dark a 7th probe — 9 days of email blindness",
+        detail: "Still approval-blocked. Everything money- and registration-related remains invisible to the dashboard since Aug 3. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'.",
+        sources: ["Gmail"]
       },
       {
         priority: 5,
-        title: "Higgsfield: 1,618.41 credits, 4 days idle — Ultimate stable",
-        detail: "Verified live at 12:10 PM today. No burn since Sunday. Renewal card confirmed good; the fuel is waiting on the promo project.",
+        title: "Higgsfield steady: 1,618.41 credits, Ultimate active",
+        detail: "Verified again this morning — no burn since Sunday. Fuel is banked for the Beyond the Stars visuals and the media-kit promo.",
         sources: ["Higgsfield"],
         money: true
       },
       {
         priority: 6,
-        title: "Beyond the Stars: 4 designs staged (verified Tue)",
-        detail: "Two Bold tickets, a flyer draft, and the Conference Ticket. Date + venue + Jotform link are the remaining blanks — a 90-minute Friday block ships the whole registration flow.",
-        sources: ["Canva (Aug 11 verify)"]
+        title: "Slack silent day 20 — the streak outlived the Intensive",
+        detail: "#all-thinkbox-ai-operating-systems verified empty again this morning. The replay + capstone + invite email to attendees is still the single unlock.",
+        sources: ["Slack"]
       },
       {
         priority: 7,
-        title: "Clubhouse thread from last night — log what landed",
-        detail: "Wednesday's triple-booked evening included two Clubhouse sessions you added same-day. If those spawn commitments (speaking, follow-ups), calendar them now before bootcamp recovery blurs the week.",
-        sources: ["Google Calendar"]
+        title: "Beyond the Stars kit holding at 4 designs",
+        detail: "Two Bold tickets, one flyer-shaped draft, one Conference Ticket (as of Tuesday's probe). Next step when bootcamp clears: wire the Jotform registration and name the event date.",
+        sources: ["Canva (Aug 11 probe)"]
       },
       {
         priority: 8,
-        title: "Ops: publishes were delayed by platform restarts Tue–Thu",
-        detail: "Several refresh cycles were interrupted mid-publish this week; this run restores the live page. Data was never lost — each cycle committed to GitHub first. Normal cadence resumes as infrastructure stabilizes.",
-        sources: ["System"]
+        title: "Monday: PRO Welcome duplicate, week 7",
+        detail: "Aug 17, 1 PM — both copies still standing. The same calendar session that prunes tonight's losing event can end this one too.",
+        sources: ["Google Calendar"]
       }
     ]
   },
@@ -69,12 +69,12 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "offline", detail: "approval blocked — 8th cycle" },
-    { name: "Google Calendar", status: "online",  detail: "verified Aug 12 3:24 PM — today's events confirmed" },
-    { name: "Notion",          status: "online",  detail: "cached — verified Aug 10, not re-probed today" },
-    { name: "Slack",           status: "online",  detail: "probed 12:10 PM today — still empty" },
-    { name: "Canva",           status: "online",  detail: "cached — verified Aug 11, not re-probed today" },
-    { name: "Higgsfield",      status: "online",  detail: "probed 12:10 PM today — 1,618.41" },
+    { name: "Gmail",           status: "offline", detail: "approval blocked — 7th probe in a row" },
+    { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
+    { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
+    { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
+    { name: "Canva",           status: "online",  detail: "design list OK (Aug 11 verify)" },
+    { name: "Higgsfield",      status: "online",  detail: "1,618.41 credits — Ultimate stable" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -100,11 +100,11 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY" },
-      { day: "THU 08/13", time: "5:00 PM", title: "Claude Code Bootcamp — Day 4 FINALE", loc: "Zoom webinar", note: "TODAY — last session" },
-      { day: "THU 08/13", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "" },
-      { day: "FRI 08/14", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "first open day in a week before this" },
-      { day: "SAT 08/15", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
+      { day: "WED 08/12", time: "5:00 PM", title: "Claude Code Bootcamp — Day 3", loc: "Zoom webinar", note: "TONIGHT — hour 2 conflicted" },
+      { day: "WED 08/12", time: "6:00 PM", title: "Phoenix RISE Roundtable #1 ⚡ Clubhouse 'Weather Warning'", loc: "Zoom / Clubhouse", note: "TRIPLE-BOOKED hour" },
+      { day: "WED 08/12", time: "9:00 PM", title: "Clubhouse: Evening Session — God Is Speaking", loc: "Clubhouse", note: "added today" },
+      { day: "THU 08/13", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "then Bootcamp Day 4 at 5" },
+      { day: "THU 08/13", time: "5:00 PM", title: "Claude Code Bootcamp — Day 4 (final)", loc: "Zoom webinar", note: "" },
       { day: "MON 08/17", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 7" }
     ]
   },
@@ -137,7 +137,7 @@ window.MISSION_DATA = {
   slack: {
     workspace: "thinkboxaiope",
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 21 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 20 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
