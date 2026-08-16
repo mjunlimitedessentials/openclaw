@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-15T11:10:00Z",
+  generatedAt: "2026-08-16T19:10:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,55 +12,55 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Bootcamp week is behind you — the first genuinely light weekend in a month. Two Circles today, a quiet Sunday, and three carried items: the Gmail reconnect, the Slack first-post, and Monday's stubborn duplicate.",
+    headline: "A quiet Sunday: one Circle tonight, a clean calendar ahead — and the same three follow-throughs waiting: Gmail reconnect, the Slack decision, and Monday's week-7 duplicate.",
     actions: [
       {
         priority: 1,
-        title: "Today: Circle at 10 AM and 8 PM — nothing else booked",
-        detail: "First post-bootcamp Saturday. The open middle of the day is the best block in weeks for the Beyond the Stars event plan: the ticket designs are done, so naming a date and wiring the Jotform registration would make the weekend count.",
-        sources: ["Google Calendar", "Canva"]
+        title: "Tonight: Circle at 8 PM — the only commitment",
+        detail: "Sunday is otherwise open. If the Beyond the Stars date didn't get named yesterday, this evening's quiet block before Circle is the next best window — the tickets, flyer, and proven Jotform flow are all staged.",
+        sources: ["Google Calendar", "Canva (Aug 14 probe)"]
       },
       {
         priority: 2,
-        title: "Gmail has been dark since Aug 3 — the one fix that unlocks everything",
-        detail: "Twelve days without email intel: payment-retry results from the 7 remaining dead-card vendors, Intensive replies, bootcamp follow-ups, and any Beyond the Stars inquiries are all invisible to this dashboard. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'.",
+        title: "Gmail: 13 days dark — the reconnect is a 60-second fix",
+        detail: "Approval-blocked since Aug 3. Everything money- and registration-related is invisible to the dashboard until it's back: claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'. The COMMS panel lights up on the very next probe.",
         sources: ["Gmail"]
       },
       {
         priority: 3,
-        title: "Bootcamp graduate move: apply Claude Code to your own stack",
-        detail: "Four evenings of Claude Code training just ended Thursday. The natural capstone-in-real-life: extend this Mission Control (a panel for Beyond the Stars registrations?) or build the VCI admin-dashboard prompt against one of your apps while the material is fresh.",
+        title: "Tomorrow 1 PM: PRO Welcome Call — week 7 of the duplicate",
+        detail: "Both copies still stand. Monday morning, two minutes in Google Calendar, delete one recurring series — the longest-lived item on this board finally retires.",
         sources: ["Google Calendar"]
       },
       {
         priority: 4,
-        title: "Slack silent day 23 — decide if the channel matters",
-        detail: "#all-thinkbox-ai-operating-systems has now outlasted the Intensive and bootcamp week at zero messages. Either send the replay + invite email that seeds it, or consciously park the Slack experiment — both beat a silent tile.",
+        title: "Slack: day 24 of silence — make the call this week",
+        detail: "#all-thinkbox-ai-operating-systems verified empty again today. Send the replay + capstone + invite email to Intensive attendees, or consciously archive the channel experiment. Either resolution beats a permanent red tile.",
         sources: ["Slack"]
       },
       {
         priority: 5,
-        title: "Higgsfield: 1,618.41 credits, six days untouched",
-        detail: "The renewed Ultimate balance hasn't moved since Sunday. With bootcamp over, the media-kit promo video and Beyond the Stars visuals are the obvious first draws.",
+        title: "Higgsfield: 1,618.41 credits parked — a week without a draw",
+        detail: "Ultimate plan stable since the renewal. The media-kit promo and Beyond the Stars visuals remain the queued projects; the fuel is paid for either way.",
         sources: ["Higgsfield"],
         money: true
       },
       {
         priority: 6,
-        title: "Monday: PRO Welcome duplicate reaches week 7",
-        detail: "Aug 17, 1 PM — still listed twice, the longest-running item on this board. Two minutes in Google Calendar on Monday morning ends it.",
+        title: "Week ahead: the calmest since the dashboard launched",
+        detail: "Fixed points only — Mon PRO call 1 PM, Thu AI4B 3 PM, nightly Circles at 8. That leaves four open weekdays: enough to ship the promo video AND launch Beyond the Stars registration if the date gets named.",
         sources: ["Google Calendar"]
       },
       {
         priority: 7,
-        title: "Week ahead is the calmest since July",
-        detail: "Only fixed points: Monday's PRO call, Thursday's AI4B at 3 PM, nightly Circles. Room for the follow-through items above — and for scheduling the next revenue event.",
-        sources: ["Google Calendar"]
+        title: "Bootcamp skills: use them this week or lose the momentum",
+        detail: "Four Claude Code sessions ended Thursday. The VCI admin-dashboard prompt from Tuesday's training applied to one of your own apps would be the perfect first solo flight — and Notion could hold the build notes (no edits there since Jul 10).",
+        sources: ["Notion", "Google Calendar"]
       },
       {
         priority: 8,
-        title: "Dashboard ops note: last week's refresh gaps are healed",
-        detail: "Infrastructure restarts disrupted several mid-week cycles (and one push briefly reverted the data file — fixed). This refresh is fully probed and current; the normal morning cadence continues.",
+        title: "Ops: weekend refreshes ran clean",
+        detail: "Saturday and Sunday cycles both completed after last week's infrastructure turbulence. The link, repo, and Routine are all healthy.",
         sources: ["System"]
       }
     ]
@@ -88,7 +88,7 @@ window.MISSION_DATA = {
     { name: "Unnamed server",  status: "auth",    detail: "needs OAuth re-authorization" }
   ],
 
-  // Gmail probe approval-blocked again this run — panel shows NO SIGNAL.
+  // Gmail probe approval-blocked — panel shows NO SIGNAL.
   gmail: {
     inboxEstimateLast3Days: null,
     unreadShown: null,
@@ -100,8 +100,7 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SAT 08/15", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "TODAY" },
-      { day: "SAT 08/15", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "TODAY — evening" },
+      { day: "SUN 08/16", time: "8:00 PM", title: "Marqus Beaver Business Circle", loc: "Zoom", note: "TONIGHT — only commitment" },
       { day: "MON 08/17", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 7" },
       { day: "THU 08/20", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
       { day: "SAT 08/22", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "" },
@@ -137,7 +136,7 @@ window.MISSION_DATA = {
   slack: {
     workspace: "thinkboxaiope",
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 23 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 24 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
