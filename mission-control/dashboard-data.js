@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-21T11:25:00Z",
+  generatedAt: "2026-08-24T02:15:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,55 +12,49 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "The nightly Circle series vanished from the calendar Wednesday night — your evenings are suddenly free. Today is completely open: the clearest Friday since this dashboard launched.",
+    headline: "You created this weekend — 90 Higgsfield credits burned Saturday night into Sunday, right after a 108.5-credit top-up landed. Tomorrow is the loaded day: PRO duplicate at 1 PM and the Manus restore window at 8 PM.",
     actions: [
       {
         priority: 1,
-        title: "Calendar cleanup detected: nightly Circles removed",
-        detail: "The 8 PM Marqus Beaver Business Circle no longer recurs — only Saturday morning's 10 AM session remains. If that was your edit late Wednesday, your evenings just opened up permanently; if not, check the recurring series before assuming tonight is free.",
+        title: "Monday 8 PM: Manus data restore — the reminder you set fires tomorrow",
+        detail: "manus.im/backup → sign in → Backup & Restoration → upload your .manustask file. Nothing else is booked Monday evening, so the window is clear. This is your own Aug 12 reminder coming due.",
         sources: ["Google Calendar"]
       },
       {
         priority: 2,
-        title: "Today: zero commitments — a true open Friday",
-        detail: "Nothing booked at all. The highest-leverage uses: KS Live follow-ups from last night's planning meeting, wiring Beyond the Stars registration, or shipping the media-kit promo with the 1,464 banked credits.",
-        sources: ["Google Calendar", "Higgsfield"]
-      },
-      {
-        priority: 3,
-        title: "KS Live: capture last night's decisions before they fade",
-        detail: "The planning meeting with Pastor Shawn/Rhema was last night 8:30 PM. Today: send your recap/commitments to LaJuan's group, put agreed dates on the calendar, and open the project's Notion page. Your duplicate personal copy of the meeting can be deleted too.",
-        sources: ["Google Calendar", "Notion"]
-      },
-      {
-        priority: 4,
-        title: "Gmail: 18 days dark — KS Live coordination is flying blind here",
-        detail: "The board can't see the meeting follow-up emails. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh' — it's still the single most valuable minute you can give this system.",
-        sources: ["Gmail"]
-      },
-      {
-        priority: 5,
-        title: "Higgsfield: 1,464.91 credits, holding two days",
-        detail: "The 153.5-credit production run ended Tuesday. If those assets were for KS Live or Beyond the Stars, they're presumably in review — the balance is ready for revision rounds.",
+        title: "Higgsfield is active again: +108.5 top-up, then a 90-credit weekend session",
+        detail: "Balance moved 1,464.91 → 1,573.41 → 1,483.41 between Friday and tonight. Whatever you generated this weekend, pull the keepers into Canva/Drive before they get buried — and if the render run was for Beyond the Stars or KS Live, the 1,483 remaining covers revision rounds.",
         sources: ["Higgsfield"],
         money: true
       },
       {
-        priority: 6,
-        title: "Monday: PRO duplicate (week 8) + Manus restore — now conflict-free",
-        detail: "With nightly Circles gone, Monday 8 PM's Manus data-restore reminder no longer collides with anything. Restore the .manustask backup then, and delete one PRO Welcome series at 1 PM.",
+        priority: 3,
+        title: "Monday 1 PM: PRO Welcome Call still rings twice — week 8",
+        detail: "Two identical recurring series fire at the same time again tomorrow. Two months of double reminders now; deleting one series (calendar → event → delete all events in series) permanently fixes it.",
         sources: ["Google Calendar"]
       },
       {
-        priority: 7,
-        title: "Slack: day 29 — a month of silence on Monday",
-        detail: "#all-thinkbox-ai-operating-systems verified empty again. With KS Live now a real multi-person project, this is the week the channel either becomes the team hub or gets archived.",
+        priority: 4,
+        title: "Gmail: 20 days dark — weekend generations can't be cross-checked",
+        detail: "The board can't see Higgsfield receipts, KS Live threads, or Beyond the Stars replies. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'. Still the highest-value minute you can give this system.",
+        sources: ["Gmail"]
+      },
+      {
+        priority: 5,
+        title: "Slack crossed a full month of silence (day 31)",
+        detail: "#all-thinkbox-ai-operating-systems: zero messages since Jul 23. With KS Live now a multi-person project, decide this week: make it the team hub (post the KS Live recap there tomorrow) or archive it.",
         sources: ["Slack"]
       },
       {
-        priority: 8,
-        title: "Next fixed point: AI4B Thursday 3 PM — six days out",
-        detail: "The calendar between now and then is nearly empty. Whatever KS Live and Beyond the Stars need, the runway is unusually long.",
+        priority: 6,
+        title: "KS Live: the follow-through window is this week",
+        detail: "The planning meeting with LaJuan/Pastor Shawn/Rhema was Thursday night. Recap, agreed dates on the calendar, and a project page in Notion (untouched since Jul 10) are all still unlogged anywhere the board can see.",
+        sources: ["Google Calendar", "Notion"]
+      },
+      {
+        priority: 7,
+        title: "The week ahead is nearly empty — AI4B Thursday 3 PM is the only fixed point",
+        detail: "After Monday, nothing until AI4B Fail Forward Thursday and the Saturday 10 AM Circle. Calendar hasn't changed since Aug 20 — long open runway for KS Live and Beyond the Stars build-out.",
         sources: ["Google Calendar"]
       }
     ]
@@ -74,7 +68,7 @@ window.MISSION_DATA = {
     { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK (Aug 14 verify)" },
-    { name: "Higgsfield",      status: "online",  detail: "1,464.91 credits — Ultimate stable" },
+    { name: "Higgsfield",      status: "online",  detail: "1,483.41 credits — active this weekend" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -100,11 +94,10 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "FRI 08/21", time: "—", title: "No commitments — open day", loc: "", note: "clearest Friday on record" },
-      { day: "SAT 08/22", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "nightly series removed" },
       { day: "MON 08/24", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 8" },
-      { day: "MON 08/24", time: "8:00 PM", title: "Manus task-data restore reminder", loc: "manus.im/backup", note: "no longer conflicts" },
-      { day: "THU 08/27", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" }
+      { day: "MON 08/24", time: "8:00 PM", title: "Manus task-data restore reminder", loc: "manus.im/backup", note: "your Aug 12 reminder — evening is clear" },
+      { day: "THU 08/27", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "only fixed point midweek" },
+      { day: "SAT 08/29", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly — nightly series still gone" }
     ]
   },
 
@@ -136,13 +129,13 @@ window.MISSION_DATA = {
   slack: {
     workspace: "thinkboxaiope",
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 29 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 31: a full month silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
 
   higgsfield: {
-    credits: 1464.91,
+    credits: 1483.41,
     plan: "Ultimate"
   }
 };
