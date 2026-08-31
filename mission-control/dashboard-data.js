@@ -82,6 +82,88 @@ window.MISSION_DATA = {
     { name: "Unnamed server",  status: "auth",    detail: "needs OAuth re-authorization" }
   ],
 
+  // Today tile — regenerated each refresh from the calendar probe.
+  today: {
+    label: "SUN AUG 30",
+    sub: "0 COMMITMENTS · LAST OPEN DAY BEFORE THE WEEK",
+    events: [],
+    next: "MON 1:00 PM — PRO WELCOME CALL (×2, week 9)"
+  },
+
+  // Business ops — latest cross-source updates, all from this board's probes.
+  business: {
+    updates: [
+      {
+        tag: "PRODUCTION", kind: "amber", money: true,
+        title: "185-credit Higgsfield run this week",
+        detail: "Balance moved 1,483 → 1,298 Monday–Thursday, the biggest output week yet. The assets are unfiled — pull keepers into Canva/Drive and tag them to a project."
+      },
+      {
+        tag: "LAUNCH",
+        title: "Beyond the Stars ticket kit is ready — no date announced",
+        detail: "Two bold pink/black/white ticket designs finished in Canva Aug 10. Registration and a public date are the only missing pieces."
+      },
+      {
+        tag: "PROJECT",
+        title: "KS Live in VA — follow-through window open",
+        detail: "Planning meeting held Aug 20 with LaJuan Baker, Pastor Shawn & Rhema. Recap, agreed dates, and a Notion project home are still unlogged."
+      },
+      {
+        tag: "CLIENT",
+        title: "ELICM website design active in Canva",
+        detail: "ELICM Website design in recent Canva edits; the $175 conference-ticket payment was still pending Zelle per the July inbox."
+      },
+      {
+        tag: "RISK", kind: "risk",
+        title: "Revenue visibility offline since Aug 3",
+        detail: "Stripe and Gmail links are dark — no payout, invoice, or receipt telemetry reaches this board. Reconnecting Gmail restores most of it."
+      }
+    ]
+  },
+
+  // Grant radar — researched via live web search on the verified date below.
+  // Amounts/deadlines copied from published program pages; confirm at source.
+  grants: {
+    verified: "AUG 30",
+    items: [
+      {
+        amount: "$10K ×3/mo",
+        name: "Amber Grant — WomensNet",
+        deadline: "DUE AUG 31",
+        fit: "Women-owned US businesses, all categories. One short application covers every WomensNet grant including the $50K year-end award.",
+        url: "ambergrantsforwomen.com"
+      },
+      {
+        amount: "$10K/mo",
+        name: "Verizon Small Business Digital Ready",
+        deadline: "thru Dec 2026",
+        fit: "Complete two free online courses to qualify — built for digital-marketing businesses like MJUnlimited.",
+        url: "verizon.com/digitalready"
+      },
+      {
+        amount: "$5K + program",
+        name: "digitalundivided Breakthrough",
+        deadline: "cohort-based",
+        fit: "Black or Latina women-led businesses with 1+ year operating and $50K+ revenue — training, growth marketing, network, and a $5K grant.",
+        url: "digitalundivided.com"
+      },
+      {
+        amount: "$500/mo",
+        name: "Freed Fellowship",
+        deadline: "monthly",
+        fit: "Monthly microgrant plus expert feedback and mentorship; recipients become eligible for the $2,500 year-end grant.",
+        url: "freedfellowship.com"
+      },
+      {
+        amount: "varies",
+        name: "Grants.gov + state portals",
+        deadline: "rolling",
+        fit: "Federal search portal — filter for education/training and minority- or women-owned business programs.",
+        url: "grants.gov"
+      }
+    ]
+  },
+
   // Gmail probe approval-blocked — panel shows NO SIGNAL.
   gmail: {
     inboxEstimateLast3Days: null,

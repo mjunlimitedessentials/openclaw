@@ -166,6 +166,30 @@
   body.bigtext .tchart .tl{font-size:12.5px}
   body.bigtext .tchart .tv{font-size:16px}
 
+  /* ---------- today / business ops / grant radar ---------- */
+  .daybig{font-size:26px;color:#eaf2ff;letter-spacing:3px;text-shadow:0 0 12px rgba(79,214,255,.35)}
+  .daysub{font-size:10px;color:var(--dim);letter-spacing:2px;margin:4px 0 8px}
+  .slot{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed #14213a;align-items:baseline}
+  .slot:last-child{border-bottom:none}
+  .slot .tm{color:var(--cyan);font-size:11px;letter-spacing:1px;white-space:nowrap;min-width:74px;text-shadow:0 0 6px rgba(79,214,255,.4)}
+  .slot.freeslot .tm{color:var(--green);text-shadow:0 0 6px rgba(55,224,139,.4)}
+  .biztag{display:inline-block;font-size:9px;letter-spacing:1px;padding:2px 6px;border:1px solid var(--cyan);color:var(--cyan);margin-right:8px;vertical-align:1px}
+  .biztag.amber{border-color:var(--amber);color:var(--amber)}
+  .biztag.risk{border-color:var(--red);color:var(--red)}
+  .gr{padding:9px 0;border-bottom:1px dashed #14213a}
+  .gr:last-child{border-bottom:none}
+  .gr .amt{color:var(--amber);font-weight:700;font-size:15px;text-shadow:0 0 8px rgba(255,181,69,.4);margin-right:8px;white-space:nowrap}
+  .gr .gn{color:#eaf2ff;font-weight:700}
+  .gr .gd{color:var(--dim);font-size:11px;margin-top:3px}
+  .gr .gu{color:var(--cyan);font-size:10px;letter-spacing:1px;margin-top:2px}
+  body.bigtext .daybig{font-size:32px}
+  body.bigtext .daysub{font-size:12.5px}
+  body.bigtext .slot .tm{font-size:13.5px;min-width:92px}
+  body.bigtext .gr .amt{font-size:18px}
+  body.bigtext .gr .gd{font-size:13.5px}
+  body.bigtext .gr .gu{font-size:12px}
+  body.bigtext .biztag{font-size:11px}
+
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important}
     .panel{opacity:1}
@@ -241,6 +265,24 @@ function render(){
     html += panel("w8","BRIEF-01","AI MORNING BRIEFING","off",nosig("BRIEFING NOT GENERATED"));
   }
 
+  // 1b — TODAY: daily schedule tile (omitted when the data file has no today block)
+  var td = g("today.events",null);
+  if (td !== null){
+    var tdh = '<div class="daybig">'+esc(g("today.label",""))+'</div>'+
+              '<div class="daysub">'+esc(g("today.sub",""))+'</div>';
+    if (td.length){
+      td.forEach(function(e){
+        tdh += '<div class="slot'+(e.free?' freeslot':'')+'"><span class="tm">'+esc(e.time)+'</span>'+
+               '<span class="v">'+esc(e.title)+(e.note?'<span class="chip ACTION">'+esc(e.note)+'</span>':'')+'</span></div>';
+      });
+    } else {
+      tdh += '<div class="slot freeslot"><span class="tm">ALL DAY</span><span class="v">Open — no commitments</span></div>';
+    }
+    var nx = g("today.next","");
+    if (nx) tdh += '<div class="daysub" style="margin-top:8px">NEXT UP · '+esc(nx)+'</div>';
+    html += panel("w4","DAY-01","TODAY — DAILY SCHEDULE","on",tdh);
+  }
+
   // 2 — SOURCE STATUS BOARD
   var srcs = g("sources",[]);
   if (srcs.length){
@@ -268,6 +310,32 @@ function render(){
     html += panel("w6","SKED-03","MISSION SCHEDULE — 7 DAY","on",c);
   } else {
     html += panel("w6","SKED-03","MISSION SCHEDULE — 7 DAY","off",nosig());
+  }
+
+  // 3b — BUSINESS OPS: latest cross-source business updates
+  var bz = g("business.updates",[]);
+  if (bz.length){
+    var bh = "";
+    bz.forEach(function(u){
+      bh += '<div class="action'+(u.money?' money':'')+'">'+
+            '<span class="biztag'+(u.kind?' '+esc(u.kind):'')+'">'+esc(u.tag)+'</span>'+
+            '<span class="t">'+esc(u.title)+'</span>'+
+            '<div class="d">'+esc(u.detail)+'</div></div>';
+    });
+    html += panel("w6","BIZ-12","BUSINESS OPS — LATEST UPDATES","on",bh);
+  }
+
+  // 3c — GRANT RADAR: funding opportunities matched to the operator's niche
+  var gr = g("grants.items",[]);
+  if (gr.length){
+    var gh = '<div class="daysub">VERIFIED '+esc(g("grants.verified",""))+' VIA WEB RESEARCH · CONFIRM AT SOURCE BEFORE APPLYING</div>';
+    gr.forEach(function(x){
+      gh += '<div class="gr"><span class="amt">'+esc(x.amount)+'</span><span class="gn">'+esc(x.name)+'</span>'+
+            (x.deadline?'<span class="chip ACTION">'+esc(x.deadline)+'</span>':'')+
+            '<div class="gd">'+esc(x.fit)+'</div>'+
+            (x.url?'<div class="gu">'+esc(x.url)+'</div>':'')+'</div>';
+    });
+    html += panel("w6","GRNT-13","GRANT RADAR — YOUR NICHE","on",gh);
   }
 
   // 4 — COMMS (GMAIL)

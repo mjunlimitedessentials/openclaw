@@ -59,6 +59,16 @@ ToolSearch rather than hardcoding prefixes.
      `telemetry.weekLoad.points` from the 7-day calendar probe (events per
      day, SUN–SAT from today). Real probed values only — never interpolate
      missing days.
+   - `today`: rebuild from the calendar probe — label (day + date), events
+     with times for today only, `next` = the next upcoming fixed commitment.
+   - `business.updates`: 4–6 latest business updates cross-referenced from
+     the probes (production runs, launches, projects, client work, risks).
+     Real observed changes only.
+   - `grants`: keep the researched list with its `verified` date. Re-verify
+     via web search roughly weekly (or when a deadline passes); update
+     deadlines, drop closed programs, never invent amounts or dates. If web
+     search is unavailable, leave the list untouched — the stale `verified`
+     date is the honesty marker.
 3. Sanity-check: `node --check mission-control/dashboard-data.js` must pass.
 4. Commit and push on the current working branch
    (message: `chore(mission-control): morning data refresh <date>`).
