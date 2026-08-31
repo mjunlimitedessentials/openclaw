@@ -53,6 +53,12 @@ ToolSearch rather than hardcoding prefixes.
      each cross-referencing at least one source (`sources: [...]`), security
      items first, money items flagged `money: true`. The headline is one
      sentence that captures the day.
+   - `telemetry`: maintain the probe-history graph series. Append today's
+     Higgsfield balance to `telemetry.credits.points` (keep ~30 days, drop the
+     oldest; skip the append if the balance probe failed) and rebuild
+     `telemetry.weekLoad.points` from the 7-day calendar probe (events per
+     day, SUN–SAT from today). Real probed values only — never interpolate
+     missing days.
 3. Sanity-check: `node --check mission-control/dashboard-data.js` must pass.
 4. Commit and push on the current working branch
    (message: `chore(mission-control): morning data refresh <date>`).

@@ -137,5 +137,37 @@ window.MISSION_DATA = {
   higgsfield: {
     credits: 1298.41,
     plan: "Ultimate"
+  },
+
+  // Telemetry series — REAL values only, carried from this dashboard's own
+  // probe log (each point is a balance actually returned on that date).
+  // Refresh runs append today's probe and keep ~30 days of history.
+  telemetry: {
+    credits: {
+      label: "HIGGSFIELD CREDITS — PROBE HISTORY",
+      unit: "credits",
+      points: [
+        { t: "08/07", v: 1637.91 },
+        { t: "08/18", v: 1480.91 },
+        { t: "08/21", v: 1464.91 },
+        { t: "08/23", v: 1573.41 },
+        { t: "08/24", v: 1483.41 },
+        { t: "08/27", v: 1298.41 },
+        { t: "08/30", v: 1298.41 }
+      ]
+    },
+    weekLoad: {
+      label: "CALENDAR LOAD — NEXT 7 DAYS",
+      unit: "events / day",
+      points: [
+        { t: "SUN", v: 0 },
+        { t: "MON", v: 2 },
+        { t: "TUE", v: 0 },
+        { t: "WED", v: 0 },
+        { t: "THU", v: 1 },
+        { t: "FRI", v: 0 },
+        { t: "SAT", v: 1 }
+      ]
+    }
   }
 };

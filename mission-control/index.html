@@ -142,6 +142,30 @@
   body.booted .panel{animation:pin .65s cubic-bezier(.2,.85,.3,1) both;animation-delay:calc(var(--i,0)*95ms + 300ms)}
   @keyframes pin{from{opacity:0;transform:translateY(26px) rotateX(9deg) scale(.985)}to{opacity:1;transform:none}}
 
+  /* ---------- 3D holo-deck floor ---------- */
+  #holo{position:fixed;left:-25vw;right:-25vw;bottom:-6vh;height:46vh;z-index:1;pointer-events:none;
+    perspective:600px;overflow:hidden;opacity:.45;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 46%);mask-image:linear-gradient(180deg,transparent 0,#000 46%)}
+  #holo .fl{position:absolute;inset:-120% 0 0 0;transform-origin:50% 100%;transform:rotateX(62deg);
+    background-image:linear-gradient(rgba(79,214,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(79,214,255,.15) 1px,transparent 1px);
+    background-size:64px 64px;animation:flscroll 6s linear infinite}
+  @keyframes flscroll{from{background-position:0 0}to{background-position:0 64px}}
+  #holo::after{content:"";position:absolute;left:8%;right:8%;top:40%;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(79,214,255,.4),transparent);filter:blur(1px)}
+
+  /* ---------- telemetry graphs (real probe history) ---------- */
+  .telegrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.telegrid{grid-template-columns:1fr}}
+  .tchart{position:relative}
+  .tchart canvas{display:block;width:100%;height:150px}
+  .tchart .tl{font-size:10px;letter-spacing:2px;color:var(--dim);margin-bottom:6px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .tchart .tl b{color:#eaf2ff;letter-spacing:1px}
+  .tchart .tv{font-size:13px;font-weight:700;white-space:nowrap}
+  .tchart .tv.cyan{color:var(--cyan);text-shadow:0 0 8px rgba(79,214,255,.5)}
+  .tchart .tv.amber{color:var(--amber);text-shadow:0 0 8px rgba(255,181,69,.5)}
+  body.bigtext .tchart .tl{font-size:12.5px}
+  body.bigtext .tchart .tv{font-size:16px}
+
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important}
     .panel{opacity:1}
@@ -150,6 +174,7 @@
 </head>
 <body>
 <canvas id="stars"></canvas>
+<div id="holo"><div class="fl"></div></div>
 <div class="vig"></div>
 <div id="boot"><div class="btxt" id="btxt">MJU MISSION CONTROL</div><div class="bline"></div></div>
 
@@ -320,6 +345,25 @@ function render(){
             '<div class="offline-note">STRIPE LINK OFFLINE — REVENUE TELEMETRY UNAVAILABLE (needs connector approval)</div>';
   html += panel("w3","FIN-10","FINANCE WATCH","auth",fin);
 
+  // 11 — TELEMETRY GRAPHS — drawn only from real probe-history series in the
+  // data file; the panel is omitted entirely when no series exist.
+  var t1 = g("telemetry.credits.points",[]), t2 = g("telemetry.weekLoad.points",[]);
+  if (t1.length > 1 || t2.length > 1){
+    var tg = '<div class="telegrid">';
+    if (t1.length > 1){
+      tg += '<div class="tchart money"><div class="tl"><b>'+esc(g("telemetry.credits.label","CREDITS"))+'</b>'+
+            '<span class="tv cyan">'+esc(t1[t1.length-1].v)+' '+esc(g("telemetry.credits.unit",""))+'</span></div>'+
+            '<canvas class="tcv" data-series="credits" data-color="cyan"></canvas></div>';
+    }
+    if (t2.length > 1){
+      tg += '<div class="tchart"><div class="tl"><b>'+esc(g("telemetry.weekLoad.label","WEEK LOAD"))+'</b>'+
+            '<span class="tv amber">'+esc(g("telemetry.weekLoad.unit",""))+'</span></div>'+
+            '<canvas class="tcv" data-series="weekLoad" data-color="amber"></canvas></div>';
+    }
+    tg += '</div>';
+    html += panel("w12","TLM-11","TELEMETRY — PROBE HISTORY","on",tg);
+  }
+
   document.getElementById("grid").innerHTML = html;
 }
 
@@ -407,6 +451,76 @@ function countUps(){
   });
 }
 
+// Telemetry charts: glowing jagged area lines, drawn only from real
+// probe-history series (visual layer — no data logic, no synthetic points).
+var CHART_COLORS = {
+  cyan:  { line:"#4fd6ff", glow:"rgba(79,214,255,.55)", fill:"rgba(79,214,255,.14)" },
+  amber: { line:"#ffb545", glow:"rgba(255,181,69,.5)",  fill:"rgba(255,181,69,.12)" }
+};
+function drawChart(cv, pts, colorKey, prog){
+  var ctx = cv.getContext("2d"); if (!ctx) return;
+  var dpr = Math.min(window.devicePixelRatio||1, 2);
+  var W = cv.clientWidth||300, H = cv.clientHeight||150;
+  cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  var C = CHART_COLORS[colorKey] || CHART_COLORS.cyan;
+  var vs = pts.map(function(p){ return +p.v||0; });
+  var mn = Math.min.apply(null,vs), mx = Math.max.apply(null,vs);
+  var pad = (mx-mn)*.18 || 1; mn -= pad; mx += pad;
+  var PL=6, PR=6, PT=8, PB=18;
+  function X(i){ return PL + (W-PL-PR)*i/(pts.length-1); }
+  function Y(v){ return PT + (H-PT-PB)*(1-(v-mn)/(mx-mn)); }
+  ctx.strokeStyle = "rgba(28,44,71,.8)"; ctx.lineWidth = 1;
+  for (var r=1; r<4; r++){
+    var gy = PT+(H-PT-PB)*r/4;
+    ctx.beginPath(); ctx.moveTo(PL,gy); ctx.lineTo(W-PR,gy); ctx.stroke();
+  }
+  ctx.save(); ctx.beginPath(); ctx.rect(0,0,W*prog,H); ctx.clip();
+  ctx.beginPath(); ctx.moveTo(X(0),H-PB);
+  pts.forEach(function(p,i){ ctx.lineTo(X(i),Y(+p.v||0)); });
+  ctx.lineTo(X(pts.length-1),H-PB); ctx.closePath();
+  var grad = ctx.createLinearGradient(0,PT,0,H-PB);
+  grad.addColorStop(0,C.fill); grad.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.shadowColor = C.glow; ctx.shadowBlur = 9;
+  ctx.strokeStyle = C.line; ctx.lineWidth = 1.6; ctx.lineJoin = "miter";
+  ctx.beginPath();
+  pts.forEach(function(p,i){ i ? ctx.lineTo(X(i),Y(+p.v||0)) : ctx.moveTo(X(i),Y(+p.v||0)); });
+  ctx.stroke(); ctx.shadowBlur = 0;
+  if (prog >= 1){
+    var lx = X(pts.length-1), ly = Y(+pts[pts.length-1].v||0);
+    ctx.fillStyle = C.line; ctx.beginPath(); ctx.arc(lx,ly,2.5,0,6.28); ctx.fill();
+  }
+  ctx.restore();
+  ctx.fillStyle = "#5f7398"; ctx.font = "9px Courier New";
+  ctx.textAlign = "left";  ctx.fillText(String(pts[0].t||""), PL, H-5);
+  ctx.textAlign = "right"; ctx.fillText(String(pts[pts.length-1].t||""), W-PR, H-5);
+  if (pts.length > 4){
+    var mi = Math.floor(pts.length/2);
+    ctx.textAlign = "center"; ctx.fillText(String(pts[mi].t||""), X(mi), H-5);
+  }
+}
+function drawCharts(prog){
+  document.querySelectorAll("canvas.tcv").forEach(function(cv){
+    try{
+      var pts = g("telemetry."+cv.getAttribute("data-series")+".points",[]);
+      if (pts.length > 1) drawChart(cv, pts, cv.getAttribute("data-color"), prog);
+    }catch(e){}
+  });
+}
+function animateCharts(){
+  if (REDUCED){ drawCharts(1); return; }
+  var t0 = null, DUR = 1200;
+  function step(t){
+    if (!t0) t0 = t;
+    var k = Math.min((t-t0)/DUR, 1); k = 1-Math.pow(1-k,3);
+    drawCharts(k);
+    if (k < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+window.addEventListener("resize", function(){ drawCharts(1); });
+
 // Typewriter for the briefing headline.
 function typeHeadline(){
   var el = document.getElementById("headline");
@@ -446,7 +560,7 @@ function initFX(){
         if (ev.animationName === "pin"){ p.style.animation = "none"; p.style.opacity = "1"; }
       });
     });
-    setTimeout(function(){ countUps(); typeHeadline(); }, REDUCED ? 0 : 550);
+    setTimeout(function(){ countUps(); typeHeadline(); animateCharts(); }, REDUCED ? 0 : 550);
   }, bootDelay);
 }
 
