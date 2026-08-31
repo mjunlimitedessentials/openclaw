@@ -190,6 +190,28 @@
   body.bigtext .gr .gu{font-size:12px}
   body.bigtext .biztag{font-size:11px}
 
+  /* ---------- instrument cluster: gauges, meters, bars ---------- */
+  .gauge-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .gauge-wrap canvas{width:110px;height:110px;flex:none}
+  .segbar{display:flex;gap:3px;margin:8px 0 4px}
+  .segbar i{flex:1;height:10px;background:#0e1830;border:1px solid #14213a}
+  .segbar i.on{background:var(--green);box-shadow:0 0 7px var(--green);border-color:var(--green)}
+  .segbar i.auth{background:var(--amber);box-shadow:0 0 6px var(--amber);border-color:var(--amber)}
+  .segbar i.off{background:rgba(255,93,93,.3);border-color:rgba(255,93,93,.55)}
+  .wkline{display:flex;gap:5px;margin:10px 0 2px;align-items:flex-end;height:48px}
+  .wkline .wd{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%}
+  .wkline .barv{width:100%;background:linear-gradient(180deg,var(--cyan),rgba(79,214,255,.2));box-shadow:0 0 8px rgba(79,214,255,.35)}
+  .wkline .wl{font-size:8px;color:var(--dim);letter-spacing:1px}
+  .wkline .wd.today .wl{color:var(--amber)}
+  .wkline .wd.today .barv{background:linear-gradient(180deg,var(--amber),rgba(255,181,69,.2));box-shadow:0 0 8px rgba(255,181,69,.4)}
+  .ringday{position:relative;width:78px;height:78px;flex:none}
+  .ringday canvas{width:78px;height:78px}
+  .ringday .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ringday .rn{font-size:21px;color:var(--red);font-weight:700;text-shadow:0 0 9px rgba(255,93,93,.55);line-height:1}
+  .ringday .rl{font-size:7px;color:var(--dim);letter-spacing:1px;margin-top:3px}
+  body.bigtext .ringday .rn{font-size:24px}
+  body.bigtext .wkline .wl{font-size:10px}
+
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important}
     .panel{opacity:1}
@@ -287,7 +309,11 @@ function render(){
   var srcs = g("sources",[]);
   if (srcs.length){
     var on = srcs.filter(function(s){return s.status==="online";}).length;
-    var s = '<div class="row"><span class="k">LINK STATUS</span><span class="v">'+on+' / '+srcs.length+' ONLINE</span></div><div class="statgrid">';
+    var s = '<div class="row"><span class="k">LINK STATUS</span><span class="v">'+on+' / '+srcs.length+' ONLINE</span></div>';
+    s += '<div class="segbar">'+srcs.map(function(x){
+      return '<i class="'+(x.status==="online"?"on":(x.status==="auth"?"auth":"off"))+'"></i>';
+    }).join('')+'</div>';
+    s += '<div class="statgrid">';
     srcs.forEach(function(x){
       var led = x.status==="online" ? "on" : (x.status==="auth" ? "auth" : "off");
       s += '<div class="stat"><div class="n"><span class="led '+led+'"></span>'+esc(x.name)+'</div><div class="d">'+esc(x.detail||x.status)+'</div></div>';
@@ -303,6 +329,15 @@ function render(){
   if (evs.length){
     var c = '<div class="row"><span class="k">TZ</span><span class="v">'+esc(g("calendar.timezone","?"))+'</span>'+
             '<span class="k">CALENDARS</span><span class="v">'+esc(g("calendar.calendarCount","?"))+'</span></div>';
+    // 7-day activity meter from the weekLoad probe series (bars, not a graph)
+    var wk = g("telemetry.weekLoad.points",[]);
+    if (wk.length){
+      var wmax = Math.max(1, Math.max.apply(null, wk.map(function(p){return +p.v||0;})));
+      c += '<div class="wkline">'+wk.map(function(p,i){
+        var hpx = Math.max(3, Math.round((+p.v||0)/wmax*34));
+        return '<div class="wd'+(i===0?' today':'')+'"><i class="barv" style="height:'+hpx+'px"></i><span class="wl">'+esc(p.t)+'</span></div>';
+      }).join('')+'</div>';
+    }
     evs.forEach(function(e){
       c += '<div class="row"><span class="k">'+esc(e.day)+' '+esc(e.time)+'</span><span class="v">'+esc(e.title)+
         (e.note?'<span class="chip ACTION">'+esc(e.note)+'</span>':'')+'</span></div>';
@@ -388,11 +423,17 @@ function render(){
   // 8 — CREW COMMS (SLACK)
   var ch = g("slack.channels",[]);
   if (ch.length){
-    var sl = '<div class="row"><span class="k">WORKSPACE</span><span class="v">'+esc(g("slack.workspace","?"))+'</span></div>';
+    var chRows = '<div class="row"><span class="k">WORKSPACE</span><span class="v">'+esc(g("slack.workspace","?"))+'</span></div>';
     ch.forEach(function(x){
-      sl += '<div class="row"><span class="v">'+esc(x.name)+'</span><span class="k">'+esc(x.messages)+' MSGS · '+esc(x.purpose)+'</span></div>';
+      chRows += '<div class="row"><span class="v">'+esc(x.name)+'</span><span class="k">'+esc(x.messages)+' MSGS · '+esc(x.purpose)+'</span></div>';
     });
-    sl += '<div class="offline-note" style="color:var(--amber)">CHANNELS SILENT — AWAITING FIRST TRANSMISSION</div>';
+    chRows += '<div class="offline-note" style="color:var(--amber)">CHANNELS SILENT — AWAITING FIRST TRANSMISSION</div>';
+    var sdn = g("slack.silentDays",null);
+    var sl = (sdn!==null)
+      ? '<div style="display:flex;align-items:center;gap:16px"><div class="ringday"><canvas class="ringcv"></canvas>'+
+        '<div class="rc"><div class="rn">'+esc(sdn)+'</div><div class="rl">DAYS SILENT</div></div></div>'+
+        '<div style="flex:1;min-width:0">'+chRows+'</div></div>'
+      : chRows;
     html += panel("w6","CREW-08","CREW COMMS — SLACK","on",sl);
   } else {
     html += panel("w6","CREW-08","CREW COMMS — SLACK","off",nosig());
@@ -401,8 +442,17 @@ function render(){
   // 9 — FUEL (HIGGSFIELD CREDITS) — money-sensitive
   var cr = g("higgsfield.credits",null);
   if (cr!==null){
-    var f = '<div class="row money"><span class="big" data-count="'+esc(cr)+'">'+esc(cr)+'</span><span class="unit">AI CREDITS · PLAN: '+esc(g("higgsfield.plan","?")).toUpperCase()+'</span></div>'+
-            '<div class="k">GENERATION FUEL FOR VIDEO / IMAGE / AUDIO MISSIONS</div>';
+    // radial fuel gauge vs the highest balance in the probe-history window
+    var peak = null;
+    try{
+      var tp = g("telemetry.credits.points",[]);
+      if (tp.length) peak = Math.max.apply(null, tp.map(function(p){return +p.v||0;}));
+    }catch(e){}
+    var f = '<div class="gauge-wrap money">'+
+            (peak ? '<canvas id="fuelGauge" data-pct="'+(cr/peak)+'"></canvas>' : '')+
+            '<div><div class="row"><span class="big" data-count="'+esc(cr)+'">'+esc(cr)+'</span><span class="unit">AI CREDITS · PLAN: '+esc(g("higgsfield.plan","?")).toUpperCase()+'</span></div>'+
+            (peak ? '<div class="k">'+Math.round(cr/peak*100)+'% OF 30-DAY PEAK ('+peak.toFixed(2)+')</div>' : '')+
+            '<div class="k">GENERATION FUEL FOR VIDEO / IMAGE / AUDIO MISSIONS</div></div></div>';
     html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","on",f);
   } else {
     html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","off",nosig());
@@ -568,12 +618,59 @@ function drawChart(cv, pts, colorKey, prog){
     ctx.textAlign = "center"; ctx.fillText(String(pts[mi].t||""), X(mi), H-5);
   }
 }
+// Radial fuel gauge: needle-free glowing arc, colored by remaining fraction.
+function drawGauge(cv, pct, prog){
+  var ctx = cv.getContext("2d"); if (!ctx) return;
+  var dpr = Math.min(window.devicePixelRatio||1, 2), S = cv.clientWidth||110;
+  cv.width = S*dpr; cv.height = S*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,S,S);
+  var c = S/2, r = S/2-9, a0 = Math.PI*.75, a1 = Math.PI*2.25;
+  ctx.lineWidth = 7; ctx.lineCap = "butt";
+  ctx.strokeStyle = "rgba(28,44,71,.9)";
+  ctx.beginPath(); ctx.arc(c,c,r,a0,a1); ctx.stroke();
+  var p = Math.max(0, Math.min(1, pct))*prog;
+  var col = pct > .5 ? "#37e08b" : (pct > .25 ? "#ffb545" : "#ff5d5d");
+  ctx.strokeStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 10;
+  ctx.beginPath(); ctx.arc(c,c,r,a0,a0+(a1-a0)*p); ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = "rgba(95,115,152,.6)"; ctx.lineWidth = 1;
+  for (var i=0; i<=6; i++){
+    var a = a0+(a1-a0)*i/6;
+    ctx.beginPath();
+    ctx.moveTo(c+Math.cos(a)*(r-9), c+Math.sin(a)*(r-9));
+    ctx.lineTo(c+Math.cos(a)*(r-14), c+Math.sin(a)*(r-14));
+    ctx.stroke();
+  }
+  ctx.fillStyle = "#eaf2ff"; ctx.font = "700 15px Courier New"; ctx.textAlign = "center";
+  ctx.fillText(Math.round(pct*100*prog)+"%", c, c+5);
+  ctx.fillStyle = "#5f7398"; ctx.font = "7px Courier New";
+  ctx.fillText("FUEL", c, c+17);
+}
+// Decorative alarm ring around a counter (e.g. Slack days-silent).
+function drawRing(cv, prog){
+  var ctx = cv.getContext("2d"); if (!ctx) return;
+  var dpr = Math.min(window.devicePixelRatio||1, 2), S = cv.clientWidth||78;
+  cv.width = S*dpr; cv.height = S*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,S,S);
+  var c = S/2, r = S/2-5;
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "rgba(28,44,71,.9)";
+  ctx.beginPath(); ctx.arc(c,c,r,0,6.283); ctx.stroke();
+  ctx.strokeStyle = "#ff5d5d"; ctx.shadowColor = "rgba(255,93,93,.6)"; ctx.shadowBlur = 8;
+  ctx.beginPath(); ctx.arc(c,c,r,-Math.PI/2,-Math.PI/2+6.283*prog); ctx.stroke();
+  ctx.shadowBlur = 0;
+}
 function drawCharts(prog){
   document.querySelectorAll("canvas.tcv").forEach(function(cv){
     try{
       var pts = g("telemetry."+cv.getAttribute("data-series")+".points",[]);
       if (pts.length > 1) drawChart(cv, pts, cv.getAttribute("data-color"), prog);
     }catch(e){}
+  });
+  var fg = document.getElementById("fuelGauge");
+  if (fg){ try{ drawGauge(fg, +fg.getAttribute("data-pct")||0, prog); }catch(e){} }
+  document.querySelectorAll("canvas.ringcv").forEach(function(cv){
+    try{ drawRing(cv, prog); }catch(e){}
   });
 }
 function animateCharts(){

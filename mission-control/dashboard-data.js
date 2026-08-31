@@ -210,6 +210,7 @@ window.MISSION_DATA = {
 
   slack: {
     workspace: "thinkboxaiope",
+    silentDays: 38,
     channels: [
       { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 38 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
