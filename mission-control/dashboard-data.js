@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-27T19:56:00Z",
+  generatedAt: "2026-08-30T15:10:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,49 +12,49 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "A real production week: 185 more Higgsfield credits burned since Sunday night. AI4B Fail Forward just wrapped, the calendar was edited Monday evening right in the Manus-restore window, and after Saturday's Circle the week ahead is wide open.",
+    headline: "Quiet Sunday after a loud week: the 185-credit production run paused Friday, the balance is parked at 1,298.41, and tomorrow August closes with the PRO duplicate entering week 9.",
     actions: [
       {
         priority: 1,
-        title: "Higgsfield: 185 credits this week — the biggest run since the streak began",
-        detail: "Balance 1,483.41 → 1,298.41 since Sunday. Four straight days of output. Pull the keepers somewhere findable (Canva or Drive) and note which project they belong to — Beyond the Stars still has no public date, and these assets are its launch kit if that's what they are.",
-        sources: ["Higgsfield"],
-        money: true
+        title: "Today is fully open — the last free day before the week starts",
+        detail: "Nothing on the calendar until Monday 1 PM. Best uses: review what the 185-credit run produced, file the keepers into Canva or Drive, and give Beyond the Stars its date.",
+        sources: ["Google Calendar", "Higgsfield"]
       },
       {
         priority: 2,
-        title: "Manus restore: the calendar changed Monday at 8:17 PM — did the restore happen?",
-        detail: "Your calendar's last edit landed exactly in the restore reminder's window (Mon 8 PM), and the reminder is now gone. If the .manustask upload finished, that loop is closed; if you dismissed the reminder instead, manus.im/backup still has your tasks waiting.",
-        sources: ["Google Calendar"]
+        title: "August wraps tomorrow — production happened, but nowhere is it logged",
+        detail: "The month's story: a 108.5-credit top-up, roughly 430 credits generated across three runs, tickets designed, KS Live kicked off. None of it is in Notion (idle since Jul 10), Slack, or anywhere the board can see. One month-end page would capture it before September starts.",
+        sources: ["Higgsfield", "Notion", "Canva"]
       },
       {
         priority: 3,
-        title: "AI4B Fail Forward just ended — capture takeaways while they're hot",
-        detail: "The 3 PM session with Patrick Precourt wrapped minutes ago. One page of notes into Notion (idle 7 weeks) before dinner beats a perfect summary never written.",
-        sources: ["Google Calendar", "Notion"]
+        title: "Monday 1 PM: PRO Welcome duplicate — week 9 begins",
+        detail: "Both recurring series fire again tomorrow. Two minutes deletes one series and retires the board's oldest standing item before September.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 4,
-        title: "Gmail: 24 days dark",
-        detail: "Every week of production (185 credits of it this week) generates receipts, replies, and follow-ups the board can't see. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'.",
+        title: "Gmail: 27 days dark — the board is a month behind on money mail",
+        detail: "Since Aug 3 nothing financial (Stripe reports, Higgsfield receipts, vendor retries) has been visible here. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'.",
         sources: ["Gmail"]
       },
       {
         priority: 5,
-        title: "Monday: PRO Welcome duplicate enters week 9",
-        detail: "Both series fire again Mon 8/31 at 1 PM. Deleting one recurring series (event → delete all events in series) retires the board's oldest standing item in two minutes.",
-        sources: ["Google Calendar"]
+        title: "Higgsfield renewal window approaches — Ultimate renewed ~Aug 7 last cycle",
+        detail: "If the plan renews early September, the card that failed in July needs to be current. Balance 1,298.41 unchanged since Thursday — plenty of fuel for September launches.",
+        sources: ["Higgsfield"],
+        money: true
       },
       {
         priority: 6,
-        title: "Slack: day 35 — five weeks silent",
-        detail: "#all-thinkbox-ai-operating-systems is still empty. Post this week's production log there as transmission #1, or archive the workspace and stop carrying it.",
+        title: "Slack: day 38 — five and a half weeks silent",
+        detail: "Still zero messages in #all-thinkbox-ai-operating-systems. Post the August recap there as transmission #1, or archive it with a clear conscience.",
         sources: ["Slack"]
       },
       {
         priority: 7,
-        title: "After Saturday's 10 AM Circle, next week is nearly empty",
-        detail: "Only the Monday PRO pair is booked. Long open runway for KS Live follow-through and whatever the 185 credits produced.",
+        title: "The week ahead is light: AI4B Thursday, Circle Saturday",
+        detail: "After Monday's PRO pair, only two fixed points. Long runway for KS Live follow-through and Beyond the Stars build-out.",
         sources: ["Google Calendar"]
       }
     ]
@@ -68,7 +68,7 @@ window.MISSION_DATA = {
     { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK (Aug 14 verify)" },
-    { name: "Higgsfield",      status: "online",  detail: "1,298.41 credits — production week" },
+    { name: "Higgsfield",      status: "online",  detail: "1,298.41 credits — steady since Thu" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -94,9 +94,10 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "THU 08/27", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY — just wrapped" },
-      { day: "SAT 08/29", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" },
-      { day: "MON 08/31", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 9" }
+      { day: "SUN 08/30", time: "—", title: "No commitments — open day", loc: "", note: "" },
+      { day: "MON 08/31", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 9" },
+      { day: "THU 09/03", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
+      { day: "SAT 09/05", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" }
     ]
   },
 
@@ -128,7 +129,7 @@ window.MISSION_DATA = {
   slack: {
     workspace: "thinkboxaiope",
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 35: five weeks silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 38 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
