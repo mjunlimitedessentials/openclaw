@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-08-30T15:10:00Z",
+  generatedAt: "2026-09-02T01:25:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,50 +12,58 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Quiet Sunday after a loud week: the 185-credit production run paused Friday, the balance is parked at 1,298.41, and tomorrow August closes with the PRO duplicate entering week 9.",
+    headline: "GMAIL IS BACK — first successful probe in 29 days. The backlog confirms Runway and HeyGen are billing again, Semrush is tracking your site weekly, and ELICM is waiting in your Instagram DMs.",
     actions: [
       {
         priority: 1,
-        title: "Today is fully open — the last free day before the week starts",
-        detail: "Nothing on the calendar until Monday 1 PM. Best uses: review what the 185-credit run produced, file the keepers into Canva or Drive, and give Beyond the Stars its date.",
-        sources: ["Google Calendar", "Higgsfield"]
-      },
-      {
-        priority: 2,
-        title: "August wraps tomorrow — production happened, but nowhere is it logged",
-        detail: "The month's story: a 108.5-credit top-up, roughly 430 credits generated across three runs, tickets designed, KS Live kicked off. None of it is in Notion (idle since Jul 10), Slack, or anywhere the board can see. One month-end page would capture it before September starts.",
-        sources: ["Higgsfield", "Notion", "Canva"]
-      },
-      {
-        priority: 3,
-        title: "Monday 1 PM: PRO Welcome duplicate — week 9 begins",
-        detail: "Both recurring series fire again tomorrow. Two minutes deletes one series and retires the board's oldest standing item before September.",
-        sources: ["Google Calendar"]
-      },
-      {
-        priority: 4,
-        title: "Gmail: 27 days dark — the board is a month behind on money mail",
-        detail: "Since Aug 3 nothing financial (Stripe reports, Higgsfield receipts, vendor retries) has been visible here. claude.ai → Settings → Connectors → reconnect Gmail, then say 'refresh'.",
+        title: "Gmail reconnected after 29 days dark — the board can see money mail again",
+        detail: "The link came back tonight. Roughly 200 threads landed in just the last 3 days. The comms panel is live again; the finance picture below comes straight from tonight's inbox.",
         sources: ["Gmail"]
       },
       {
-        priority: 5,
-        title: "Higgsfield renewal window approaches — Ultimate renewed ~Aug 7 last cycle",
-        detail: "If the plan renews early September, the card that failed in July needs to be current. Balance 1,298.41 unchanged since Thursday — plenty of fuel for September launches.",
-        sources: ["Higgsfield"],
+        priority: 2,
+        title: "Two AI-vendor receipts hit tonight: Runway + HeyGen — audit the stack",
+        detail: "Runway AI receipt #2551-3685 and HeyGen receipt #2546-8993 both arrived Sep 1, so the July dead-card era is over for these vendors. With Higgsfield Ultimate also active, three video-AI subscriptions are billing at once — decide which earn their keep this month.",
+        sources: ["Gmail"],
         money: true
       },
       {
+        priority: 3,
+        title: "ELICM is in your Instagram DMs — 4 unread messages",
+        detail: "Instagram flagged unread messages from eternal_life_in_christ_min and others, including Tresti Cunningham. That's the client whose website sits in Canva and whose $175 ticket was pending — the thread is warm, answer it while it is.",
+        sources: ["Gmail", "Canva"]
+      },
+      {
+        priority: 4,
+        title: "September grant cycle is open — Amber Grant resets, apply early",
+        detail: "August's Amber deadline passed; the next $10K×3 round closes Sep 30 and early entries see less noise. Free nonprofit-funding workshops are also landing in your inbox (The Wealth Ascension ran one tonight) — aligned with the Grant Radar below.",
+        sources: ["Gmail", "Grant Radar"],
+        money: true
+      },
+      {
+        priority: 5,
+        title: "The week: AI4B Thursday, Circle Saturday, PRO ×2 on Labor Day Monday",
+        detail: "Three fixed points, everything else open. Monday Sep 7 is Labor Day and the PRO Welcome duplicate still fires twice at 1 PM — week 10 unless one series gets deleted first.",
+        sources: ["Google Calendar"]
+      },
+      {
         priority: 6,
-        title: "Slack: day 38 — five and a half weeks silent",
-        detail: "Still zero messages in #all-thinkbox-ai-operating-systems. Post the August recap there as transmission #1, or archive it with a clear conscience.",
-        sources: ["Slack"]
+        title: "Higgsfield parked at 1,298.41 for five days — renewal watch",
+        detail: "No generation since the 185-credit week ended Aug 27. Ultimate renewed around Aug 7 last cycle, so the next charge is likely within a week — the HeyGen/Runway receipts prove the card works now.",
+        sources: ["Higgsfield", "Gmail"],
+        money: true
       },
       {
         priority: 7,
-        title: "The week ahead is light: AI4B Thursday, Circle Saturday",
-        detail: "After Monday's PRO pair, only two fixed points. Long runway for KS Live follow-through and Beyond the Stars build-out.",
-        sources: ["Google Calendar"]
+        title: "Slack hits day 40 of silence",
+        detail: "#all-thinkbox-ai-operating-systems is still empty. With Gmail back, the September story could start with one post: the August production recap.",
+        sources: ["Slack"]
+      },
+      {
+        priority: 8,
+        title: "Semrush is watching your site weekly — wire it into the routine",
+        detail: "Position-tracking reports for mjunlimitedessentialmktg.com arrive every week. Skim tonight's for keyword movement — it's free SEO telemetry already in your inbox.",
+        sources: ["Gmail"]
       }
     ]
   },
@@ -63,14 +71,14 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "offline", detail: "approval blocked since Aug 3 — reconnect needed" },
+    { name: "Gmail",           status: "online",  detail: "RECONNECTED — first probe since Aug 3" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK (Aug 14 verify)" },
-    { name: "Higgsfield",      status: "online",  detail: "1,298.41 credits — steady since Thu" },
+    { name: "Higgsfield",      status: "online",  detail: "1,298.41 credits — idle 5 days" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
-    { name: "Stripe",          status: "offline", detail: "needs authorization — reports in inbox" },
+    { name: "Stripe",          status: "offline", detail: "needs authorization — receipts visible via Gmail" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
     { name: "Zoom",            status: "offline", detail: "call requires approval" },
     { name: "Supabase",        status: "offline", detail: "call requires approval" },
@@ -84,39 +92,39 @@ window.MISSION_DATA = {
 
   // Today tile — regenerated each refresh from the calendar probe.
   today: {
-    label: "SUN AUG 30",
-    sub: "0 COMMITMENTS · LAST OPEN DAY BEFORE THE WEEK",
+    label: "TUE SEP 01",
+    sub: "EVENING — NO REMAINING COMMITMENTS",
     events: [],
-    next: "MON 1:00 PM — PRO WELCOME CALL (×2, week 9)"
+    next: "THU 3:00 PM — AI4B FAIL FORWARD"
   },
 
   // Business ops — latest cross-source updates, all from this board's probes.
   business: {
     updates: [
       {
-        tag: "PRODUCTION", kind: "amber", money: true,
-        title: "185-credit Higgsfield run this week",
-        detail: "Balance moved 1,483 → 1,298 Monday–Thursday, the biggest output week yet. The assets are unfiled — pull keepers into Canva/Drive and tag them to a project."
+        tag: "COMMS", kind: "amber",
+        title: "Gmail link restored — 29-day blackout over",
+        detail: "First successful inbox probe since Aug 3. Money mail, client threads, and vendor receipts are visible to the board again."
       },
       {
-        tag: "LAUNCH",
-        title: "Beyond the Stars ticket kit is ready — no date announced",
-        detail: "Two bold pink/black/white ticket designs finished in Canva Aug 10. Registration and a public date are the only missing pieces."
-      },
-      {
-        tag: "PROJECT",
-        title: "KS Live in VA — follow-through window open",
-        detail: "Planning meeting held Aug 20 with LaJuan Baker, Pastor Shawn & Rhema. Recap, agreed dates, and a Notion project home are still unlogged."
+        tag: "VENDORS", kind: "amber", money: true,
+        title: "Runway + HeyGen receipts landed Sep 1",
+        detail: "Both AI-video subscriptions billed successfully tonight — the failed-card era is over. Three video platforms (Runway, HeyGen, Higgsfield) are now active at once; worth a keep/cut pass."
       },
       {
         tag: "CLIENT",
-        title: "ELICM website design active in Canva",
-        detail: "ELICM Website design in recent Canva edits; the $175 conference-ticket payment was still pending Zelle per the July inbox."
+        title: "ELICM waiting in Instagram DMs",
+        detail: "4 unread messages incl. eternal_life_in_christ_min and Tresti Cunningham. Their website design is active in Canva; the $175 ticket payment was pending Zelle."
       },
       {
-        tag: "RISK", kind: "risk",
-        title: "Revenue visibility offline since Aug 3",
-        detail: "Stripe and Gmail links are dark — no payout, invoice, or receipt telemetry reaches this board. Reconnecting Gmail restores most of it."
+        tag: "PROJECT",
+        title: "KS Live in VA + Beyond the Stars — both need their next move",
+        detail: "KS Live recap and dates remain unlogged since the Aug 20 planning meeting; the Beyond the Stars ticket kit (Canva, Aug 10) still has no public date or registration."
+      },
+      {
+        tag: "SEO",
+        title: "Semrush weekly tracking on mjunlimitedessentialmktg.com",
+        detail: "Position-tracking report for Aug 26–Sep 2 arrived — free weekly keyword telemetry now visible through the restored Gmail link."
       }
     ]
   },
@@ -129,8 +137,8 @@ window.MISSION_DATA = {
       {
         amount: "$10K ×3/mo",
         name: "Amber Grant — WomensNet",
-        deadline: "DUE AUG 31",
-        fit: "Women-owned US businesses, all categories. One short application covers every WomensNet grant including the $50K year-end award.",
+        deadline: "closes Sep 30",
+        fit: "Women-owned US businesses, all categories. One short application covers every WomensNet grant including the $50K year-end award. New round each month.",
         url: "ambergrantsforwomen.com"
       },
       {
@@ -164,11 +172,18 @@ window.MISSION_DATA = {
     ]
   },
 
-  // Gmail probe approval-blocked — panel shows NO SIGNAL.
+  // Gmail — live again. Notable threads from the last 3 days (probe at generatedAt).
   gmail: {
-    inboxEstimateLast3Days: null,
-    unreadShown: null,
-    threads: []
+    inboxEstimateLast3Days: 201,
+    unreadShown: 6,
+    threads: [
+      { at: "2026-09-02T00:00:07Z", from: "Runway AI",        subject: "Receipt #2551-3685 — subscription billed", tag: "MONEY", money: true },
+      { at: "2026-09-01T22:39:39Z", from: "HeyGen (Stripe)",  subject: "Receipt #2546-8993 — subscription billed", tag: "MONEY", money: true },
+      { at: "2026-09-02T00:35:27Z", from: "Semrush",          subject: "Position tracking — mjunlimitedessentialmktg.com (Aug 26–Sep 2)", tag: "NEWSLETTER" },
+      { at: "2026-09-01T23:40:04Z", from: "Instagram",        subject: "4 unread DMs — eternal_life_in_christ_min + Tresti Cunningham", tag: "ACTION" },
+      { at: "2026-09-01T23:31:52Z", from: "Wealth Ascension", subject: "FREE nonprofit funding workshop — live tonight", tag: "COMMUNITY" },
+      { at: "2026-09-01T23:03:54Z", from: "TikTok Shop",      subject: "170M shoppers — October early-mover pitch", tag: "NEWSLETTER" }
+    ]
   },
 
   calendar: {
@@ -176,10 +191,9 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SUN 08/30", time: "—", title: "No commitments — open day", loc: "", note: "" },
-      { day: "MON 08/31", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 9" },
       { day: "THU 09/03", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
-      { day: "SAT 09/05", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" }
+      { day: "SAT 09/05", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" },
+      { day: "MON 09/07", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — Labor Day" }
     ]
   },
 
@@ -210,9 +224,9 @@ window.MISSION_DATA = {
 
   slack: {
     workspace: "thinkboxaiope",
-    silentDays: 38,
+    silentDays: 40,
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 38 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 40 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
@@ -236,20 +250,21 @@ window.MISSION_DATA = {
         { t: "08/23", v: 1573.41 },
         { t: "08/24", v: 1483.41 },
         { t: "08/27", v: 1298.41 },
-        { t: "08/30", v: 1298.41 }
+        { t: "08/30", v: 1298.41 },
+        { t: "09/01", v: 1298.41 }
       ]
     },
     weekLoad: {
       label: "CALENDAR LOAD — NEXT 7 DAYS",
       unit: "events / day",
       points: [
-        { t: "SUN", v: 0 },
-        { t: "MON", v: 2 },
         { t: "TUE", v: 0 },
         { t: "WED", v: 0 },
         { t: "THU", v: 1 },
         { t: "FRI", v: 0 },
-        { t: "SAT", v: 1 }
+        { t: "SAT", v: 1 },
+        { t: "SUN", v: 0 },
+        { t: "MON", v: 2 }
       ]
     }
   }
