@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-09-05T15:15:00Z",
+  generatedAt: "2026-09-07T15:25:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,52 +12,51 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Higgsfield renewed: +1,200 credits landed and the tank sits at 2,498.41 — the biggest reserve on record. New on the board: a kidney-doctor appointment Wednesday morning, and a Kingdom Founders application that closes Sunday midnight.",
+    headline: "Labor Day, and the tank is full: 2,498.41 credits untouched since the renewal. One call today at 1 PM (the PRO duplicate, week 10), the kidney appointment Wednesday morning, and the September grant window open all week.",
     actions: [
       {
         priority: 1,
-        title: "NEW health appointment: Dr. Katyal (kidney), Wednesday 9/9 — plan the morning",
-        detail: "Kidney Medical Associates, 4475 Regency Pl, White Plains MD. Calendar block 9:30–11:30 AM with the visit at 10. Added Aug 28 — first health item this board has seen; nothing else conflicts that morning.",
+        title: "Today 1 PM: PRO Welcome fires twice — on the holiday",
+        detail: "Week 10 of the duplicate. If you're off today anyway, this is the easiest two minutes to finally delete one recurring series and retire the board's oldest item.",
         sources: ["Google Calendar"]
       },
       {
         priority: 2,
-        title: "Higgsfield Ultimate renewed — balance 2,498.41 (+1,200)",
-        detail: "The renewal hit on schedule and the card cleared, closing out the July payment saga completely. This is your largest fuel reserve since the dashboard launched — September launches are fully funded.",
-        sources: ["Higgsfield"],
-        money: true
+        title: "Wednesday 10 AM: Dr. Katyal (kidney) — White Plains, MD",
+        detail: "Calendar block 9:30–11:30 with reminders at 60 and 15 minutes. Nothing else that morning; Thursday's AI4B at 3 PM is the next commitment after it.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 3,
-        title: "Kingdom Founders Ascension Academy: application closes SUNDAY midnight",
-        detail: "The Day-3 replay email gives you until tomorrow (Sun) at midnight to apply or secure a spot. Decide deliberately — its cost vs. the free grant capital in the radar below is exactly the keep/cut call the vendor audit flagged.",
-        sources: ["Gmail"],
+        title: "September production hasn't started — 2,498.41 credits idle since renewal",
+        detail: "The +1,200 renewal landed Friday and nothing has been generated since. Beyond the Stars (still undated), KS Live assets, and the affiliate promo are all fully funded and waiting.",
+        sources: ["Higgsfield", "Canva"],
         money: true
       },
       {
         priority: 4,
-        title: "Labor Day weekend = affiliate window you're already invited to",
-        detail: "The AI Business Summit affiliate email makes the case for posting THIS weekend while feeds are quiet. With 2,498 credits banked, one promo asset run tonight is nearly free — and Beyond the Stars could ride the same wave.",
-        sources: ["Gmail", "Higgsfield", "Canva"]
+        title: "KFAA deadline passed last night — either way, the decision is made",
+        detail: "The Kingdom Founders application closed Sunday midnight. If you applied, watch the inbox for confirmation; if you passed, that budget stays free for the no-cost capital below.",
+        sources: ["Gmail (Sep 5 probe)"]
       },
       {
         priority: 5,
-        title: "Monday (Labor Day): PRO Welcome still rings twice — week 10",
-        detail: "Both series fire at 1 PM on the holiday. Two minutes deletes one recurring series and finally retires the board's oldest item.",
-        sources: ["Google Calendar"]
-      },
-      {
-        priority: 6,
-        title: "September grants: Amber round is open — apply this week, not Sep 29",
-        detail: "The $10K×3 Amber Grant closes Sep 30; early entries face less noise. Verizon Digital Ready's two free courses also remain the cleanest path to its $10K monthly draw.",
+        title: "Grant week: Amber's September round + Verizon's two free courses",
+        detail: "Apply to the $10K×3 Amber round early (closes Sep 30) and knock out Verizon Digital Ready's two courses to unlock its monthly $10K draw. Both cost only time.",
         sources: ["Grant Radar"],
         money: true
       },
       {
+        priority: 6,
+        title: "ELICM's Instagram DMs are a week old now",
+        detail: "The 4 unread messages from Sep 1 (eternal_life_in_christ_min, Tresti Cunningham) are still open. A client thread aging past a week starts costing trust — close the loop today.",
+        sources: ["Gmail (Sep 5 probe)", "Canva"]
+      },
+      {
         priority: 7,
-        title: "Slack: day 44 — and ELICM's DMs are still warm",
-        detail: "#all-thinkbox-ai-operating-systems remains empty while the ELICM thread (4 unread Instagram DMs from Sep 1) still waits. Close the client loop first; the channel decision can follow.",
-        sources: ["Slack", "Gmail"]
+        title: "Slack: day 46 — the channel outlived a full news cycle",
+        detail: "Still zero messages. Post the September kickoff (renewal, grants push, launch dates) as transmission #1, or archive it and stop carrying the decision.",
+        sources: ["Slack"]
       }
     ]
   },
@@ -65,12 +64,12 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "online",  detail: "live — ~200 threads / 48h" },
+    { name: "Gmail",           status: "online",  detail: "link OK (Sep 5 verify)" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK (Aug 14 verify)" },
-    { name: "Higgsfield",      status: "online",  detail: "2,498.41 credits — RENEWED +1,200" },
+    { name: "Higgsfield",      status: "online",  detail: "2,498.41 credits — full tank" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — receipts visible via Gmail" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -86,12 +85,12 @@ window.MISSION_DATA = {
 
   // Today tile — regenerated each refresh from the calendar probe.
   today: {
-    label: "SAT SEP 05",
-    sub: "1 COMMITMENT — LABOR DAY WEEKEND",
+    label: "MON SEP 07",
+    sub: "LABOR DAY — 1 COMMITMENT",
     events: [
-      { time: "10:00 AM", title: "Marqus Beaver Business Circle", note: "this morning" }
+      { time: "1:00 PM", title: "PRO Welcome Call", note: "×2 — week 10" }
     ],
-    next: "MON 1:00 PM — PRO WELCOME (×2, LABOR DAY)"
+    next: "WED 10:00 AM — DR. KATYAL (KIDNEY), WHITE PLAINS MD"
   },
 
   // Business ops — latest cross-source updates, all from this board's probes.
@@ -99,28 +98,28 @@ window.MISSION_DATA = {
     updates: [
       {
         tag: "FUEL", kind: "amber", money: true,
-        title: "Higgsfield renewal cleared: +1,200 credits, balance 2,498.41",
-        detail: "Ultimate renewed on the fixed card. Combined with the Runway and HeyGen receipts, every AI-vendor subscription is now billing normally."
+        title: "Full tank idle: 2,498.41 credits, zero September burn",
+        detail: "The renewal landed Friday and no generation has followed. Every queued project — Beyond the Stars, KS Live assets, affiliate promo — is funded and waiting on a green light."
       },
       {
-        tag: "DEADLINE", kind: "risk",
-        title: "Kingdom Founders Ascension Academy — apply by Sunday midnight",
-        detail: "Paid academy pitch with a hard deadline tomorrow night. Weigh against the free grant capital in the radar before committing September budget."
+        tag: "DEADLINE",
+        title: "KFAA application window closed Sunday midnight",
+        detail: "The Kingdom Founders decision point has passed. Watch for a confirmation email if you applied; otherwise the September budget stays intact for grants."
       },
       {
-        tag: "AFFILIATE",
-        title: "AI Business Summit wants affiliate promo this holiday weekend",
-        detail: "Their Sep 5 email pushes a Labor-Day-weekend posting window. You're on the affiliate list — a commission opportunity that costs one social post."
+        tag: "CLIENT", kind: "risk",
+        title: "ELICM DMs now 6 days unanswered",
+        detail: "The Sep 1 Instagram thread (eternal_life_in_christ_min + Tresti Cunningham) is still open, with their website design active in Canva and $175 pending Zelle."
       },
       {
-        tag: "CLIENT",
-        title: "ELICM: 4 Instagram DMs still unanswered since Sep 1",
-        detail: "eternal_life_in_christ_min + Tresti Cunningham are waiting. Their website design is active in Canva; the $175 ticket payment was pending Zelle."
+        tag: "PROJECT",
+        title: "Beyond the Stars + KS Live enter week 5 undated",
+        detail: "Ticket kit finished Aug 10; KS Live planning meeting was Aug 20. Neither has a public date, registration, or project home yet — the launch runway is fully funded now."
       },
       {
         tag: "SEO",
         title: "Semrush weekly tracking continues on mjunlimitedessentialmktg.com",
-        detail: "Weekly position reports keep arriving through the restored Gmail link — free keyword telemetry worth a weekly skim."
+        detail: "Weekly position reports arrive via the restored Gmail link — worth a skim each Monday."
       }
     ]
   },
@@ -168,13 +167,13 @@ window.MISSION_DATA = {
     ]
   },
 
-  // Gmail — live. Notable threads from the last 48h (probe at generatedAt).
+  // Gmail — link verified Sep 5; notable threads below are from that probe.
   gmail: {
     inboxEstimateLast3Days: 201,
     unreadShown: 6,
     threads: [
-      { at: "2026-09-05T14:46:17Z", from: "Kingdom Founders (yesgocoach)", subject: "DAY 3 REPLAY — apply by Sunday midnight", tag: "ACTION" },
-      { at: "2026-09-05T15:25:25Z", from: "AI Business Summit", subject: "Affiliate push: holiday weekend is exactly why this works", tag: "ACTION" },
+      { at: "2026-09-05T14:46:17Z", from: "Kingdom Founders (yesgocoach)", subject: "DAY 3 REPLAY — apply by Sunday midnight (window now closed)", tag: "ACTION" },
+      { at: "2026-09-05T15:25:25Z", from: "AI Business Summit", subject: "Affiliate push: holiday-weekend promo window", tag: "ACTION" },
       { at: "2026-09-05T16:13:09Z", from: "VC Inc", subject: "Workshop Sep 8–9, VIP Q&A Sep 10 (5:00 PM EDT)", tag: "COMMUNITY" },
       { at: "2026-09-05T13:08:08Z", from: "Nick Ponte AI", subject: "The #1 thing holding your agency back", tag: "NEWSLETTER" },
       { at: "2026-09-05T13:45:44Z", from: "Lifetouch", subject: "Rachel's school photos — 25% off, code MCSITE9", tag: "COMMUNITY", money: true },
@@ -187,10 +186,10 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SAT 09/05", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "TODAY" },
-      { day: "MON 09/07", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — Labor Day" },
-      { day: "WED 09/09", time: "10:00 AM", title: "Dr. Katyal — kidney doctor", loc: "White Plains, MD", note: "NEW — block 9:30–11:30" },
-      { day: "THU 09/10", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" }
+      { day: "MON 09/07", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "TODAY — duplicate ×2, week 10" },
+      { day: "WED 09/09", time: "10:00 AM", title: "Dr. Katyal — kidney doctor", loc: "White Plains, MD", note: "block 9:30–11:30" },
+      { day: "THU 09/10", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
+      { day: "SAT 09/12", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" }
     ]
   },
 
@@ -221,9 +220,9 @@ window.MISSION_DATA = {
 
   slack: {
     workspace: "thinkboxaiope",
-    silentDays: 44,
+    silentDays: 46,
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 44 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 46 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
@@ -249,20 +248,21 @@ window.MISSION_DATA = {
         { t: "08/27", v: 1298.41 },
         { t: "08/30", v: 1298.41 },
         { t: "09/01", v: 1298.41 },
-        { t: "09/05", v: 2498.41 }
+        { t: "09/05", v: 2498.41 },
+        { t: "09/07", v: 2498.41 }
       ]
     },
     weekLoad: {
       label: "CALENDAR LOAD — NEXT 7 DAYS",
       unit: "events / day",
       points: [
-        { t: "SAT", v: 1 },
-        { t: "SUN", v: 0 },
-        { t: "MON", v: 2 },
+        { t: "MON", v: 1 },
         { t: "TUE", v: 0 },
         { t: "WED", v: 1 },
         { t: "THU", v: 1 },
-        { t: "FRI", v: 0 }
+        { t: "FRI", v: 0 },
+        { t: "SAT", v: 1 },
+        { t: "SUN", v: 0 }
       ]
     }
   }
