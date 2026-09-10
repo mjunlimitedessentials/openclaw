@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-09-09T15:20:00Z",
+  generatedAt: "2026-09-10T11:35:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,51 +12,51 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "Kidney-doctor morning — the appointment block runs to 11:30, and the rest of Wednesday is clear. Two carry-overs still open: the Captions card fix and 13 days of untouched credits.",
+    headline: "AI4B at 3 PM is today's only commitment. The bigger news is free money education: the Grant Writer's Bootcamp confirmed for next week — and the tank hits day 14 untouched at 2,498.41.",
     actions: [
       {
         priority: 1,
-        title: "This morning: Dr. Katyal wraps by 11:30 — capture any follow-ups now",
-        detail: "If the visit produced labs, prescriptions, or a follow-up date, put them on the calendar before the afternoon swallows them. The rest of today is commitment-free.",
+        title: "Today 3 PM: AI4B Fail Forward with Patrick Precourt",
+        detail: "The only fixed point until Saturday's Circle. The morning is clear — a good window for the ELICM reply or the first Beyond the Stars generation run.",
         sources: ["Google Calendar"]
       },
       {
         priority: 2,
-        title: "Captions: the $26.49 card fix is still open from yesterday",
-        detail: "The failed-payment email (starred) is aging in the inbox. Two minutes at captions.ai — update the card or cancel — closes the last billing ghost from July.",
-        sources: ["Gmail (Sep 8 probe)"],
+        title: "Grant Writer's Bootcamp is FREE and ~7 days out",
+        detail: "Last night's Grant Mastery email confirms the bootcamp teaches grant writing free around Sep 17. Pair it with an Amber application (closes Sep 30) and Verizon's two courses — September's grant stack is all zero-cost.",
+        sources: ["Gmail", "Grant Radar"],
         money: true
       },
       {
         priority: 3,
-        title: "Tomorrow 3 PM: AI4B Fail Forward",
-        detail: "The only fixed point Thursday. The open stretch before it is the week's best window for the ELICM reply and the Stripe report review.",
-        sources: ["Google Calendar"]
+        title: "Captions: no new failure email since Tuesday — verify it's actually fixed",
+        detail: "Silence can mean the card was updated or just that retries paused. Thirty seconds in captions.ai billing settings confirms which. Until then this stays the last open billing item.",
+        sources: ["Gmail"],
+        money: true
       },
       {
         priority: 4,
-        title: "Day 13 of the full tank — 2,498.41 credits and no September output",
-        detail: "Two weeks of runway have passed since the renewal. One generation session tonight for Beyond the Stars or KS Live turns paid-for fuel into assets.",
-        sources: ["Higgsfield"],
+        title: "Stripe reports now arrive every other day — make them a Monday ritual",
+        detail: "Sep 9 payout and balance reconciliations for MJHairUnl landed overnight, following Sep 7's pair. A standing 10-minute Monday review turns these unread emails into an actual revenue pulse.",
+        sources: ["Gmail"],
         money: true
       },
       {
         priority: 5,
-        title: "Grant season checklist: Amber (3 weeks left), Verizon courses, challenge on the 22nd",
-        detail: "The Amber round closes Sep 30, Verizon's two free courses unlock its $10K draw, and the Grow Your Biz grant challenge starts in under two weeks. All three cost only time.",
-        sources: ["Grant Radar"],
-        money: true
+        title: "Day 14: the full tank is now two weeks old",
+        detail: "2,498.41 credits, zero September generation. Whatever blocks the first run — script, decision, time — is costing more than credits now: Beyond the Stars has no launch assets and no date.",
+        sources: ["Higgsfield", "Canva"]
       },
       {
         priority: 6,
-        title: "ELICM: 8 days since their DMs arrived",
-        detail: "The Instagram thread from Sep 1 is the board's oldest open client loop, with the website design sitting in Canva and $175 pending Zelle.",
+        title: "ELICM: day 9 — answer before it becomes two weeks",
+        detail: "The Sep 1 Instagram DMs remain the oldest client loop. One reply plus a website status note clears the board's longest-standing risk item.",
         sources: ["Gmail (Sep 5 probe)", "Canva"]
       },
       {
         priority: 7,
-        title: "Slack: day 48",
-        detail: "#all-thinkbox-ai-operating-systems is still empty. September's story so far — renewal, grants, Stripe reports — would make a solid first transmission.",
+        title: "Slack: day 49 — one shy of fifty",
+        detail: "Tomorrow the silence hits a round number. Either it becomes the September kickoff post or the archive decision — day 50 is a natural deadline.",
         sources: ["Slack"]
       }
     ]
@@ -65,12 +65,12 @@ window.MISSION_DATA = {
   // Connector status board — probed live. never guess: online = returned data,
   // offline = call blocked/failed in this environment, auth = needs authorization.
   sources: [
-    { name: "Gmail",           status: "online",  detail: "link OK (Sep 8 verify)" },
+    { name: "Gmail",           status: "online",  detail: "~200 threads / 48h — live probe" },
     { name: "Google Calendar", status: "online",  detail: "7-day window queried, ET" },
     { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK (Aug 14 verify)" },
-    { name: "Higgsfield",      status: "online",  detail: "2,498.41 credits — idle 13 days" },
+    { name: "Higgsfield",      status: "online",  detail: "2,498.41 credits — idle 14 days" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — reports readable via Gmail" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -86,41 +86,41 @@ window.MISSION_DATA = {
 
   // Today tile — regenerated each refresh from the calendar probe.
   today: {
-    label: "WED SEP 09",
-    sub: "1 COMMITMENT — MEDICAL MORNING",
+    label: "THU SEP 10",
+    sub: "1 COMMITMENT",
     events: [
-      { time: "10:00 AM", title: "Dr. Katyal — kidney doctor", note: "White Plains MD · block to 11:30" }
+      { time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", note: "Zoom" }
     ],
-    next: "THU 3:00 PM — AI4B FAIL FORWARD"
+    next: "SAT 10:00 AM — BUSINESS CIRCLE"
   },
 
   // Business ops — latest cross-source updates, all from this board's probes.
   business: {
     updates: [
       {
+        tag: "GRANTS", kind: "amber",
+        title: "Free Grant Writer's Bootcamp confirmed — about a week away",
+        detail: "Grant Mastery's Sep 9 email locks in the free bootcamp (~Sep 17). Zero-cost path to stronger Amber and federal applications this month."
+      },
+      {
+        tag: "REVENUE", money: true,
+        title: "Stripe MJHairUnl reports on an every-other-day cadence",
+        detail: "Sep 7 and Sep 9 payout + balance reconciliations are in the inbox. Recurring revenue documents the board can finally track."
+      },
+      {
         tag: "BILLING", kind: "risk", money: true,
-        title: "Captions $26.49 failure still unresolved",
-        detail: "The last vendor from July's card cascade keeps failing on an old card. Fix at captions.ai or cancel — everything else bills cleanly."
+        title: "Captions fix unverified — failure emails went quiet",
+        detail: "No new $26.49 failure since Tuesday. Confirm in captions.ai billing whether the card was fixed or the retries just paused."
       },
       {
-        tag: "REVENUE", kind: "amber", money: true,
-        title: "Stripe MJHairUnl reports waiting in the inbox",
-        detail: "Sep 7 payout + ending-balance reconciliations arrived Monday night — the board's first direct revenue documents. Unopened as of the last probe."
-      },
-      {
-        tag: "FUEL", money: true,
-        title: "2,498.41 credits — 13 idle days since renewal",
-        detail: "September production hasn't started. Beyond the Stars and KS Live assets are fully funded and waiting."
-      },
-      {
-        tag: "GRANTS",
-        title: "Three live grant tracks this month",
-        detail: "Amber ($10K×3, closes Sep 30), Verizon Digital Ready (two free courses → $10K draw), and the Grow Your Biz challenge starting ~Sep 22."
+        tag: "FUEL",
+        title: "2,498.41 credits — 14 days without a generation",
+        detail: "Two full weeks of paid runway unused. The first September run is the unblock for Beyond the Stars and KS Live alike."
       },
       {
         tag: "CLIENT", kind: "risk",
-        title: "ELICM DMs — day 8 unanswered",
-        detail: "Oldest open client loop: 4 Instagram messages from Sep 1, website design in Canva, $175 pending Zelle."
+        title: "ELICM DMs — day 9 unanswered",
+        detail: "Oldest open loop: 4 Instagram messages from Sep 1, website design in Canva, $175 pending Zelle."
       }
     ]
   },
@@ -138,18 +138,18 @@ window.MISSION_DATA = {
         url: "ambergrantsforwomen.com"
       },
       {
+        amount: "free bootcamp",
+        name: "Grant Writer's Bootcamp (Grant Mastery)",
+        deadline: "~Sep 17",
+        fit: "Free grant-writing training confirmed by their Sep 9 email — you're on the list. Feeds directly into this month's applications.",
+        url: "grantmasterychallenge.com"
+      },
+      {
         amount: "$10K/mo",
         name: "Verizon Small Business Digital Ready",
         deadline: "thru Dec 2026",
         fit: "Complete two free online courses to qualify — built for digital-marketing businesses like MJUnlimited.",
         url: "verizon.com/digitalready"
-      },
-      {
-        amount: "free + training",
-        name: "Grow Your Biz Challenge (Grant Mastery)",
-        deadline: "starts ~Sep 22",
-        fit: "You're already on their email list — grant-writing challenge aligned with the September applications here.",
-        url: "grantmasterychallenge.com"
       },
       {
         amount: "$5K + program",
@@ -168,17 +168,17 @@ window.MISSION_DATA = {
     ]
   },
 
-  // Gmail — link verified Sep 8; notable threads below are from that probe.
+  // Gmail — live probe at generatedAt; notable threads from the last 48h.
   gmail: {
     inboxEstimateLast3Days: 201,
     unreadShown: 6,
     threads: [
-      { at: "2026-09-08T06:47:30Z", from: "Captions", subject: "$26.49 payment unsuccessful — again (starred)", tag: "MONEY", money: true },
-      { at: "2026-09-08T02:52:06Z", from: "Stripe", subject: "MJHairUnl payout + balance reconciliation reports ready", tag: "MONEY", money: true },
-      { at: "2026-09-08T01:35:03Z", from: "Grant Mastery Challenge", subject: "Grow Your Biz Challenge — 14 days away, quick answers", tag: "ACTION" },
-      { at: "2026-09-08T01:35:36Z", from: "IONOS", subject: "Email archiving error — help@mjuemvirtualproperties.com", tag: "SECURITY" },
-      { at: "2026-09-08T03:27:19Z", from: "Marketing Secrets AI", subject: "Your cancelled account is still here (win-back)", tag: "NEWSLETTER" },
-      { at: "2026-09-08T01:03:10Z", from: "Million Dollar Secrets", subject: "Personal invite — AI + marketing charity event", tag: "COMMUNITY" }
+      { at: "2026-09-10T03:55:04Z", from: "Grant Mastery", subject: "FREE Grant Writer's Bootcamp — 7 days out", tag: "ACTION" },
+      { at: "2026-09-10T02:42:34Z", from: "Stripe", subject: "MJHairUnl Sep 9 payout + balance reports ready", tag: "MONEY", money: true },
+      { at: "2026-09-10T11:25:31Z", from: "The WBH (Lori)", subject: "A special invite, MJ — back-to-school career letter", tag: "COMMUNITY" },
+      { at: "2026-09-10T10:03:54Z", from: "Tech Savvy Mentors", subject: "Podcast: move clients from spreadsheet to CRM in one afternoon", tag: "NEWSLETTER" },
+      { at: "2026-09-10T11:32:52Z", from: "AI Marketing Newsletter", subject: "Nvidia buys Hugging Face for $13B", tag: "NEWSLETTER" },
+      { at: "2026-09-10T01:45:35Z", from: "Instagram", subject: "ladonnaebacon + 4 others shared new posts", tag: "COMMUNITY" }
     ]
   },
 
@@ -187,8 +187,7 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "WED 09/09", time: "10:00 AM", title: "Dr. Katyal — kidney doctor", loc: "White Plains, MD", note: "TODAY — block to 11:30" },
-      { day: "THU 09/10", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "" },
+      { day: "THU 09/10", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "TODAY" },
       { day: "SAT 09/12", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" },
       { day: "MON 09/14", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 11" }
     ]
@@ -221,9 +220,9 @@ window.MISSION_DATA = {
 
   slack: {
     workspace: "thinkboxaiope",
-    silentDays: 48,
+    silentDays: 49,
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 48 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 49 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
@@ -250,20 +249,21 @@ window.MISSION_DATA = {
         { t: "09/01", v: 1298.41 },
         { t: "09/05", v: 2498.41 },
         { t: "09/07", v: 2498.41 },
-        { t: "09/09", v: 2498.41 }
+        { t: "09/09", v: 2498.41 },
+        { t: "09/10", v: 2498.41 }
       ]
     },
     weekLoad: {
       label: "CALENDAR LOAD — NEXT 7 DAYS",
       unit: "events / day",
       points: [
-        { t: "WED", v: 1 },
         { t: "THU", v: 1 },
         { t: "FRI", v: 0 },
         { t: "SAT", v: 1 },
         { t: "SUN", v: 0 },
         { t: "MON", v: 2 },
-        { t: "TUE", v: 0 }
+        { t: "TUE", v: 0 },
+        { t: "WED", v: 0 }
       ]
     }
   }
