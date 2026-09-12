@@ -3,7 +3,7 @@
 // tool call at generatedAt; sources that failed or required auth are marked
 // offline/auth and their panels render a NO SIGNAL state instead of fake data.
 window.MISSION_DATA = {
-  generatedAt: "2026-09-11T11:25:00Z",
+  generatedAt: "2026-09-12T11:15:00Z",
   operator: {
     name: "Mona Jackson-Ham",
     email: "mjunlimitedessentials@gmail.com",
@@ -12,52 +12,51 @@ window.MISSION_DATA = {
   },
 
   briefing: {
-    headline: "The engine roared back: 535.5 credits burned since yesterday — the biggest production day on record — and your 'I drew this' post pulled 532 views the same night. One deadline: the Google One trial charges tomorrow.",
+    headline: "Circle at 10 this morning, and two quiet deadlines: the Google One trial converts to paid today, and the IONOS mailbox backup failed a second time. The balance held overnight after Thursday's record run.",
     actions: [
       {
         priority: 1,
-        title: "Google One (AI Pro, 5TB) trial ends TOMORROW — decide today",
-        detail: "Google Play will auto-charge when the trial lapses Sep 12. Keep it if the 5TB + AI Pro is earning its seat next to Higgsfield/HeyGen/Runway; otherwise cancel in Play Store → Subscriptions before tonight.",
-        sources: ["Gmail"],
-        money: true
+        title: "Today 10 AM: Marqus Beaver Business Circle",
+        detail: "The weekly session — fresh off a 535.5-credit production day and a 532-view post, there's real news to share this week.",
+        sources: ["Google Calendar"]
       },
       {
         priority: 2,
-        title: "Biggest production day ever: 535.5 credits — and the content is landing",
-        detail: "Balance went 2,498.41 → 1,962.91 overnight, triple the previous record week. Facebook says the Sep 10 'AI can't be that hard… I drew this' post hit 532 views — your best of the week. Whatever this run produced, ride the momentum: post the next piece while the first is hot.",
-        sources: ["Higgsfield", "Gmail"],
+        title: "Google One trial converts TODAY — last call to cancel",
+        detail: "The AI Pro (5TB) trial lapses Sep 12 and Google Play charges automatically. If it stays, it joins Higgsfield/HeyGen/Runway in the paid stack; if not, cancel in Play Store → Subscriptions before tonight.",
+        sources: ["Gmail (Sep 11 probe)"],
         money: true
       },
       {
         priority: 3,
-        title: "Slack hits day 50 TODAY — the deadline you set yourself",
-        detail: "The round number is here. Transmission #1 writes itself now: the production run, the 532-view post, grant season. Post it or archive the channel — either ends the streak deliberately.",
-        sources: ["Slack"]
+        title: "IONOS backup failed AGAIN for help@mjuemvirtualproperties.com",
+        detail: "Second archiving error in five days — this is recurring, not a glitch. Log into IONOS and re-enter the mailbox credentials (or check quota) so business email stays backed up.",
+        sources: ["Gmail"]
       },
       {
         priority: 4,
-        title: "Sep 17 is stacking up: grant bootcamp + TSS free event, same day as AI4B",
-        detail: "Next Thursday now holds the free Grant Writer's Bootcamp, the TSS women-builders event at 7 PM ($20K in scholarships given), and AI4B at 3 PM. Pick lanes now so the day doesn't triple-book itself.",
-        sources: ["Gmail", "Google Calendar", "Grant Radar"]
+        title: "Perplexity signed in with your Google account at 5:49 AM",
+        detail: "Google's notice says account data was shared with Perplexity this morning. If that was you, no action; if not, review connected apps at myaccount.google.com/connections.",
+        sources: ["Gmail"]
       },
       {
         priority: 5,
-        title: "Tomorrow 10 AM: Business Circle — today is clear",
-        detail: "Nothing booked today. Monday brings the PRO pair (week 11); the calendar was edited Thursday afternoon, so give Monday a quick look to confirm nothing else moved.",
-        sources: ["Google Calendar"]
+        title: "Grant coaching in your inbox agrees: targeted beats random",
+        detail: "Grant Mastery's overnight email — 'stop applying for random grants' — matches this board's radar: Amber (fits, closes Sep 30), Verizon (fits, free courses), the bootcamp Thursday. Skip anything that doesn't fit the niche.",
+        sources: ["Gmail", "Grant Radar"]
       },
       {
         priority: 6,
-        title: "Stripe reports are now daily — Sep 7, 9, 10 all in the inbox",
-        detail: "MJHairUnl payout + balance reconciliations keep arriving unread. Ten minutes clears the stack and gives you a real revenue number for the week.",
-        sources: ["Gmail"],
+        title: "Post-run follow-through: 1,962.91 credits held — now ship the assets",
+        detail: "Thursday's 535.5-credit output is sitting in Higgsfield. Pull the keepers, post the next 'making-of' piece while the last one is still warm, and tag them to Beyond the Stars or KS Live.",
+        sources: ["Higgsfield"],
         money: true
       },
       {
         priority: 7,
-        title: "ELICM: day 10 — double digits now",
-        detail: "The Sep 1 Instagram DMs are still unanswered while their website sits in Canva. Close the loop before the Circle tomorrow — it's a two-minute reply.",
-        sources: ["Gmail (Sep 5 probe)", "Canva"]
+        title: "ELICM day 11 · Slack day 51",
+        detail: "Both streaks keep running. The client reply is two minutes; the channel decision (post the September story or archive) can ride along with it.",
+        sources: ["Gmail (Sep 5 probe)", "Slack"]
       }
     ]
   },
@@ -70,7 +69,7 @@ window.MISSION_DATA = {
     { name: "Notion",          status: "online",  detail: "workspace search OK (Aug 10 verify)" },
     { name: "Slack",           status: "online",  detail: "thinkboxaiope workspace" },
     { name: "Canva",           status: "online",  detail: "design list OK (Aug 14 verify)" },
-    { name: "Higgsfield",      status: "online",  detail: "1,962.91 credits — 535.5 burned in 24h" },
+    { name: "Higgsfield",      status: "online",  detail: "1,962.91 credits — steady post-run" },
     { name: "Google Drive",    status: "offline", detail: "approval pending — blocked on recent runs" },
     { name: "Stripe",          status: "offline", detail: "needs authorization — daily reports via Gmail" },
     { name: "Granola",         status: "offline", detail: "call requires approval" },
@@ -86,38 +85,40 @@ window.MISSION_DATA = {
 
   // Today tile — regenerated each refresh from the calendar probe.
   today: {
-    label: "FRI SEP 11",
-    sub: "0 COMMITMENTS — OPEN DAY",
-    events: [],
-    next: "SAT 10:00 AM — BUSINESS CIRCLE"
+    label: "SAT SEP 12",
+    sub: "1 COMMITMENT",
+    events: [
+      { time: "10:00 AM", title: "Marqus Beaver Business Circle", note: "Zoom · weekly" }
+    ],
+    next: "MON 1:00 PM — PRO WELCOME (×2, week 11)"
   },
 
   // Business ops — latest cross-source updates, all from this board's probes.
   business: {
     updates: [
       {
-        tag: "PRODUCTION", kind: "amber", money: true,
-        title: "535.5 credits in 24 hours — September production is ON",
-        detail: "The biggest single-day run since the dashboard launched, right after Thursday's AI4B. Balance now 1,962.91 with plenty left for revisions."
-      },
-      {
-        tag: "CONTENT",
-        title: "'I drew this' Facebook post: 532 views, best of the week",
-        detail: "Sep 10, 8:15 PM post about drawing with AI is outperforming. The audience is responding to the making-of angle — more of that."
+        tag: "PRODUCTION", money: true,
+        title: "Balance steady at 1,962.91 after the record 535.5-credit day",
+        detail: "Thursday's output is banked; Friday was quiet. Next step is shipping the assets — post, file, or attach them to a launch."
       },
       {
         tag: "BILLING", kind: "risk", money: true,
-        title: "Google One AI Pro (5TB) trial converts to paid TOMORROW",
-        detail: "Auto-charge lands Sep 12 unless cancelled in Google Play first. Decide whether it earns a seat in the AI stack."
+        title: "Google One AI Pro converts to paid today",
+        detail: "Trial ends Sep 12 with an automatic charge. Decide before tonight whether it earns a seat in the stack."
       },
       {
-        tag: "REVENUE", money: true,
-        title: "Stripe MJHairUnl reports now arrive daily",
-        detail: "Sep 7, 9, and 10 payout + balance reconciliations are stacked in the inbox unread — a weekly 10-minute review turns them into a revenue pulse."
+        tag: "INFRA", kind: "risk",
+        title: "IONOS mailbox backup failing repeatedly",
+        detail: "Second archiving error for help@mjuemvirtualproperties.com in five days. Re-enter credentials or check quota in IONOS."
+      },
+      {
+        tag: "SECURITY",
+        title: "Perplexity connected to your Google account this morning",
+        detail: "Sign-in with Google at 5:49 AM per Google's notice. Fine if it was you; otherwise review myaccount.google.com/connections."
       },
       {
         tag: "CLIENT", kind: "risk",
-        title: "ELICM DMs — day 10 unanswered",
+        title: "ELICM DMs — day 11 unanswered",
         detail: "Oldest open loop: 4 Instagram messages from Sep 1, website design in Canva, $175 pending Zelle."
       }
     ]
@@ -139,7 +140,7 @@ window.MISSION_DATA = {
         amount: "free bootcamp",
         name: "Grant Writer's Bootcamp (Grant Mastery)",
         deadline: "~Sep 17",
-        fit: "Free grant-writing training — you're on the list. Feeds directly into this month's applications.",
+        fit: "Free grant-writing training — you're on the list. Their own advice this week: target grants that fit, skip the random ones.",
         url: "grantmasterychallenge.com"
       },
       {
@@ -171,12 +172,12 @@ window.MISSION_DATA = {
     inboxEstimateLast3Days: 201,
     unreadShown: 6,
     threads: [
-      { at: "2026-09-11T02:08:30Z", from: "Google Play", subject: "Google One (AI Pro 5TB) trial ends Sep 12 — auto-charge", tag: "MONEY", money: true },
-      { at: "2026-09-11T02:39:53Z", from: "Stripe", subject: "MJHairUnl Sep 10 payout + balance reports ready", tag: "MONEY", money: true },
-      { at: "2026-09-11T09:32:58Z", from: "Facebook", subject: "Post insights: 'I drew this' — 532 views, best of week", tag: "COMMUNITY" },
-      { at: "2026-09-11T09:45:53Z", from: "TSS (self-made.biz)", subject: "Free event Thu Sep 17 7 PM — $20K+ scholarships given", tag: "ACTION" },
-      { at: "2026-09-11T05:32:19Z", from: "Teachable (Stripe)", subject: "Free (Downgraded) plan renews Oct 11 — $0", tag: "NEWSLETTER" },
-      { at: "2026-09-11T02:08:27Z", from: "TikTok Shop", subject: "$23,630 in seller rewards pitch (repeat)", tag: "NEWSLETTER" }
+      { at: "2026-09-12T09:49:45Z", from: "Google", subject: "Account data shared with Perplexity (5:49 AM sign-in)", tag: "SECURITY" },
+      { at: "2026-09-12T01:44:51Z", from: "IONOS", subject: "Email archiving error — 2nd failure for help@mjuemvirtualproperties.com", tag: "SECURITY" },
+      { at: "2026-09-12T03:14:59Z", from: "Stripe", subject: "MJHairUnl Sep 11 payout + balance reports ready", tag: "MONEY", money: true },
+      { at: "2026-09-12T01:01:08Z", from: "Grant Mastery", subject: "Stop applying for random grants — target fit instead", tag: "ACTION" },
+      { at: "2026-09-11T02:08:30Z", from: "Google Play", subject: "Google One trial ends TODAY — auto-charge", tag: "MONEY", money: true },
+      { at: "2026-09-12T00:58:20Z", from: "Wealth Ascension", subject: "\"You've been working on it long enough\" — nonprofit push", tag: "COMMUNITY" }
     ]
   },
 
@@ -185,7 +186,7 @@ window.MISSION_DATA = {
     calendarCount: 6,
     calendars: ["Personal", "NO NONSENSE WEIGHTLOSS TRAINING", "Family", "Sing Like A Star Challenge", "AI4B PRO", "US Holidays"],
     events: [
-      { day: "SAT 09/12", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "weekly" },
+      { day: "SAT 09/12", time: "10:00 AM", title: "Marqus Beaver Business Circle (morning)", loc: "Zoom", note: "TODAY" },
       { day: "MON 09/14", time: "1:00 PM", title: "PRO Welcome Call", loc: "Zoom webinar", note: "duplicate ×2 — week 11" },
       { day: "THU 09/17", time: "3:00 PM", title: "AI4B Fail Forward — Patrick Precourt", loc: "Zoom", note: "busy day: bootcamp + TSS 7 PM" }
     ]
@@ -218,9 +219,9 @@ window.MISSION_DATA = {
 
   slack: {
     workspace: "thinkboxaiope",
-    silentDays: 50,
+    silentDays: 51,
     channels: [
-      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — DAY 50 silent" },
+      { name: "#all-thinkbox-ai-operating-systems", messages: 0, purpose: "announcements — day 51 silent" },
       { name: "#social", messages: 0, purpose: "fun / team bonding" }
     ]
   },
@@ -249,20 +250,21 @@ window.MISSION_DATA = {
         { t: "09/07", v: 2498.41 },
         { t: "09/09", v: 2498.41 },
         { t: "09/10", v: 2498.41 },
-        { t: "09/11", v: 1962.91 }
+        { t: "09/11", v: 1962.91 },
+        { t: "09/12", v: 1962.91 }
       ]
     },
     weekLoad: {
       label: "CALENDAR LOAD — NEXT 7 DAYS",
       unit: "events / day",
       points: [
-        { t: "FRI", v: 0 },
         { t: "SAT", v: 1 },
         { t: "SUN", v: 0 },
         { t: "MON", v: 2 },
         { t: "TUE", v: 0 },
         { t: "WED", v: 0 },
-        { t: "THU", v: 1 }
+        { t: "THU", v: 1 },
+        { t: "FRI", v: 0 }
       ]
     }
   }
