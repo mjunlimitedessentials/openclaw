@@ -458,10 +458,19 @@ function render(){
     html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","off",nosig());
   }
 
-  // 10 — FINANCE (blurred by privacy; honest about what's offline)
-  var fin = '<div class="row money"><span class="v">$ Stripe payout + balance reports (MJHairUnl, Jul 25) in inbox · $175 ELICM ticket pending Zelle</span></div>'+
-            '<div class="offline-note">STRIPE LINK OFFLINE — REVENUE TELEMETRY UNAVAILABLE (needs connector approval)</div>';
-  html += panel("w3","FIN-10","FINANCE WATCH","auth",fin);
+  // 10 — FINANCE — rendered from the data feed; NO SIGNAL when the feed has
+  // no finance block (keeps refreshes honest instead of a hard-coded snapshot)
+  var finNotes = g("finance.notes",[]);
+  if (finNotes.length || g("finance.status","")){
+    var fin = "";
+    finNotes.forEach(function(n){ fin += '<div class="row money"><span class="v">'+esc(n)+'</span></div>'; });
+    var fs = g("finance.status","");
+    if (fs) fin += '<div class="offline-note">'+esc(fs)+'</div>';
+    var fled = g("finance.led","auth");
+    html += panel("w3","FIN-10","FINANCE WATCH", (fled==="on"||fled==="off"||fled==="auth")?fled:"auth", fin);
+  } else {
+    html += panel("w3","FIN-10","FINANCE WATCH","off",nosig("NO FINANCE DATA IN FEED"));
+  }
 
   // 11 — TELEMETRY GRAPHS — drawn only from real probe-history series in the
   // data file; the panel is omitted entirely when no series exist.

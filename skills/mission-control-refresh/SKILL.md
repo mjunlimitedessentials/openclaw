@@ -9,7 +9,15 @@ metadata:
 
 # Mission Control Refresh
 
-Regenerate `mission-control/dashboard-data.js` from live connector probes.
+> **SECURITY (verified 2026-09-20): this repository is PUBLIC.** Never commit
+> live personal data (names, emails, calendar events, inbox subjects,
+> balances, client names) to it. `mission-control/dashboard-data.js` in the
+> repo stays a **sanitized template**; the live data file is written only in
+> the session workspace and published only to the operator's **private
+> Claude artifact**. Commits earlier on this branch contain live snapshots —
+> treat that history as exposed until the operator purges it.
+
+Regenerate the live Mission Control data from connector probes.
 The page (`mission-control/index.html`) is static and must NOT be edited by
 this skill — it renders whatever the data file contains and shows NO SIGNAL
 for anything missing. All data flows through the data file.
@@ -33,7 +41,7 @@ for anything missing. All data flows through the data file.
 | Gmail | `search_threads` query `in:inbox newer_than:3d`, pageSize 15 |
 | Google Calendar | `list_events` today → +7 days, primary calendar; `list_calendars` count |
 | Google Drive | `list_recent_files` pageSize 10 |
-| Notion | query the "My Tasks" view (db `d532cf23-e4e7-44fe-b546-1edd2fad18e9`) for open-task count; `notion-search` for recent pages |
+| Notion | query the operator's tasks database for open-task count (use the `notion.tasksDbId` value configured in the data file, or discover the tasks database via `notion-search`; if none is configured/found, mark Notion online with a note and leave tasks null — never hardcode a personal database ID in this repo); `notion-search` for recent pages |
 | Slack | `slack_search_channels`, then `slack_read_channel` per channel for message counts |
 | Canva | `search-designs` sorted by modified_descending |
 | Higgsfield | `balance` for credits + plan |
@@ -70,8 +78,11 @@ ToolSearch rather than hardcoding prefixes.
      search is unavailable, leave the list untouched — the stale `verified`
      date is the honesty marker.
 3. Sanity-check: `node --check mission-control/dashboard-data.js` must pass.
-4. Commit and push on the current working branch
-   (message: `chore(mission-control): morning data refresh <date>`).
+4. Write the LIVE data file only in the session workspace, rebuild the
+   single-file page from it, and republish the operator's private Claude
+   artifact. Do NOT commit the live file: the repo copy of
+   `mission-control/dashboard-data.js` must stay the sanitized template
+   (commit only template/structure changes, with real data stripped).
 5. If running in an environment with Chromium, screenshot the page
    (1720px wide) and send it to the user with a 2–3 line summary of what
    changed since yesterday. If nothing notable changed, keep it to one line.
