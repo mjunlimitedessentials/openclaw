@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MJU MISSION CONTROL</title>
+<style>
+  :root{
+    --bg:#04070d; --panel:#0a1120; --panel2:#0d1628; --line:#1c2c47;
+    --grid:#0e1830; --green:#37e08b; --amber:#ffb545; --red:#ff5d5d;
+    --cyan:#4fd6ff; --text:#c9d7ee; --dim:#5f7398; --mono:"Courier New",ui-monospace,Menlo,Consolas,monospace;
+    --mx:0; --my:0; /* normalized mouse position, set from JS, drives panel tilt */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--mono);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:42px 42px;min-height:100vh;padding:18px 22px 40px;overflow-x:hidden;
+  }
+  body::after{ /* scanlines */
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:99;
+    background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);
+  }
+  /* ---------- atmosphere layers ---------- */
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .vig{position:fixed;inset:0;z-index:97;pointer-events:none;
+    background:radial-gradient(ellipse 75% 65% at 50% 42%,transparent 52%,rgba(0,0,6,.34) 78%,rgba(0,0,8,.62) 100%)}
+  header,.grid,footer{position:relative;z-index:2}
+
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:16px;border:1px solid var(--line);
+    background:linear-gradient(180deg,#0c1526,#070d19);padding:14px 20px;margin-bottom:16px;position:relative;
+    box-shadow:0 14px 34px -18px rgba(0,0,0,.8),0 0 30px -18px rgba(79,214,255,.4)}
+  header .sig{width:12px;height:12px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  h1{font-size:20px;letter-spacing:6px;color:#eaf2ff;font-weight:700}
+  h1 span{color:var(--cyan);text-shadow:0 0 14px rgba(79,214,255,.55)}
+  .sub{font-size:11px;color:var(--dim);letter-spacing:2px}
+  .spacer{flex:1}
+  .clock{font-size:22px;color:var(--green);letter-spacing:3px;text-shadow:0 0 8px rgba(55,224,139,.5)}
+  .stamp{font-size:10px;color:var(--dim);text-align:right;letter-spacing:1px}
+  .btn{cursor:pointer;border:1px solid var(--line);background:#0c1526;color:var(--text);
+    font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:9px 14px}
+  .btn.active{border-color:var(--amber);color:var(--amber);box-shadow:0 0 10px rgba(255,181,69,.25)}
+
+  /* ---------- console grid with depth ---------- */
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;perspective:1500px}
+  .panel{grid-column:span 4;border:1px solid var(--line);
+    background:radial-gradient(130% 95% at 50% -12%,rgba(79,214,255,.075),transparent 55%),
+               linear-gradient(180deg,var(--panel),#060b15);
+    padding:0;position:relative;min-height:120px;
+    transform:rotateY(calc(var(--mx)*var(--dp,3deg))) rotateX(calc(var(--my)*var(--dn,-3deg)));
+    will-change:transform;
+    box-shadow:0 26px 50px -22px rgba(0,0,0,.85),0 0 26px -14px rgba(79,214,255,.3),
+               inset 0 1px 0 rgba(140,200,255,.07);
+  }
+  .panel::before,.panel::after{content:"";position:absolute;width:10px;height:10px;border:2px solid var(--cyan);opacity:.6}
+  .panel::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+  .panel::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+  .panel.w6{grid-column:span 6}.panel.w8{grid-column:span 8}.panel.w12{grid-column:span 12}
+  @media(max-width:1100px){.panel,.panel.w6,.panel.w8{grid-column:span 6}}
+  @media(max-width:760px){.panel,.panel.w6,.panel.w8,.panel.w12{grid-column:span 12}}
+
+  /* glare sweep — a soft light bar drifts down each panel on its own schedule */
+  .swp{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+  .swp::before{content:"";position:absolute;top:-130%;left:-10%;right:-10%;height:65%;
+    background:linear-gradient(172deg,transparent 30%,rgba(170,225,255,.045) 45%,rgba(170,225,255,.11) 50%,rgba(170,225,255,.045) 55%,transparent 70%);
+    animation:sweep 11s linear infinite;animation-delay:var(--sd,0s)}
+  @keyframes sweep{0%{transform:translateY(0)}42%{transform:translateY(400%)}100%{transform:translateY(400%)}}
+
+  .ph{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--line);background:rgba(20,32,56,.5);position:relative;z-index:2}
+  .ph .tag{font-size:10px;letter-spacing:3px;color:var(--cyan)}
+  .ph .name{font-size:12px;letter-spacing:2px;color:#eaf2ff;font-weight:700}
+  .led{width:8px;height:8px;border-radius:50%;flex:none}
+  .led.on{background:var(--green);box-shadow:0 0 8px var(--green);animation:ledpulse 2.6s ease-in-out infinite}
+  .led.off{background:var(--red);box-shadow:0 0 8px var(--red);animation:ledpulse-red 2.2s ease-in-out infinite}
+  .led.auth{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  @keyframes ledpulse{50%{box-shadow:0 0 15px var(--green),0 0 4px var(--green)}}
+  @keyframes ledpulse-red{50%{box-shadow:0 0 14px var(--red),0 0 4px var(--red)}}
+  .pb{padding:12px 14px;font-size:12px;line-height:1.55;position:relative;z-index:2}
+  .row{display:flex;gap:10px;padding:6px 0;border-bottom:1px dashed #14213a;align-items:baseline}
+  .row:last-child{border-bottom:none}
+  .k{color:var(--dim);font-size:10px;letter-spacing:1px;white-space:nowrap}
+  .v{color:var(--text)}
+  .big{font-size:34px;color:var(--green);text-shadow:0 0 10px rgba(55,224,139,.4);line-height:1.1;font-variant-numeric:tabular-nums}
+  .big.amber{color:var(--amber);text-shadow:0 0 10px rgba(255,181,69,.4)}
+  .unit{font-size:11px;color:var(--dim);letter-spacing:2px}
+  .chip{display:inline-block;font-size:9px;letter-spacing:1px;padding:2px 6px;border:1px solid var(--line);color:var(--dim);margin-left:6px}
+  .chip.SECURITY{border-color:var(--red);color:var(--red)}
+  .chip.ACTION{border-color:var(--amber);color:var(--amber)}
+  .chip.MONEY{border-color:var(--amber);color:var(--amber)}
+  .chip.COMMUNITY,.chip.NEWSLETTER{border-color:var(--line)}
+  .src{font-size:9px;color:var(--cyan);letter-spacing:1px}
+  .pri{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+    border:1px solid var(--cyan);color:var(--cyan);font-size:11px;margin-right:8px}
+  .action{padding:9px 0;border-bottom:1px dashed #14213a}
+  .action:last-child{border-bottom:none}
+  .action .t{color:#eaf2ff;font-weight:700}
+  .action .d{color:var(--dim);font-size:11px;margin-top:3px}
+  .statgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .stat{border:1px solid var(--line);padding:8px 10px;background:rgba(10,18,34,.6)}
+  .stat .n{font-size:11px;letter-spacing:1px;color:#eaf2ff;display:flex;align-items:center;gap:7px}
+  .stat .d{font-size:9px;color:var(--dim);margin-top:4px;letter-spacing:.5px}
+  .offline-note{color:var(--red);font-size:10px;letter-spacing:1px}
+  .money{transition:filter .25s}
+  body.privacy .money{filter:blur(9px)}
+  /* TEXT+ large-print mode — bigger, simpler reading; visual layer only */
+  body.bigtext .pb{font-size:15px;line-height:1.65}
+  body.bigtext .ph .name{font-size:15px}
+  body.bigtext .ph .tag{font-size:12px}
+  body.bigtext .k{font-size:12.5px}
+  body.bigtext .action .t{font-size:15px}
+  body.bigtext .action .d{font-size:13.5px}
+  body.bigtext .headline{font-size:15px}
+  body.bigtext .big{font-size:42px}
+  body.bigtext .unit{font-size:13px}
+  body.bigtext .chip{font-size:11px}
+  body.bigtext .src{font-size:11px}
+  body.bigtext .stat .n{font-size:13px}
+  body.bigtext .stat .d{font-size:11px}
+  body.bigtext .nosig{font-size:15px}
+  body.bigtext .swp::before{display:none} /* calmer read: no glare sweeps in large-print mode */
+  .nosig{color:var(--red);letter-spacing:3px;font-size:12px;text-align:center;padding:24px 0;opacity:.85;animation:nosigflk 3.4s steps(2) infinite}
+  @keyframes nosigflk{50%{opacity:.45}}
+  .headline{color:var(--amber);border-left:3px solid var(--amber);padding:6px 10px;margin-bottom:10px;font-size:12px;background:rgba(255,181,69,.05);min-height:2.6em}
+  .headline .caret{display:inline-block;width:7px;height:12px;background:var(--amber);margin-left:2px;vertical-align:-1px;animation:pulse 1s steps(2) infinite}
+  footer{margin-top:18px;font-size:10px;color:var(--dim);letter-spacing:1px;text-align:center}
+
+  /* ---------- boot sequence ---------- */
+  #boot{position:fixed;inset:0;background:#01030a;z-index:200;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:16px}
+  #boot .btxt{font-family:var(--mono);font-size:11px;letter-spacing:4px;color:var(--green);text-shadow:0 0 10px rgba(55,224,139,.6)}
+  #boot .bline{width:min(430px,78vw);height:2px;background:var(--green);box-shadow:0 0 18px var(--green);
+    transform-origin:left;animation:bootline 1.05s cubic-bezier(.3,.9,.4,1) .15s both}
+  @keyframes bootline{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  body.booted #boot{animation:bootoff .5s ease .05s both;pointer-events:none}
+  @keyframes bootoff{35%{opacity:1;filter:brightness(2.4)}100%{opacity:0;visibility:hidden}}
+  /* CRT flicker on the console as the boot cover lifts */
+  body.booted header,body.booted .grid{animation:crt .55s steps(3) 1}
+  @keyframes crt{0%{opacity:.2;filter:brightness(2.6) saturate(0)}60%{opacity:1;filter:brightness(1.35)}100%{filter:none}}
+  /* staggered panel arrival */
+  .panel{opacity:0}
+  body.booted .panel{animation:pin .65s cubic-bezier(.2,.85,.3,1) both;animation-delay:calc(var(--i,0)*95ms + 300ms)}
+  @keyframes pin{from{opacity:0;transform:translateY(26px) rotateX(9deg) scale(.985)}to{opacity:1;transform:none}}
+
+  /* ---------- 3D holo-deck floor ---------- */
+  #holo{position:fixed;left:-25vw;right:-25vw;bottom:-6vh;height:46vh;z-index:1;pointer-events:none;
+    perspective:600px;overflow:hidden;opacity:.45;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 46%);mask-image:linear-gradient(180deg,transparent 0,#000 46%)}
+  #holo .fl{position:absolute;inset:-120% 0 0 0;transform-origin:50% 100%;transform:rotateX(62deg);
+    background-image:linear-gradient(rgba(79,214,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(79,214,255,.15) 1px,transparent 1px);
+    background-size:64px 64px;animation:flscroll 6s linear infinite}
+  @keyframes flscroll{from{background-position:0 0}to{background-position:0 64px}}
+  #holo::after{content:"";position:absolute;left:8%;right:8%;top:40%;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(79,214,255,.4),transparent);filter:blur(1px)}
+
+  /* ---------- telemetry graphs (real probe history) ---------- */
+  .telegrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.telegrid{grid-template-columns:1fr}}
+  .tchart{position:relative}
+  .tchart canvas{display:block;width:100%;height:150px}
+  .tchart .tl{font-size:10px;letter-spacing:2px;color:var(--dim);margin-bottom:6px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .tchart .tl b{color:#eaf2ff;letter-spacing:1px}
+  .tchart .tv{font-size:13px;font-weight:700;white-space:nowrap}
+  .tchart .tv.cyan{color:var(--cyan);text-shadow:0 0 8px rgba(79,214,255,.5)}
+  .tchart .tv.amber{color:var(--amber);text-shadow:0 0 8px rgba(255,181,69,.5)}
+  body.bigtext .tchart .tl{font-size:12.5px}
+  body.bigtext .tchart .tv{font-size:16px}
+
+  /* ---------- today / business ops / grant radar ---------- */
+  .daybig{font-size:26px;color:#eaf2ff;letter-spacing:3px;text-shadow:0 0 12px rgba(79,214,255,.35)}
+  .daysub{font-size:10px;color:var(--dim);letter-spacing:2px;margin:4px 0 8px}
+  .slot{display:flex;gap:10px;padding:7px 0;border-bottom:1px dashed #14213a;align-items:baseline}
+  .slot:last-child{border-bottom:none}
+  .slot .tm{color:var(--cyan);font-size:11px;letter-spacing:1px;white-space:nowrap;min-width:74px;text-shadow:0 0 6px rgba(79,214,255,.4)}
+  .slot.freeslot .tm{color:var(--green);text-shadow:0 0 6px rgba(55,224,139,.4)}
+  .biztag{display:inline-block;font-size:9px;letter-spacing:1px;padding:2px 6px;border:1px solid var(--cyan);color:var(--cyan);margin-right:8px;vertical-align:1px}
+  .biztag.amber{border-color:var(--amber);color:var(--amber)}
+  .biztag.risk{border-color:var(--red);color:var(--red)}
+  .gr{padding:9px 0;border-bottom:1px dashed #14213a}
+  .gr:last-child{border-bottom:none}
+  .gr .amt{color:var(--amber);font-weight:700;font-size:15px;text-shadow:0 0 8px rgba(255,181,69,.4);margin-right:8px;white-space:nowrap}
+  .gr .gn{color:#eaf2ff;font-weight:700}
+  .gr .gd{color:var(--dim);font-size:11px;margin-top:3px}
+  .gr .gu{color:var(--cyan);font-size:10px;letter-spacing:1px;margin-top:2px}
+  body.bigtext .daybig{font-size:32px}
+  body.bigtext .daysub{font-size:12.5px}
+  body.bigtext .slot .tm{font-size:13.5px;min-width:92px}
+  body.bigtext .gr .amt{font-size:18px}
+  body.bigtext .gr .gd{font-size:13.5px}
+  body.bigtext .gr .gu{font-size:12px}
+  body.bigtext .biztag{font-size:11px}
+
+  /* ---------- instrument cluster: gauges, meters, bars ---------- */
+  .gauge-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .gauge-wrap canvas{width:110px;height:110px;flex:none}
+  .segbar{display:flex;gap:3px;margin:8px 0 4px}
+  .segbar i{flex:1;height:10px;background:#0e1830;border:1px solid #14213a}
+  .segbar i.on{background:var(--green);box-shadow:0 0 7px var(--green);border-color:var(--green)}
+  .segbar i.auth{background:var(--amber);box-shadow:0 0 6px var(--amber);border-color:var(--amber)}
+  .segbar i.off{background:rgba(255,93,93,.3);border-color:rgba(255,93,93,.55)}
+  .wkline{display:flex;gap:5px;margin:10px 0 2px;align-items:flex-end;height:48px}
+  .wkline .wd{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%}
+  .wkline .barv{width:100%;background:linear-gradient(180deg,var(--cyan),rgba(79,214,255,.2));box-shadow:0 0 8px rgba(79,214,255,.35)}
+  .wkline .wl{font-size:8px;color:var(--dim);letter-spacing:1px}
+  .wkline .wd.today .wl{color:var(--amber)}
+  .wkline .wd.today .barv{background:linear-gradient(180deg,var(--amber),rgba(255,181,69,.2));box-shadow:0 0 8px rgba(255,181,69,.4)}
+  .ringday{position:relative;width:78px;height:78px;flex:none}
+  .ringday canvas{width:78px;height:78px}
+  .ringday .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ringday .rn{font-size:21px;color:var(--red);font-weight:700;text-shadow:0 0 9px rgba(255,93,93,.55);line-height:1}
+  .ringday .rl{font-size:7px;color:var(--dim);letter-spacing:1px;margin-top:3px}
+  body.bigtext .ringday .rn{font-size:24px}
+  body.bigtext .wkline .wl{font-size:10px}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+    .panel{opacity:1}
+  }
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div id="holo"><div class="fl"></div></div>
+<div class="vig"></div>
+<div id="boot"><div class="btxt" id="btxt">MJU MISSION CONTROL</div><div class="bline"></div></div>
+
+<header>
+  <div class="sig"></div>
+  <div>
+    <h1>MJU <span>MISSION CONTROL</span></h1>
+    <div class="sub" id="opline">OPERATOR: —</div>
+  </div>
+  <div class="spacer"></div>
+  <div>
+    <div class="clock" id="clock">--:--:--</div>
+    <div class="stamp" id="stamp">DATA: —</div>
+  </div>
+  <button class="btn" id="textBtn" onclick="toggleText()">🔎 TEXT: STD</button>
+  <button class="btn" id="privacyBtn" onclick="togglePrivacy()">🔒 PRIVACY: OFF</button>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<footer>ALL TELEMETRY FROM LIVE CONNECTOR PROBES · FAILED SOURCES SHOWN AS NO SIGNAL · NO SIMULATED DATA</footer>
+
+<script src="dashboard-data.js"></script>
+<script>
+"use strict";
+// Defensive access: the page must render even with a missing or partial data file.
+var D = (typeof window !== "undefined" && window.MISSION_DATA) ? window.MISSION_DATA : {};
+function g(path, fb){ try{ var o=D; path.split(".").forEach(function(k){o=o[k];}); return (o===undefined||o===null)?fb:o; }catch(e){ return fb; } }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+
+var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var PANEL_N = 0; // stagger index + deterministic per-panel variation
+
+function panel(cls, tag, name, ledClass, bodyHtml){
+  var n = PANEL_N++;
+  var dp = 2 + (n*37)%3;            // tilt depth 2–4deg, varies per panel
+  var sd = ((n*53)%110)/10;         // sweep phase offset 0–11s
+  return '<section class="panel '+cls+'" style="--i:'+n+';--dp:'+dp+'deg;--dn:-'+dp+'deg;--sd:'+sd+'s">'+
+    '<div class="ph"><span class="led '+ledClass+'"></span>'+
+    '<span class="tag">'+tag+'</span><span class="name">'+esc(name)+'</span></div>'+
+    '<div class="pb">'+bodyHtml+'</div><i class="swp"></i></section>';
+}
+function nosig(msg){ return '<div class="nosig">■ NO SIGNAL — '+esc(msg||"SOURCE OFFLINE")+' ■</div>'; }
+
+function render(){
+  var html = "";
+  PANEL_N = 0;
+  document.getElementById("opline").textContent =
+    "OPERATOR: " + g("operator.name","UNKNOWN") + " · " + g("operator.org","");
+  var ts = g("generatedAt","");
+  document.getElementById("stamp").textContent = "DATA: " + (ts ? ts.replace("T"," ").replace("Z"," UTC") : "UNAVAILABLE");
+
+  // 1 — AI MORNING BRIEFING
+  var acts = g("briefing.actions",[]);
+  if (acts.length){
+    var b = '<div class="headline" id="headline" data-full="'+esc(g("briefing.headline",""))+'"></div>';
+    acts.forEach(function(a){
+      b += '<div class="action'+(a.money?' money':'')+'"><span class="pri">'+esc(a.priority)+'</span>'+
+        '<span class="t">'+esc(a.title)+'</span>'+
+        '<div class="d">'+esc(a.detail)+' <span class="src">['+esc((a.sources||[]).join(" × "))+']</span></div></div>';
+    });
+    html += panel("w8","BRIEF-01","AI MORNING BRIEFING","on",b);
+  } else {
+    html += panel("w8","BRIEF-01","AI MORNING BRIEFING","off",nosig("BRIEFING NOT GENERATED"));
+  }
+
+  // 1b — TODAY: daily schedule tile (omitted when the data file has no today block)
+  var td = g("today.events",null);
+  if (td !== null){
+    var tdh = '<div class="daybig">'+esc(g("today.label",""))+'</div>'+
+              '<div class="daysub">'+esc(g("today.sub",""))+'</div>';
+    if (td.length){
+      td.forEach(function(e){
+        tdh += '<div class="slot'+(e.free?' freeslot':'')+'"><span class="tm">'+esc(e.time)+'</span>'+
+               '<span class="v">'+esc(e.title)+(e.note?'<span class="chip ACTION">'+esc(e.note)+'</span>':'')+'</span></div>';
+      });
+    } else {
+      tdh += '<div class="slot freeslot"><span class="tm">ALL DAY</span><span class="v">Open — no commitments</span></div>';
+    }
+    var nx = g("today.next","");
+    if (nx) tdh += '<div class="daysub" style="margin-top:8px">NEXT UP · '+esc(nx)+'</div>';
+    html += panel("w4","DAY-01","TODAY — DAILY SCHEDULE","on",tdh);
+  }
+
+  // 2 — SOURCE STATUS BOARD
+  var srcs = g("sources",[]);
+  if (srcs.length){
+    var on = srcs.filter(function(s){return s.status==="online";}).length;
+    var s = '<div class="row"><span class="k">LINK STATUS</span><span class="v">'+on+' / '+srcs.length+' ONLINE</span></div>';
+    s += '<div class="segbar">'+srcs.map(function(x){
+      return '<i class="'+(x.status==="online"?"on":(x.status==="auth"?"auth":"off"))+'"></i>';
+    }).join('')+'</div>';
+    s += '<div class="statgrid">';
+    srcs.forEach(function(x){
+      var led = x.status==="online" ? "on" : (x.status==="auth" ? "auth" : "off");
+      s += '<div class="stat"><div class="n"><span class="led '+led+'"></span>'+esc(x.name)+'</div><div class="d">'+esc(x.detail||x.status)+'</div></div>';
+    });
+    s += '</div>';
+    html += panel("w4","LINK-02","CONNECTOR ARRAY","on",s);
+  } else {
+    html += panel("w4","LINK-02","CONNECTOR ARRAY","off",nosig());
+  }
+
+  // 3 — SCHEDULE
+  var evs = g("calendar.events",[]);
+  if (evs.length){
+    var c = '<div class="row"><span class="k">TZ</span><span class="v">'+esc(g("calendar.timezone","?"))+'</span>'+
+            '<span class="k">CALENDARS</span><span class="v">'+esc(g("calendar.calendarCount","?"))+'</span></div>';
+    // 7-day activity meter from the weekLoad probe series (bars, not a graph)
+    var wk = g("telemetry.weekLoad.points",[]);
+    if (wk.length){
+      var wmax = Math.max(1, Math.max.apply(null, wk.map(function(p){return +p.v||0;})));
+      c += '<div class="wkline">'+wk.map(function(p,i){
+        var hpx = Math.max(3, Math.round((+p.v||0)/wmax*34));
+        return '<div class="wd'+(i===0?' today':'')+'"><i class="barv" style="height:'+hpx+'px"></i><span class="wl">'+esc(p.t)+'</span></div>';
+      }).join('')+'</div>';
+    }
+    evs.forEach(function(e){
+      c += '<div class="row"><span class="k">'+esc(e.day)+' '+esc(e.time)+'</span><span class="v">'+esc(e.title)+
+        (e.note?'<span class="chip ACTION">'+esc(e.note)+'</span>':'')+'</span></div>';
+    });
+    html += panel("w6","SKED-03","MISSION SCHEDULE — 7 DAY","on",c);
+  } else {
+    html += panel("w6","SKED-03","MISSION SCHEDULE — 7 DAY","off",nosig());
+  }
+
+  // 3b — BUSINESS OPS: latest cross-source business updates
+  var bz = g("business.updates",[]);
+  if (bz.length){
+    var bh = "";
+    bz.forEach(function(u){
+      bh += '<div class="action'+(u.money?' money':'')+'">'+
+            '<span class="biztag'+(u.kind?' '+esc(u.kind):'')+'">'+esc(u.tag)+'</span>'+
+            '<span class="t">'+esc(u.title)+'</span>'+
+            '<div class="d">'+esc(u.detail)+'</div></div>';
+    });
+    html += panel("w6","BIZ-12","BUSINESS OPS — LATEST UPDATES","on",bh);
+  }
+
+  // 3c — GRANT RADAR: funding opportunities matched to the operator's niche
+  var gr = g("grants.items",[]);
+  if (gr.length){
+    var gh = '<div class="daysub">VERIFIED '+esc(g("grants.verified",""))+' VIA WEB RESEARCH · CONFIRM AT SOURCE BEFORE APPLYING</div>';
+    gr.forEach(function(x){
+      gh += '<div class="gr"><span class="amt">'+esc(x.amount)+'</span><span class="gn">'+esc(x.name)+'</span>'+
+            (x.deadline?'<span class="chip ACTION">'+esc(x.deadline)+'</span>':'')+
+            '<div class="gd">'+esc(x.fit)+'</div>'+
+            (x.url?'<div class="gu">'+esc(x.url)+'</div>':'')+'</div>';
+    });
+    html += panel("w6","GRNT-13","GRANT RADAR — YOUR NICHE","on",gh);
+  }
+
+  // 4 — COMMS (GMAIL)
+  var th = g("gmail.threads",[]);
+  if (th.length){
+    var m = '<div class="row"><span class="big amber" data-count="'+esc(g("gmail.inboxEstimateLast3Days","0"))+'">'+esc(g("gmail.inboxEstimateLast3Days","—"))+'</span>'+
+            '<span class="unit">INBOX THREADS / 72H</span></div>';
+    th.forEach(function(t){
+      m += '<div class="row'+(t.money?' money':'')+'"><span class="k">'+esc((t.at||"").slice(11,16))+'Z</span>'+
+        '<span class="v">'+esc(t.from)+' — '+esc(t.subject)+'<span class="chip '+esc(t.tag)+'">'+esc(t.tag)+'</span></span></div>';
+    });
+    html += panel("w6","COMM-04","COMMS TRAFFIC — GMAIL","on",m);
+  } else {
+    html += panel("w6","COMM-04","COMMS TRAFFIC — GMAIL","off",nosig());
+  }
+
+  // 5 — TASK REACTOR (NOTION)
+  var openTasks = g("notion.openTasks",null);
+  if (openTasks!==null){
+    var n = '<div class="row"><span class="big" data-count="'+esc(openTasks)+'">'+esc(openTasks)+'</span><span class="unit">OPEN TASKS — '+esc(g("notion.tasksDb",""))+'</span></div>';
+    n += '<div class="k" style="padding:6px 0 2px">RECENT PAGES</div>';
+    g("notion.recentPages",[]).forEach(function(p){
+      n += '<div class="row"><span class="k">'+esc(p.edited)+'</span><span class="v">'+esc(p.title)+'</span></div>';
+    });
+    html += panel("","TASK-05","TASK REACTOR — NOTION","on",n);
+  } else {
+    html += panel("","TASK-05","TASK REACTOR — NOTION","off",nosig());
+  }
+
+  // 6 — DOC BAY (DRIVE)
+  var fl = g("drive.files",[]);
+  if (fl.length){
+    var d = "";
+    fl.forEach(function(f){ d += '<div class="row"><span class="k">'+esc(f.when)+' · '+esc(f.type)+'</span><span class="v">'+esc(f.title)+'</span></div>'; });
+    html += panel("","DOCS-06","DOC BAY — DRIVE","on",d);
+  } else {
+    html += panel("","DOCS-06","DOC BAY — DRIVE","off",nosig());
+  }
+
+  // 7 — DESIGN STUDIO (CANVA)
+  var cd = g("canva.designs",[]);
+  if (cd.length){
+    var cv = "";
+    cd.forEach(function(x){ cv += '<div class="row"><span class="v">'+esc(x.title)+'</span><span class="k">'+esc(x.updated)+'</span></div>'; });
+    html += panel("","DSGN-07","DESIGN STUDIO — CANVA","on",cv);
+  } else {
+    html += panel("","DSGN-07","DESIGN STUDIO — CANVA","off",nosig());
+  }
+
+  // 8 — CREW COMMS (SLACK)
+  var ch = g("slack.channels",[]);
+  if (ch.length){
+    var chRows = '<div class="row"><span class="k">WORKSPACE</span><span class="v">'+esc(g("slack.workspace","?"))+'</span></div>';
+    ch.forEach(function(x){
+      chRows += '<div class="row"><span class="v">'+esc(x.name)+'</span><span class="k">'+esc(x.messages)+' MSGS · '+esc(x.purpose)+'</span></div>';
+    });
+    chRows += '<div class="offline-note" style="color:var(--amber)">CHANNELS SILENT — AWAITING FIRST TRANSMISSION</div>';
+    var sdn = g("slack.silentDays",null);
+    var sl = (sdn!==null)
+      ? '<div style="display:flex;align-items:center;gap:16px"><div class="ringday"><canvas class="ringcv"></canvas>'+
+        '<div class="rc"><div class="rn">'+esc(sdn)+'</div><div class="rl">DAYS SILENT</div></div></div>'+
+        '<div style="flex:1;min-width:0">'+chRows+'</div></div>'
+      : chRows;
+    html += panel("w6","CREW-08","CREW COMMS — SLACK","on",sl);
+  } else {
+    html += panel("w6","CREW-08","CREW COMMS — SLACK","off",nosig());
+  }
+
+  // 9 — FUEL (HIGGSFIELD CREDITS) — money-sensitive
+  var cr = g("higgsfield.credits",null);
+  if (cr!==null){
+    // radial fuel gauge vs the highest balance in the probe-history window
+    var peak = null;
+    try{
+      var tp = g("telemetry.credits.points",[]);
+      if (tp.length) peak = Math.max.apply(null, tp.map(function(p){return +p.v||0;}));
+    }catch(e){}
+    var f = '<div class="gauge-wrap money">'+
+            (peak ? '<canvas id="fuelGauge" data-pct="'+(cr/peak)+'"></canvas>' : '')+
+            '<div><div class="row"><span class="big" data-count="'+esc(cr)+'">'+esc(cr)+'</span><span class="unit">AI CREDITS · PLAN: '+esc(g("higgsfield.plan","?")).toUpperCase()+'</span></div>'+
+            (peak ? '<div class="k">'+Math.round(cr/peak*100)+'% OF 30-DAY PEAK ('+peak.toFixed(2)+')</div>' : '')+
+            '<div class="k">GENERATION FUEL FOR VIDEO / IMAGE / AUDIO MISSIONS</div></div></div>';
+    html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","on",f);
+  } else {
+    html += panel("w3","FUEL-09","FUEL — HIGGSFIELD","off",nosig());
+  }
+
+  // 10 — FINANCE — rendered from the data feed; NO SIGNAL when the feed has
+  // no finance block (keeps refreshes honest instead of a hard-coded snapshot)
+  var finNotes = g("finance.notes",[]);
+  if (finNotes.length || g("finance.status","")){
+    var fin = "";
+    finNotes.forEach(function(n){ fin += '<div class="row money"><span class="v">'+esc(n)+'</span></div>'; });
+    var fs = g("finance.status","");
+    if (fs) fin += '<div class="offline-note">'+esc(fs)+'</div>';
+    var fled = g("finance.led","auth");
+    html += panel("w3","FIN-10","FINANCE WATCH", (fled==="on"||fled==="off"||fled==="auth")?fled:"auth", fin);
+  } else {
+    html += panel("w3","FIN-10","FINANCE WATCH","off",nosig("NO FINANCE DATA IN FEED"));
+  }
+
+  // 11 — TELEMETRY GRAPHS — drawn only from real probe-history series in the
+  // data file; the panel is omitted entirely when no series exist.
+  var t1 = g("telemetry.credits.points",[]), t2 = g("telemetry.weekLoad.points",[]);
+  if (t1.length > 1 || t2.length > 1){
+    var tg = '<div class="telegrid">';
+    if (t1.length > 1){
+      tg += '<div class="tchart money"><div class="tl"><b>'+esc(g("telemetry.credits.label","CREDITS"))+'</b>'+
+            '<span class="tv cyan">'+esc(t1[t1.length-1].v)+' '+esc(g("telemetry.credits.unit",""))+'</span></div>'+
+            '<canvas class="tcv" data-series="credits" data-color="cyan"></canvas></div>';
+    }
+    if (t2.length > 1){
+      tg += '<div class="tchart"><div class="tl"><b>'+esc(g("telemetry.weekLoad.label","WEEK LOAD"))+'</b>'+
+            '<span class="tv amber">'+esc(g("telemetry.weekLoad.unit",""))+'</span></div>'+
+            '<canvas class="tcv" data-series="weekLoad" data-color="amber"></canvas></div>';
+    }
+    tg += '</div>';
+    html += panel("w12","TLM-11","TELEMETRY — PROBE HISTORY","on",tg);
+  }
+
+  document.getElementById("grid").innerHTML = html;
+}
+
+function togglePrivacy(){
+  document.body.classList.toggle("privacy");
+  var on = document.body.classList.contains("privacy");
+  var b = document.getElementById("privacyBtn");
+  b.textContent = on ? "🙈 PRIVACY: ON" : "🔒 PRIVACY: OFF";
+  b.classList.toggle("active", on);
+}
+
+function toggleText(){
+  document.body.classList.toggle("bigtext");
+  var on = document.body.classList.contains("bigtext");
+  var b = document.getElementById("textBtn");
+  b.textContent = on ? "🔍 TEXT: LARGE" : "🔎 TEXT: STD";
+  b.classList.toggle("active", on);
+}
+
+function tick(){
+  var now = new Date();
+  try{
+    document.getElementById("clock").textContent =
+      now.toLocaleTimeString("en-US",{hour12:false,timeZone:(D.operator&&D.operator.timezone)||undefined}) + " ET";
+  }catch(e){
+    document.getElementById("clock").textContent = now.toLocaleTimeString("en-US",{hour12:false});
+  }
+}
+
+/* ================= cinematic FX layer (visual only — no data logic) ================= */
+
+// Starfield: ~150 drifting/twinkling stars with slight mouse parallax by depth.
+function initStars(){
+  var cv = document.getElementById("stars"), ctx = cv.getContext("2d");
+  var stars = [], W, H, dpr = Math.min(window.devicePixelRatio||1, 1.5);
+  function size(){
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W*dpr; cv.height = H*dpr; cv.style.width = W+"px"; cv.style.height = H+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  size(); window.addEventListener("resize", size);
+  for (var i=0;i<150;i++){
+    stars.push({ x:Math.random(), y:Math.random(), z:.3+Math.random()*.7,   // z = depth
+      r:.4+Math.random()*1.1, p:Math.random()*6.28, s:.15+Math.random()*.5 });
+  }
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    for (var i=0;i<stars.length;i++){
+      var st = stars[i];
+      var tw = REDUCED ? .7 : .45 + .55*Math.abs(Math.sin(st.p + t*.00045*st.s*4));
+      var px = (st.x*W + (REDUCED?0:t*.004*st.s*st.z)) % (W+20) - 10;
+      var py = st.y*H + (REDUCED?0:mSY*14*st.z); // parallax: deep stars shift more
+      var pxm = px + (REDUCED?0:mSX*22*st.z);
+      ctx.globalAlpha = tw*st.z*.9;
+      ctx.fillStyle = i%9===0 ? "#7fd8ff" : "#c9d7ee";
+      ctx.beginPath(); ctx.arc(pxm, py, st.r*st.z, 0, 6.28); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  return draw;
+}
+
+// Mouse-driven console tilt: two root vars ease toward the pointer each frame.
+var mTX=0, mTY=0, mSX=0, mSY=0;
+window.addEventListener("mousemove", function(e){
+  mTX = (e.clientX/window.innerWidth - .5)*2;
+  mTY = (e.clientY/window.innerHeight - .5)*2;
+});
+
+// Count-up for .big values (keeps decimals of the target: 359.91 → 2dp).
+function countUps(){
+  document.querySelectorAll(".big[data-count]").forEach(function(el){
+    var target = parseFloat(el.getAttribute("data-count"));
+    if (isNaN(target)) return;
+    var dec = (String(el.getAttribute("data-count")).split(".")[1]||"").length;
+    var t0 = null, DUR = 1300;
+    function step(t){
+      if (!t0) t0 = t;
+      var k = Math.min((t-t0)/DUR, 1);
+      k = 1 - Math.pow(1-k, 3); // ease-out cubic
+      el.textContent = (target*k).toFixed(dec);
+      if (k<1) requestAnimationFrame(step); else el.textContent = target.toFixed(dec);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// Telemetry charts: glowing jagged area lines, drawn only from real
+// probe-history series (visual layer — no data logic, no synthetic points).
+var CHART_COLORS = {
+  cyan:  { line:"#4fd6ff", glow:"rgba(79,214,255,.55)", fill:"rgba(79,214,255,.14)" },
+  amber: { line:"#ffb545", glow:"rgba(255,181,69,.5)",  fill:"rgba(255,181,69,.12)" }
+};
+function drawChart(cv, pts, colorKey, prog){
+  var ctx = cv.getContext("2d"); if (!ctx) return;
+  var dpr = Math.min(window.devicePixelRatio||1, 2);
+  var W = cv.clientWidth||300, H = cv.clientHeight||150;
+  cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  var C = CHART_COLORS[colorKey] || CHART_COLORS.cyan;
+  var vs = pts.map(function(p){ return +p.v||0; });
+  var mn = Math.min.apply(null,vs), mx = Math.max.apply(null,vs);
+  var pad = (mx-mn)*.18 || 1; mn -= pad; mx += pad;
+  var PL=6, PR=6, PT=8, PB=18;
+  function X(i){ return PL + (W-PL-PR)*i/(pts.length-1); }
+  function Y(v){ return PT + (H-PT-PB)*(1-(v-mn)/(mx-mn)); }
+  ctx.strokeStyle = "rgba(28,44,71,.8)"; ctx.lineWidth = 1;
+  for (var r=1; r<4; r++){
+    var gy = PT+(H-PT-PB)*r/4;
+    ctx.beginPath(); ctx.moveTo(PL,gy); ctx.lineTo(W-PR,gy); ctx.stroke();
+  }
+  ctx.save(); ctx.beginPath(); ctx.rect(0,0,W*prog,H); ctx.clip();
+  ctx.beginPath(); ctx.moveTo(X(0),H-PB);
+  pts.forEach(function(p,i){ ctx.lineTo(X(i),Y(+p.v||0)); });
+  ctx.lineTo(X(pts.length-1),H-PB); ctx.closePath();
+  var grad = ctx.createLinearGradient(0,PT,0,H-PB);
+  grad.addColorStop(0,C.fill); grad.addColorStop(1,"rgba(0,0,0,0)");
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.shadowColor = C.glow; ctx.shadowBlur = 9;
+  ctx.strokeStyle = C.line; ctx.lineWidth = 1.6; ctx.lineJoin = "miter";
+  ctx.beginPath();
+  pts.forEach(function(p,i){ i ? ctx.lineTo(X(i),Y(+p.v||0)) : ctx.moveTo(X(i),Y(+p.v||0)); });
+  ctx.stroke(); ctx.shadowBlur = 0;
+  if (prog >= 1){
+    var lx = X(pts.length-1), ly = Y(+pts[pts.length-1].v||0);
+    ctx.fillStyle = C.line; ctx.beginPath(); ctx.arc(lx,ly,2.5,0,6.28); ctx.fill();
+  }
+  ctx.restore();
+  ctx.fillStyle = "#5f7398"; ctx.font = "9px Courier New";
+  ctx.textAlign = "left";  ctx.fillText(String(pts[0].t||""), PL, H-5);
+  ctx.textAlign = "right"; ctx.fillText(String(pts[pts.length-1].t||""), W-PR, H-5);
+  if (pts.length > 4){
+    var mi = Math.floor(pts.length/2);
+    ctx.textAlign = "center"; ctx.fillText(String(pts[mi].t||""), X(mi), H-5);
+  }
+}
+// Radial fuel gauge: needle-free glowing arc, colored by remaining fraction.
+function drawGauge(cv, pct, prog){
+  var ctx = cv.getContext("2d"); if (!ctx) return;
+  var dpr = Math.min(window.devicePixelRatio||1, 2), S = cv.clientWidth||110;
+  cv.width = S*dpr; cv.height = S*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,S,S);
+  var c = S/2, r = S/2-9, a0 = Math.PI*.75, a1 = Math.PI*2.25;
+  ctx.lineWidth = 7; ctx.lineCap = "butt";
+  ctx.strokeStyle = "rgba(28,44,71,.9)";
+  ctx.beginPath(); ctx.arc(c,c,r,a0,a1); ctx.stroke();
+  var p = Math.max(0, Math.min(1, pct))*prog;
+  var col = pct > .5 ? "#37e08b" : (pct > .25 ? "#ffb545" : "#ff5d5d");
+  ctx.strokeStyle = col; ctx.shadowColor = col; ctx.shadowBlur = 10;
+  ctx.beginPath(); ctx.arc(c,c,r,a0,a0+(a1-a0)*p); ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = "rgba(95,115,152,.6)"; ctx.lineWidth = 1;
+  for (var i=0; i<=6; i++){
+    var a = a0+(a1-a0)*i/6;
+    ctx.beginPath();
+    ctx.moveTo(c+Math.cos(a)*(r-9), c+Math.sin(a)*(r-9));
+    ctx.lineTo(c+Math.cos(a)*(r-14), c+Math.sin(a)*(r-14));
+    ctx.stroke();
+  }
+  ctx.fillStyle = "#eaf2ff"; ctx.font = "700 15px Courier New"; ctx.textAlign = "center";
+  ctx.fillText(Math.round(pct*100*prog)+"%", c, c+5);
+  ctx.fillStyle = "#5f7398"; ctx.font = "7px Courier New";
+  ctx.fillText("FUEL", c, c+17);
+}
+// Decorative alarm ring around a counter (e.g. Slack days-silent).
+function drawRing(cv, prog){
+  var ctx = cv.getContext("2d"); if (!ctx) return;
+  var dpr = Math.min(window.devicePixelRatio||1, 2), S = cv.clientWidth||78;
+  cv.width = S*dpr; cv.height = S*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,S,S);
+  var c = S/2, r = S/2-5;
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "rgba(28,44,71,.9)";
+  ctx.beginPath(); ctx.arc(c,c,r,0,6.283); ctx.stroke();
+  ctx.strokeStyle = "#ff5d5d"; ctx.shadowColor = "rgba(255,93,93,.6)"; ctx.shadowBlur = 8;
+  ctx.beginPath(); ctx.arc(c,c,r,-Math.PI/2,-Math.PI/2+6.283*prog); ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+function drawCharts(prog){
+  document.querySelectorAll("canvas.tcv").forEach(function(cv){
+    try{
+      var pts = g("telemetry."+cv.getAttribute("data-series")+".points",[]);
+      if (pts.length > 1) drawChart(cv, pts, cv.getAttribute("data-color"), prog);
+    }catch(e){}
+  });
+  var fg = document.getElementById("fuelGauge");
+  if (fg){ try{ drawGauge(fg, +fg.getAttribute("data-pct")||0, prog); }catch(e){} }
+  document.querySelectorAll("canvas.ringcv").forEach(function(cv){
+    try{ drawRing(cv, prog); }catch(e){}
+  });
+}
+function animateCharts(){
+  if (REDUCED){ drawCharts(1); return; }
+  var t0 = null, DUR = 1200;
+  function step(t){
+    if (!t0) t0 = t;
+    var k = Math.min((t-t0)/DUR, 1); k = 1-Math.pow(1-k,3);
+    drawCharts(k);
+    if (k < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+window.addEventListener("resize", function(){ drawCharts(1); });
+
+// Typewriter for the briefing headline.
+function typeHeadline(){
+  var el = document.getElementById("headline");
+  if (!el) return;
+  var full = el.getAttribute("data-full")||"";
+  if (REDUCED){ el.textContent = full; return; }
+  var i = 0, caret = '<span class="caret"></span>';
+  (function ty(){
+    el.innerHTML = esc(full.slice(0, i)) + (i<full.length ? caret : "");
+    if (i++ <= full.length) setTimeout(ty, 14);
+  })();
+}
+
+function initFX(){
+  var drawStars = initStars();
+  var root = document.documentElement;
+  function loop(t){
+    // ease current toward target for a weighty, cinematic settle
+    mSX += (mTX - mSX)*.07;
+    mSY += (mTY - mSY)*.07;
+    if (!REDUCED){
+      root.style.setProperty("--mx", mSX.toFixed(4));
+      root.style.setProperty("--my", mSY.toFixed(4));
+    }
+    if (!document.hidden) drawStars(t);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // boot sequence → lift cover, flicker console in, then animate data
+  var bootDelay = REDUCED ? 0 : 1250;
+  setTimeout(function(){
+    document.body.classList.add("booted");
+    // release entry animations once done so the tilt transform takes over
+    document.querySelectorAll(".panel").forEach(function(p){
+      p.addEventListener("animationend", function(ev){
+        if (ev.animationName === "pin"){ p.style.animation = "none"; p.style.opacity = "1"; }
+      });
+    });
+    setTimeout(function(){ countUps(); typeHeadline(); animateCharts(); }, REDUCED ? 0 : 550);
+  }, bootDelay);
+}
+
+try{ render(); }catch(e){
+  document.getElementById("grid").innerHTML =
+    '<section class="panel w12" style="opacity:1"><div class="pb"><div class="nosig">RENDER FAULT — RAW FEED PRESERVED IN dashboard-data.js</div></div></section>';
+}
+tick(); setInterval(tick,1000);
+initFX();
+</script>
+</body>
+</html>

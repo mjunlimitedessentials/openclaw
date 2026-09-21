@@ -1,0 +1,88 @@
+---
+name: mission-control-refresh
+description: Refresh the MJU Mission Control dashboard (mission-control/) by re-probing every connected tool, rewriting dashboard-data.js with real data only, regenerating the AI morning briefing, and marking failed sources offline. Use when asked to refresh, update, or rebuild the mission-control dashboard, or when the scheduled morning refresh fires.
+metadata:
+  {
+    "openclaw": { "emoji": "🛰️" }
+  }
+---
+
+# Mission Control Refresh
+
+> **SECURITY (verified 2026-09-20): this repository is PUBLIC.** Never commit
+> live personal data (names, emails, calendar events, inbox subjects,
+> balances, client names) to it. `mission-control/dashboard-data.js` in the
+> repo stays a **sanitized template**; the live data file is written only in
+> the session workspace and published only to the operator's **private
+> Claude artifact**. Commits earlier on this branch contain live snapshots —
+> treat that history as exposed until the operator purges it.
+
+Regenerate the live Mission Control data from connector probes.
+The page (`mission-control/index.html`) is static and must NOT be edited by
+this skill — it renders whatever the data file contains and shows NO SIGNAL
+for anything missing. All data flows through the data file.
+
+## Iron rules
+
+1. **Real data only.** Every number written to `dashboard-data.js` must come
+   from a tool call that succeeded in this run. Never carry a stale number
+   forward silently, never invent one.
+2. **Never break the page.** If a probe fails, mark that source
+   `status: "offline"` (or `"auth"` if it needs authorization) in the
+   `sources` array and omit/empty its data block — the page renders a
+   NO SIGNAL panel on its own. A malformed data file is the only way to
+   break the page, so keep it valid JS: `window.MISSION_DATA = { ... };`.
+3. **Money fields** keep `money: true` so the privacy toggle can blur them.
+
+## Probe list (run in parallel where possible)
+
+| Source | Probe |
+|---|---|
+| Gmail | `search_threads` query `in:inbox newer_than:3d`, pageSize 15 |
+| Google Calendar | `list_events` today → +7 days, primary calendar; `list_calendars` count |
+| Google Drive | `list_recent_files` pageSize 10 |
+| Notion | query the operator's tasks database for open-task count (use the `notion.tasksDbId` value configured in the data file, or discover the tasks database via `notion-search`; if none is configured/found, mark Notion online with a note and leave tasks null — never hardcode a personal database ID in this repo); `notion-search` for recent pages |
+| Slack | `slack_search_channels`, then `slack_read_channel` per channel for message counts |
+| Canva | `search-designs` sorted by modified_descending |
+| Higgsfield | `balance` for credits + plan |
+| Stripe, Granola, Zoom, Supabase, vidIQ, Gamma, Jotform, Lovable | attempt one cheap read each; expect approval-gating in headless runs → mark offline |
+
+MCP tool prefixes rotate between sessions — discover current names with
+ToolSearch rather than hardcoding prefixes.
+
+## Steps
+
+1. Probe everything above. Collect results; note failures.
+2. Rewrite `mission-control/dashboard-data.js`:
+   - `generatedAt`: current UTC ISO timestamp
+   - `sources`: one entry per connector with live status + one-line detail
+   - data blocks only for sources that answered
+   - `briefing`: write a fresh AI morning briefing — 5–8 prioritized actions,
+     each cross-referencing at least one source (`sources: [...]`), security
+     items first, money items flagged `money: true`. The headline is one
+     sentence that captures the day.
+   - `telemetry`: maintain the probe-history graph series. Append today's
+     Higgsfield balance to `telemetry.credits.points` (keep ~30 days, drop the
+     oldest; skip the append if the balance probe failed) and rebuild
+     `telemetry.weekLoad.points` from the 7-day calendar probe (events per
+     day, SUN–SAT from today). Real probed values only — never interpolate
+     missing days.
+   - `today`: rebuild from the calendar probe — label (day + date), events
+     with times for today only, `next` = the next upcoming fixed commitment.
+   - `business.updates`: 4–6 latest business updates cross-referenced from
+     the probes (production runs, launches, projects, client work, risks).
+     Real observed changes only.
+   - `grants`: keep the researched list with its `verified` date. Re-verify
+     via web search roughly weekly (or when a deadline passes); update
+     deadlines, drop closed programs, never invent amounts or dates. If web
+     search is unavailable, leave the list untouched — the stale `verified`
+     date is the honesty marker.
+3. Sanity-check: `node --check mission-control/dashboard-data.js` must pass.
+4. Write the LIVE data file only in the session workspace, rebuild the
+   single-file page from it, and republish the operator's private Claude
+   artifact. Do NOT commit the live file: the repo copy of
+   `mission-control/dashboard-data.js` must stay the sanitized template
+   (commit only template/structure changes, with real data stripped).
+5. If running in an environment with Chromium, screenshot the page
+   (1720px wide) and send it to the user with a 2–3 line summary of what
+   changed since yesterday. If nothing notable changed, keep it to one line.
