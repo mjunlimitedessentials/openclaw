@@ -301,7 +301,10 @@
   .voicepick select { flex: 1; min-width: 0; background: rgba(3,8,22,.6); color: var(--ink); border: 1px solid var(--hair); border-radius: 7px; font: 500 10px var(--mono); padding: 5px 6px; }
   @media (max-width: 1000px) { .reactor { width: 240px; height: 240px; } .hud-tag { display: none; } }
   @media (max-width: 680px) { .jarvis-hud { right: 14px; top: auto; bottom: 150px; transform: none; } .reactor { width: 150px; height: 150px; } .hud-name { font-size: 9px; } }
-  @media (prefers-reduced-motion: reduce) { .reactor .s1, .reactor .s2, .reactor .s3, .reactor .s4, .reactor .s5, .reactor .sweep, .reactor .center { animation: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .r-bloom, .r-spokes, .r-seg, .r-core, .hud-status .led,
+    .reactor.active .r-spokes, .reactor.active .r-seg, .reactor.active .r-core { animation: none; }
+  }
 </style>
 
 <div id="stage">

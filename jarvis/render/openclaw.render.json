@@ -1,0 +1,91 @@
+{
+  "$schema": "https://docs.openclaw.ai/schema/openclaw.schema.json",
+  "_comment": "Gateway config used by the Render deploy (jarvis-2). Pointed at via OPENCLAW_CONFIG_PATH in render.yaml. It enables the /v1/responses API (off by default), persists the agent workspace on the mounted /data disk, and uses password auth consistently so the control panel login and the live console share one credential (OPENCLAW_GATEWAY_PASSWORD). Secrets come from the Render environment, never from this file.",
+
+  "gateway": {
+    "mode": "local",
+    "bind": "lan",
+    "_auth_comment": "Password mode: OPENCLAW_GATEWAY_PASSWORD is BOTH the control-panel login and the Bearer credential for /v1/responses. (The gateway selects password mode whenever a password is set, so a separate token would be ignored.)",
+    "auth": { "mode": "password" },
+    "http": {
+      "endpoints": {
+        "_comment": "Both default to DISABLED. The live web console calls /v1/responses, so it must be enabled here.",
+        "responses": { "enabled": true },
+        "chatCompletions": { "enabled": true }
+      }
+    }
+  },
+
+  "ui": { "assistant": { "name": "JARVIS", "avatar": "🤖" } },
+
+  "agents": {
+    "defaults": {
+      "userTimezone": "America/Los_Angeles",
+      "_workspace_comment": "On the mounted disk so persona edits, notes, and memory survive every redeploy.",
+      "workspace": "/data/workspace"
+    },
+    "list": [
+      {
+        "id": "main",
+        "default": true,
+        "identity": { "name": "JARVIS", "theme": "calm, precise chief-of-staff AI", "emoji": "🤖" },
+        "workspace": "/data/workspace",
+        "model": {
+          "primary": "anthropic/claude-opus-4-6",
+          "fallbacks": ["anthropic/claude-sonnet-4-5"]
+        },
+        "skills": [
+          "jarvis",
+          "jarvis-comms",
+          "jarvis-content",
+          "jarvis-crm",
+          "jarvis-research",
+          "jarvis-sales",
+          "jarvis-operations",
+          "jarvis-analytics",
+          "jarvis-brain",
+          "jarvis-websites",
+          "mcporter",
+          "weather",
+          "summarize",
+          "voice-call"
+        ],
+        "heartbeat": {
+          "enabled": true,
+          "prompt": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. If nothing needs attention, reply HEARTBEAT_OK."
+        }
+      }
+    ]
+  },
+
+  "skills": {
+    "load": {
+      "_comment": "The repo is checked out at /app in the container; the JARVIS skills live here.",
+      "extraDirs": ["/app/jarvis/skills"],
+      "watch": true
+    }
+  },
+
+  "memory": { "backend": "builtin" },
+
+  "cron": { "enabled": true, "sessionRetention": "48h" },
+
+  "channels": {
+    "telegram": {
+      "_comment": "Set TELEGRAM_BOT_TOKEN in the Render environment to chat with JARVIS. Locked to you.",
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "actions": { "reactions": true, "sendMessage": true }
+    }
+  },
+
+  "messages": {
+    "tts": {
+      "_comment": "Premium British butler voice. Set ELEVENLABS_API_KEY in the Render environment. Leave unset to fall back to the free 'edge' voice.",
+      "auto": "always",
+      "mode": "final",
+      "provider": "elevenlabs",
+      "elevenlabs": { "voiceId": "onwK4e9ZLuTAKqWW03F9", "modelId": "eleven_turbo_v2_5" }
+    }
+  }
+}

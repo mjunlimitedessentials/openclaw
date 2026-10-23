@@ -24,9 +24,9 @@ waiting for the first build.
 ## Step 1 — Start the Blueprint
 
 1. Go to the Render Dashboard → **New +** → **Blueprint**.
-2. Connect your GitHub and pick the repo **`mjunlimitedessentials/openclaw`**.
+2. Connect your GitHub and pick your repo (the one that contains this `render.yaml` — your fork/copy of `openclaw`).
 3. Render finds `render.yaml` automatically and shows a service named **`jarvis-2`**.
-4. Confirm the branch is **`claude/jarvis-2-ai-assistant-6g95ce`**.
+4. It deploys from your repo's **default branch** (usually `main`) — no branch pin, so make sure the JARVIS code is merged there.
 5. Click **Apply**.
 
 Render now starts building the Docker image. **This first build takes ~8–12
@@ -42,8 +42,9 @@ The blueprint already configured:
 |---|---|---|
 | Port | `8080` | The port JARVIS listens on |
 | Bind | `--bind lan` | So Render can reach it from outside |
-| Disk | `/data`, 1 GB | Durable memory + workspace (survives restarts) |
-| `OPENCLAW_GATEWAY_TOKEN` | auto-generated | Bearer token for the API / live console |
+| Disk | `/data`, 1 GB | Durable storage — state + the agent **workspace** (`/data/workspace`) persist across redeploys |
+| Config | `jarvis/render/openclaw.render.json` | Enables the `/v1/responses` API, points the workspace at `/data`, sets password auth |
+| Auth | password | One credential (`OPENCLAW_GATEWAY_PASSWORD`) is both the panel login and the console's Bearer |
 
 You only need to fill in the **secret** values yourself — that's Step 3–4.
 
@@ -112,12 +113,14 @@ instead of the offline demo, copy `config.example.js` → `config.js` and set:
 window.JARVIS = {
   enabled: true,
   endpoint: "https://jarvis-2-xxxx.onrender.com",   // your Render URL, no trailing /v1
-  token: "<OPENCLAW_GATEWAY_TOKEN from Render → Environment>",
+  token: "<your OPENCLAW_GATEWAY_PASSWORD>",         // password auth: Bearer = the panel password
   model: "default",
 };
 ```
 
-`config.js` is gitignored — never commit it. See `showcase/LIVE.md` for CORS notes.
+The `/v1/responses` API is enabled by the shipped config (`jarvis/render/openclaw.render.json`);
+without that it's off by default and the console would get 404. `config.js` is gitignored —
+never commit it. See `showcase/LIVE.md` for CORS notes.
 
 ---
 

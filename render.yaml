@@ -1,6 +1,6 @@
 # JARVIS 2 — Render.com blueprint (always-on cloud host)
 # ---------------------------------------------------------------------------
-# Deploy: Render Dashboard → New → Blueprint → pick this repo/branch.
+# Deploy: Render Dashboard → New → Blueprint → pick your repo.
 # Render reads this file, builds the Dockerfile, and starts JARVIS as an
 # always-on web service. You then set the secret values (marked sync:false)
 # in the Render dashboard — NEVER in git. See jarvis/RENDER.md for the full
@@ -11,13 +11,14 @@ services:
     name: jarvis-2
     runtime: docker
     plan: starter            # ~$7/mo, always-on, keeps the /data disk. Free tier sleeps + has no disk.
-    branch: claude/jarvis-2-ai-assistant-6g95ce
+    # No `branch:` pin — Render tracks your repo's default branch (usually main),
+    # so a standard fork/Blueprint flow works for anyone.
     autoDeploy: true
 
+    # Startup seeds the persistent workspace on /data, then starts the gateway.
     # The gateway binds to loopback by default and refuses an external bind
-    # without auth. On Render we bind to 0.0.0.0 (lan) and rely on the
-    # generated OPENCLAW_GATEWAY_TOKEN / your OPENCLAW_GATEWAY_PASSWORD below.
-    dockerCommand: node openclaw.mjs gateway --allow-unconfigured --bind lan
+    # without auth, so we bind to 0.0.0.0 (lan) and require OPENCLAW_GATEWAY_PASSWORD.
+    dockerCommand: bash jarvis/render/start.sh
 
     envVars:
       # The port JARVIS listens on. Render routes external traffic here.
@@ -28,14 +29,16 @@ services:
       - key: OPENCLAW_GATEWAY_PORT
         value: "8080"
 
-      # Password you'll use to log into the JARVIS web control panel.
-      # Set it to something only you know when you deploy.
+      # Loads the JARVIS gateway config (enables the /v1/responses API, persists
+      # the workspace on /data, password auth, skills). Shipped in the repo.
+      - key: OPENCLAW_CONFIG_PATH
+        value: /app/jarvis/render/openclaw.render.json
+
+      # ONE credential for everything: the control-panel login AND the Bearer
+      # token the live web console sends to /v1/responses. Pick something only
+      # you know. (The gateway uses password auth whenever a password is set.)
       - key: OPENCLAW_GATEWAY_PASSWORD
         sync: false
-
-      # Auto-generated Bearer token for the API / live console (Authorization: Bearer ...).
-      - key: OPENCLAW_GATEWAY_TOKEN
-        generateValue: true
 
       # Your Claude key (sk-ant-...). Set it in the Render dashboard — never in git.
       - key: ANTHROPIC_API_KEY
@@ -50,10 +53,9 @@ services:
         sync: false
 
       # Durable storage on the mounted disk (survives restarts/redeploys).
+      # State (sessions, memory) + the agent workspace both live under /data.
       - key: OPENCLAW_STATE_DIR
         value: /data/.openclaw
-      - key: OPENCLAW_WORKSPACE_DIR
-        value: /data/workspace
 
     disk:
       name: openclaw-data
