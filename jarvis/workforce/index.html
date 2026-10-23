@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>J.A.R.V.I.S. 2 — AI Workforce</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root{
+    --bg-0:#05070f; --bg-1:#070c1c; --panel:rgba(11,21,51,.6); --panel-2:rgba(7,14,32,.72);
+    --hair:#1b2b55; --hair-soft:rgba(90,130,220,.16);
+    --ink:#dbe6ff; --ink-dim:#93a9db; --muted:#63799f;
+    --accent:#3b82f6; --accent-2:#60a5fa; --glow:rgba(59,130,246,.5);
+    --exec:#4aa3ff; --content:#f5c451; --research:#6ff0c0; --sales:#43d9a3; --ops:#a78bfa; --analytics:#f4a6c0;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{
+    color:var(--ink); font-family:var(--sans);
+    background:
+      radial-gradient(900px 620px at 50% -6%, #11244c 0%, transparent 60%),
+      radial-gradient(1000px 700px at 10% 110%, #0c1a3a 0%, transparent 55%),
+      var(--bg-0);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:26px 20px 70px}
+
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:34px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .orb{width:34px;height:34px;flex:none;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,#cfe6ff,var(--accent) 55%,#0c1f52 100%);
+    box-shadow:0 0 20px var(--glow),inset 0 0 8px rgba(255,255,255,.5);animation:pulse 3.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 14px var(--glow)}50%{box-shadow:0 0 30px var(--glow)}}
+  .brand h1{margin:0;font:800 15px/1 var(--mono);letter-spacing:.16em}
+  .brand .sub{font:600 9.5px var(--mono);letter-spacing:.14em;color:var(--muted);margin-top:4px}
+  .nav{display:flex;gap:8px;flex-wrap:wrap}
+  .nav a{font:600 10px var(--mono);letter-spacing:.1em;color:var(--ink-dim);text-decoration:none;
+    border:1px solid var(--hair);background:var(--panel);border-radius:18px;padding:7px 12px}
+  .nav a:hover{color:#fff;border-color:var(--accent)}
+
+  .hero{text-align:center;margin:10px 0 34px}
+  .hero h2{font:800 clamp(26px,5vw,44px)/1.05 var(--sans);letter-spacing:-.02em;margin:0 0 12px;
+    background:linear-gradient(180deg,#fff,#a9c4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font:400 15px/1.6 var(--sans);color:var(--ink-dim);max-width:52ch;margin:0 auto}
+
+  /* ---- chief node ---- */
+  .chief{display:flex;flex-direction:column;align-items:center;margin:0 auto 10px;max-width:420px}
+  .reactor{width:150px;height:150px;position:relative}
+  .reactor .ring{position:absolute;inset:0;border-radius:50%;border:1px solid var(--hair-soft)}
+  .reactor .ring.r2{inset:10%;border-color:rgba(90,140,230,.26)}
+  .reactor .ring.r3{inset:20%;border-color:rgba(120,180,255,.16)}
+  .reactor .spin{position:absolute;inset:4%;border-radius:50%;
+    background:conic-gradient(from 0deg,transparent,rgba(96,165,250,.55),transparent 28%,transparent 56%,rgba(52,226,226,.42),transparent 84%);
+    -webkit-mask:radial-gradient(circle,transparent 60%,#000 61%);mask:radial-gradient(circle,transparent 60%,#000 61%);
+    animation:spin 8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .reactor .core{position:absolute;inset:30%;border-radius:50%;
+    background:radial-gradient(circle at 38% 32%,#eaf4ff,#5fa2ff 42%,#1b49b0 72%,#0a1c4d 100%);
+    box-shadow:0 0 50px var(--glow),0 0 100px rgba(59,130,246,.25),inset 0 0 26px rgba(255,255,255,.35);
+    animation:pulse 3s ease-in-out infinite}
+  .chief .label{margin-top:14px;text-align:center}
+  .chief .label .n{font:800 20px var(--mono);letter-spacing:.14em}
+  .chief .label .r{font:600 9.5px var(--mono);letter-spacing:.18em;color:var(--accent-2);text-transform:uppercase;margin-top:5px}
+  .chief .label .d{font:500 11px var(--mono);color:var(--muted);letter-spacing:.04em;margin-top:7px}
+
+  .stem{width:1px;height:28px;margin:4px auto 0;background:linear-gradient(var(--accent),transparent)}
+
+  /* ---- agent grid ---- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  @media (max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:440px){.grid{grid-template-columns:1fr}}
+  .agent{position:relative;border:1px solid var(--hair);border-radius:16px;padding:18px 16px;
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));cursor:pointer;overflow:hidden;
+    transition:transform .16s,border-color .16s,box-shadow .16s}
+  .agent::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--c);opacity:.8}
+  .agent:hover{transform:translateY(-3px);border-color:var(--c);box-shadow:0 18px 44px -26px var(--c)}
+  .agent .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:20px;
+    background:rgba(5,11,28,.7);border:1px solid var(--hair);box-shadow:0 0 16px -4px var(--c);color:var(--c)}
+  .agent h3{margin:12px 0 2px;font:700 14px var(--sans);color:#fff}
+  .agent .role{font:600 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--c)}
+  .agent p{margin:9px 0 0;font:400 12px/1.5 var(--sans);color:var(--ink-dim)}
+  .agent .skill{margin-top:10px;font:600 9.5px var(--mono);letter-spacing:.04em;color:var(--muted)}
+  .agent .skill b{color:var(--ink-dim)}
+  .agent .live{position:absolute;top:14px;right:14px;font:700 8px var(--mono);letter-spacing:.1em;
+    color:var(--sales);border:1px solid rgba(67,217,163,.4);border-radius:10px;padding:2px 6px}
+
+  .bonus{margin-top:26px;text-align:center}
+  .bonus .h{font:700 10px var(--mono);letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:14px}
+  .bonus .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .chip{display:flex;align-items:center;gap:8px;border:1px dashed var(--hair);border-radius:20px;padding:8px 14px;
+    font:600 11px var(--mono);color:var(--ink-dim)}
+  .chip .e{font-size:15px}
+
+  .foot{margin-top:40px;text-align:center;font:500 11px var(--mono);color:var(--muted);letter-spacing:.03em}
+  .foot a{color:var(--accent-2);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <div class="orb"></div>
+      <div><h1>J.A.R.V.I.S. 2</h1><div class="sub">YOUR AI WORKFORCE</div></div>
+    </div>
+    <div class="nav">
+      <a href="../hq/">◂ HQ</a>
+      <a href="../brain/">Brain</a>
+      <a href="../showcase/">Console</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h2>One chief of staff. A team of agents.</h2>
+    <p>JARVIS sets priorities, delegates to the right specialist, and reports the result — so you work on the business, not in it.</p>
+  </div>
+
+  <div class="chief">
+    <div class="reactor">
+      <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div>
+      <div class="spin"></div><div class="core"></div>
+    </div>
+    <div class="label">
+      <div class="n">JARVIS</div>
+      <div class="r">AI Chief of Staff</div>
+      <div class="d">Sets priorities · Delegates work · Reports results</div>
+    </div>
+  </div>
+  <div class="stem"></div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="bonus">
+    <div class="h">+ Bonus agents (beyond the standard build)</div>
+    <div class="row">
+      <div class="chip"><span class="e">🧠</span> Infrastructure Brain <span style="color:var(--muted)">· maps your whole business</span></div>
+      <div class="chip"><span class="e">🌐</span> Websites Agent <span style="color:var(--muted)">· ships sites & landing pages</span></div>
+      <div class="chip"><span class="e">🗂️</span> CRM / Memory <span style="color:var(--muted)">· never forgets a client</span></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Powered by OpenClaw — your data, your devices, your rules. · <a href="../hq/">Back to HQ</a>
+  </div>
+</div>
+
+<script>
+const AGENTS = [
+  { c:"var(--exec)", e:"📅", name:"Executive Assistant", role:"Inbox · Calendar",
+    p:"Triages email, drafts replies, protects your calendar, catches conflicts — draft-don't-send.",
+    skill:"jarvis-comms", live:true },
+  { c:"var(--content)", e:"✍️", name:"Content Agent", role:"Create · Publish",
+    p:"Turns ideas into posts, scripts, decks and media. Weekly content packs on tap.",
+    skill:"jarvis-content", live:true },
+  { c:"var(--research)", e:"🔎", name:"Research Agent", role:"Find · Verify",
+    p:"Market, competitor and prospect intel — fact-checked and cited, never guessed.",
+    skill:"jarvis-research", live:true },
+  { c:"var(--sales)", e:"📈", name:"Sales Agent", role:"Pipeline · Close",
+    p:"Tracks every deal, drafts outreach + proposals, and won't let a warm lead go cold.",
+    skill:"jarvis-sales", live:true },
+  { c:"var(--ops)", e:"⚙️", name:"Operations Agent", role:"SOPs · Execution",
+    p:"Runs processes, tracks tasks to done, handles intake, and watches your automations.",
+    skill:"jarvis-operations", live:true },
+  { c:"var(--analytics)", e:"📊", name:"Analytics Agent", role:"Metrics · Reporting",
+    p:"Pulls the real numbers, rolls them into a scorecard, and flags what moved and why.",
+    skill:"jarvis-analytics", live:true },
+];
+document.getElementById("grid").innerHTML = AGENTS.map(a => `
+  <div class="agent" style="--c:${a.c}">
+    ${a.live ? '<span class="live">● LIVE</span>' : ''}
+    <div class="ic">${a.e}</div>
+    <h3>${a.name}</h3>
+    <div class="role">${a.role}</div>
+    <p>${a.p}</p>
+    <div class="skill">skill · <b>${a.skill}</b></div>
+  </div>`).join("");
+</script>
+</body>
+</html>

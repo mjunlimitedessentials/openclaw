@@ -28,13 +28,16 @@
           "primary": "anthropic/claude-opus-4-6",
           "fallbacks": ["anthropic/claude-sonnet-4-5"]
         },
-        "_skills_comment": "Allowlist keeps JARVIS focused. 'jarvis' is the orchestration brain; the 'jarvis-*' skills are the sub-agents (comms, content, crm, research). All are loaded via skills.load.extraDirs below. Add/remove to taste.",
+        "_skills_comment": "Allowlist keeps JARVIS focused. 'jarvis' is the Chief of Staff; the 'jarvis-*' skills are the AI workforce — comms (Executive Assistant), content, research, sales, operations, analytics — plus brain, websites, and crm/memory. All are loaded via skills.load.extraDirs below. Add/remove to taste.",
         "skills": [
           "jarvis",
           "jarvis-comms",
           "jarvis-content",
           "jarvis-crm",
           "jarvis-research",
+          "jarvis-sales",
+          "jarvis-operations",
+          "jarvis-analytics",
           "jarvis-brain",
           "jarvis-websites",
           "mcporter",
