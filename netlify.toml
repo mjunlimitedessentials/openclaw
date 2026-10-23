@@ -1,0 +1,15 @@
+# Netlify config for deploying the J.A.R.V.I.S. 2 static site (jarvis/).
+# This repo is a large pnpm monorepo; without this file Netlify auto-detects the
+# OpenClaw control UI and tries to publish ui/dist, which fails. We don't want any
+# build here — just serve the static jarvis/ folder.
+#
+# base = "jarvis"  -> Netlify runs inside jarvis/ (no package.json there, so it
+#                     skips the monorepo install and never builds the UI).
+# command          -> a no-op; there is nothing to compile.
+# publish = "."    -> publish the jarvis/ folder (resolved relative to base).
+#                     jarvis/index.html redirects to hq/ (the dashboard).
+
+[build]
+  base = "jarvis"
+  command = "echo 'JARVIS 2 static site — no build step required'"
+  publish = "."

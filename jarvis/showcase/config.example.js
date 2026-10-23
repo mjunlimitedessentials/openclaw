@@ -14,13 +14,19 @@
  * TLS/tunnel). See LIVE.md for CORS + safety notes.
  * ---------------------------------------------------------------------------- */
 window.JARVIS = {
+  // Must be true to leave the offline demo and talk to your gateway.
+  // Leave false (or omit) and the console stays in safe demo mode.
+  enabled: true,
+
   // Your gateway base URL (no trailing /v1). Examples:
   //   "http://localhost:8788"   (local daemon)
   //   "https://jarvis.yourdomain.com"
   endpoint: "http://localhost:8788",
 
-  // Gateway auth token (OPENCLAW_GATEWAY_TOKEN). Leave "" if your gateway is
-  // unauthenticated on loopback.
+  // Bearer credential for the gateway. On the Render deploy the gateway uses
+  // PASSWORD auth, so this is your OPENCLAW_GATEWAY_PASSWORD (the same value you
+  // log into the control panel with) — NOT a separate token. Leave "" only if
+  // your gateway is unauthenticated on loopback.
   token: "",
 
   // Model/agent to route to. "default" uses the gateway's default agent.

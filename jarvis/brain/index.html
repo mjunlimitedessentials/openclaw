@@ -231,6 +231,80 @@
     .ask, #reply { width: calc(100vw - 250px); }
   }
   @media (prefers-reduced-motion: reduce) { .brand .orb { animation: none; } }
+
+  /* ---------- JARVIS reactor HUD ---------- */
+  .jarvis-hud {
+    position: absolute; right: 40px; top: 50%; transform: translateY(-50%); z-index: 6;
+    display: flex; flex-direction: column; align-items: center; gap: 12px; pointer-events: none;
+    text-align: center;
+  }
+  .reactor { --rc: #4aa3ff; width: 320px; height: 320px; position: relative; border-radius: 50%; isolation: isolate; }
+  .reactor > div { position: absolute; border-radius: 50%; }
+  /* metallic housing */
+  .reactor .r-base { inset: 0;
+    background: radial-gradient(circle at 50% 42%, #212a39 0%, #141b26 38%, #0b1119 58%, #05080e 76%);
+    box-shadow: inset 0 6px 20px rgba(150,190,240,.10), inset 0 -14px 28px rgba(0,0,0,.72), 0 24px 70px -22px #000;
+    border: 1px solid rgba(120,150,190,.16); }
+  .reactor .r-teeth { inset: 3%; opacity: .9;
+    background: repeating-conic-gradient(from 0deg, #2b3547 0 6deg, #10161f 6deg 12deg);
+    -webkit-mask: radial-gradient(circle, transparent 74%, #000 76% 92%, transparent 94%);
+    mask: radial-gradient(circle, transparent 74%, #000 76% 92%, transparent 94%); }
+  .reactor .r-bezel { inset: 10%; opacity: .92; box-shadow: inset 0 0 18px rgba(0,0,0,.6);
+    background: conic-gradient(from 20deg, #3a475c, #131a25, #2c3646, #0d131c, #3a475c, #131a25, #2c3646, #3a475c);
+    -webkit-mask: radial-gradient(circle, transparent 56%, #000 58% 96%, transparent 98%);
+    mask: radial-gradient(circle, transparent 56%, #000 58% 96%, transparent 98%); }
+  /* volumetric bloom */
+  .reactor .r-bloom { inset: 14%; mix-blend-mode: screen; filter: blur(9px);
+    background: radial-gradient(circle, color-mix(in srgb, var(--rc) 60%, transparent) 0%, transparent 62%);
+    animation: rbreathe 3.4s ease-in-out infinite; }
+  /* rotating light spokes */
+  .reactor .r-spokes { inset: 17%; mix-blend-mode: screen; opacity: .82; filter: blur(.6px);
+    background: repeating-conic-gradient(from 0deg, transparent 0 6deg, color-mix(in srgb, var(--rc) 62%, #ffffff) 6.4deg 7.4deg, transparent 7.8deg 14deg);
+    -webkit-mask: radial-gradient(circle, transparent 42%, #000 48% 72%, transparent 78%);
+    mask: radial-gradient(circle, transparent 42%, #000 48% 72%, transparent 78%);
+    animation: rspin 16s linear infinite; }
+  /* rotating bright segments */
+  .reactor .r-seg { inset: 21%; mix-blend-mode: screen; opacity: .9; filter: drop-shadow(0 0 5px var(--rc));
+    background: repeating-conic-gradient(from 10deg, var(--rc) 0 9deg, transparent 9deg 26deg);
+    -webkit-mask: radial-gradient(circle, transparent 58%, #000 60% 70%, transparent 72%);
+    mask: radial-gradient(circle, transparent 58%, #000 60% 70%, transparent 72%);
+    animation: rspinr 11s linear infinite; }
+  /* glowing energy rings */
+  .reactor .r-ring { border: 3px solid color-mix(in srgb, var(--rc) 80%, #eaf4ff);
+    box-shadow: 0 0 16px var(--rc), 0 0 34px rgba(74,163,255,.55), inset 0 0 16px var(--rc); }
+  .reactor .r-ring.a { inset: 20%; }
+  .reactor .r-ring.b { inset: 33%; border-width: 2px; box-shadow: 0 0 12px var(--rc), inset 0 0 10px var(--rc); }
+  /* white-hot core */
+  .reactor .r-core { inset: 36%;
+    background: radial-gradient(circle at 46% 40%, #ffffff 0%, #e6f3ff 26%, #8fc8ff 52%, var(--rc) 76%, #0b1b3a 100%);
+    box-shadow: 0 0 24px #bfe6ff, 0 0 60px var(--rc), 0 0 110px rgba(74,163,255,.5), inset 0 0 22px rgba(255,255,255,.7);
+    animation: rcorepulse 2.6s ease-in-out infinite; }
+  @keyframes rspin { to { transform: rotate(360deg); } }
+  @keyframes rspinr { to { transform: rotate(-360deg); } }
+  @keyframes rbreathe { 0%,100% { opacity: .65; } 50% { opacity: 1; } }
+  @keyframes rcorepulse { 0%,100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.05); filter: brightness(1.22); } }
+  .reactor.active { --rc: #7fdcff; }
+  .reactor.active .r-spokes { animation-duration: 8s; }
+  .reactor.active .r-seg { animation-duration: 5s; }
+  .reactor.active .r-core { animation-duration: 1s; }
+  .hud-name { font: 700 12px var(--mono); letter-spacing: .34em; color: #dfeaff; text-indent: .34em; }
+  .hud-status { display: flex; align-items: center; gap: 6px; font: 600 8.5px var(--mono); letter-spacing: .22em; color: var(--good, #43d9a3); text-transform: uppercase; }
+  .hud-status .led { width: 6px; height: 6px; border-radius: 50%; background: #43d9a3; box-shadow: 0 0 8px #43d9a3; animation: pulse 2s infinite; }
+  .hud-tag { font: 600 8px var(--mono); letter-spacing: .18em; color: var(--muted); border: 1px solid var(--hair); border-radius: 20px; padding: 3px 9px; }
+  .askbar .mic { width: 34px; height: 34px; flex: none; border: 1px solid var(--hair); border-radius: 50%; cursor: pointer;
+    display: grid; place-items: center; background: rgba(5,11,28,.6); color: var(--ink-dim); transition: .15s; margin-right: 4px; }
+  .askbar .mic:hover { color: #fff; border-color: var(--accent); }
+  .askbar .mic.listening { color: #fff; border-color: #ff5a7a; background: radial-gradient(circle at 40% 35%, #ff9db3, #e11d48 70%); animation: micpulse 1.2s infinite; }
+  @keyframes micpulse { 0% { box-shadow: 0 0 0 0 rgba(225,29,72,.5); } 70% { box-shadow: 0 0 0 10px rgba(225,29,72,0); } 100% { box-shadow: 0 0 0 0 rgba(225,29,72,0); } }
+  .voicepick { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .voicepick label { font: 500 10px var(--mono); color: var(--ink-dim); letter-spacing: .06em; text-transform: uppercase; width: 40px; }
+  .voicepick select { flex: 1; min-width: 0; background: rgba(3,8,22,.6); color: var(--ink); border: 1px solid var(--hair); border-radius: 7px; font: 500 10px var(--mono); padding: 5px 6px; }
+  @media (max-width: 1000px) { .reactor { width: 240px; height: 240px; } .hud-tag { display: none; } }
+  @media (max-width: 680px) { .jarvis-hud { right: 14px; top: auto; bottom: 150px; transform: none; } .reactor { width: 150px; height: 150px; } .hud-name { font-size: 9px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .r-bloom, .r-spokes, .r-seg, .r-core, .hud-status .led,
+    .reactor.active .r-spokes, .reactor.active .r-seg, .reactor.active .r-core { animation: none; }
+  }
 </style>
 
 <div id="stage">
@@ -280,6 +354,8 @@
       <label class="toggle"><input type="checkbox" id="tHubs" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Hub labels</label>
       <label class="toggle"><input type="checkbox" id="tFlow" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Particle flow</label>
       <label class="toggle"><input type="checkbox" id="tSpin" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Auto-orbit</label>
+      <label class="toggle"><input type="checkbox" id="tVoice" checked /><span class="box"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Voice (JARVIS speaks)</label>
+      <div class="voicepick"><label>Voice</label><select id="voiceSel" title="Pick JARVIS's voice"></select></div>
     </div>
 
     <div class="block">
@@ -296,6 +372,23 @@
 
   <div id="reply"><div class="who">J.A.R.V.I.S.</div><div class="msg"></div></div>
 
+  <div class="jarvis-hud">
+    <div class="reactor" id="reactor" aria-hidden="true">
+      <div class="r-base"></div>
+      <div class="r-teeth"></div>
+      <div class="r-bezel"></div>
+      <div class="r-bloom"></div>
+      <div class="r-spokes"></div>
+      <div class="r-seg"></div>
+      <div class="r-ring a"></div>
+      <div class="r-ring b"></div>
+      <div class="r-core"></div>
+    </div>
+    <div class="hud-name">J.A.R.V.I.S.</div>
+    <div class="hud-status"><span class="led"></span> Online</div>
+    <div class="hud-tag">OPUS 4.8</div>
+  </div>
+
   <div class="ask">
     <div class="chips">
       <button data-cmd="good morning">☀ Good morning</button>
@@ -304,7 +397,8 @@
       <button data-cmd="what's at risk">▲ At risk</button>
     </div>
     <div class="askbar">
-      <input id="ask" placeholder='Ask JARVIS —  "good morning"  ·  "show me clients"  ·  "remind me…"' autocomplete="off" />
+      <button class="mic" id="micBtn" title="Speak to JARVIS"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg></button>
+      <input id="ask" placeholder='Speak or type —  "good morning" · "show me clients" · "hello"' autocomplete="off" />
       <button class="go" id="askGo" title="Send"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#04122f" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
   </div>
@@ -508,7 +602,8 @@ function setFocus(id, additive) {
     if (p) { pathSet = p; renderInspectorPath(focusId, id, p); return; }
   }
   focusId = id; pathSet = null;
-  if (id) renderInspector(byId[id]); else clearInspector();
+  if (id) { renderInspector(byId[id]); if (typeof pulseReactor === "function") pulseReactor(1400); }
+  else clearInspector();
 }
 function clearInspector() {
   document.getElementById("inspector").innerHTML =
@@ -734,12 +829,76 @@ document.getElementById("reset").addEventListener("click", () => { yaw = 0.5; pi
 
 /* ------------------------------- Ask bar -------------------------------- */
 const replyEl = document.getElementById("reply");
-let replyTimer = null;
+const reactorEl = document.getElementById("reactor");
+let replyTimer = null, reactorTimer = null;
+function pulseReactor(ms = 2600) {
+  if (!reactorEl) return;
+  reactorEl.classList.add("active");
+  clearTimeout(reactorTimer);
+  reactorTimer = setTimeout(() => reactorEl.classList.remove("active"), ms);
+}
 function reply(msg) {
   replyEl.querySelector(".msg").textContent = msg;
   replyEl.classList.add("show");
+  pulseReactor();
+  speak(msg);
   clearTimeout(replyTimer);
-  replyTimer = setTimeout(() => replyEl.classList.remove("show"), 5200);
+  replyTimer = setTimeout(() => replyEl.classList.remove("show"), 6500);
+}
+
+/* ---- Voice + mic for the brain ---- */
+const hasTTS = "speechSynthesis" in window;
+let VOICE_ON = true, ttsVoice = null, ttsUnlocked = false;
+function isBritish(v){ return /en[-_]gb/i.test(v.lang) || /google uk english/i.test(v.name); }
+function scoreVoice(v){
+  let s = 0; const n = v.name.toLowerCase();
+  if (/en[-_]gb/i.test(v.lang)) s += 100;                   // British accent dominates
+  if (/google uk english male/.test(n)) s += 60;
+  if (/\b(daniel|arthur|oliver|george|ryan|jamie|thomas)\b/.test(n)) s += 45;
+  if (/\bmale\b/.test(n)) s += 10;
+  if (/enhanced|premium|natural|neural|siri/.test(n)) s += 12; // tie-break within a language only
+  if (/google/.test(n)) s += 6;
+  if (/female|zira|hazel|susan|linda|catherine|samantha|karen|moira|tessa|fiona|serena/.test(n)) s -= 30;
+  if (/compact|eloquence|\bdavid\b|\bmark\b/.test(n)) s -= 25;
+  return s;
+}
+function pickVoice(){
+  if (!hasTTS) return null;
+  const vs = speechSynthesis.getVoices() || []; if (!vs.length) return null;
+  const en = vs.filter(v => /^en(-|_)/i.test(v.lang));
+  const pool = en.length ? en : vs;
+  return pool.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0];
+}
+const voiceSel = document.getElementById("voiceSel");
+function populateVoices(){
+  if (!hasTTS) return;
+  const vs = (speechSynthesis.getVoices() || []).filter(v => /^en/i.test(v.lang));
+  ttsVoice = pickVoice() || ttsVoice;
+  if (voiceSel && vs.length){
+    const ranked = vs.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    voiceSel.innerHTML = ranked.map(v => `<option value="${v.name}">${isBritish(v) ? "⭐ " : ""}${v.name.replace(/\((.*?)\)/g, "").trim()} · ${v.lang}</option>`).join("");
+    if (ttsVoice) voiceSel.value = ttsVoice.name;
+  }
+}
+if (hasTTS){ populateVoices(); speechSynthesis.onvoiceschanged = populateVoices; }
+if (voiceSel) voiceSel.addEventListener("change", () => {
+  const v = (speechSynthesis.getVoices() || []).find(x => x.name === voiceSel.value);
+  if (!v) return;
+  ttsVoice = v; unlockTTS();
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance("Good evening. J.A.R.V.I.S. at your service."); u.voice = v; u.lang = v.lang; u.rate = 0.95; u.pitch = 0.82; speechSynthesis.speak(u); } catch (_) {}
+});
+function unlockTTS(){ if (ttsUnlocked || !hasTTS) return; ttsUnlocked = true; try { speechSynthesis.resume(); const u = new SpeechSynthesisUtterance(" "); u.volume = 0; speechSynthesis.speak(u); } catch (_) {} }
+document.addEventListener("pointerdown", unlockTTS, { once: true });
+function speak(text){
+  if (!VOICE_ON || !hasTTS || !text) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if (ttsVoice){ u.voice = ttsVoice; u.lang = ttsVoice.lang; }
+    u.rate = 0.95; u.pitch = 0.82;
+    u.onstart = () => pulseReactor(4200);
+    speechSynthesis.speak(u);
+  } catch (_) {}
 }
 function ask(qRaw) {
   const q = qRaw.trim(); if (!q) return;
@@ -772,14 +931,47 @@ function ask(qRaw) {
   const node = nodes.find(n => n.label.toLowerCase().includes(term));
   if (node) { setFocus(node.id, false); reply(`Focused "${node.label}". ${node.note || ""}`); return; }
   if (/remind me|remember|note that|follow.?up/.test(low)) {
-    reply(`Noted. In your live JARVIS this creates a reminder / memory entry — this preview just maps the brain.`);
+    reply(`Noted. In your live JARVIS this creates a reminder or memory entry — this preview just maps the brain.`);
     return;
   }
-  reply(`No match for "${q}" in the map. Try a client, build, or domain name — or "good morning".`);
+  if (/\b(hi|hello|hey|yo|hiya|greetings|good evening|good afternoon)\b/.test(low) || /who are you|what can you do|what do you do|help/.test(low)) {
+    reply(`Hello. I'm J.A.R.V.I.S. — your infrastructure brain, mapping ${nodes.length} nodes across ${GRAPH.categories.length} domains. Ask me to "show me clients", "what's at risk", or say "good morning" for your briefing.`);
+    return;
+  }
+  reply(`I don't see "${q}" in the map yet. Try a client, build, or domain — or say "good morning", "show me clients", or "what's at risk".`);
 }
 document.getElementById("askGo").addEventListener("click", () => { const el = document.getElementById("ask"); ask(el.value); el.value=""; });
-document.getElementById("ask").addEventListener("keydown", e => { if (e.key === "Enter") { ask(e.target.value); e.target.value=""; } });
+document.getElementById("ask").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); ask(e.target.value); e.target.value=""; } });
 document.querySelectorAll(".chips button").forEach(b => b.addEventListener("click", () => ask(b.getAttribute("data-cmd"))));
+
+/* voice toggle + mic */
+const tVoice = document.getElementById("tVoice");
+if (tVoice) tVoice.addEventListener("change", e => { VOICE_ON = e.target.checked; if (!VOICE_ON && hasTTS) speechSynthesis.cancel(); else unlockTTS(); });
+const micBtn = document.getElementById("micBtn");
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recog = null, listening = false;
+// visual-only toast (doesn't speak), for mic status
+function micToast(msg){ replyEl.querySelector(".msg").textContent = msg; replyEl.classList.add("show"); clearTimeout(replyTimer); replyTimer = setTimeout(() => replyEl.classList.remove("show"), 4200); }
+if (SR && micBtn){
+  recog = new SR(); recog.lang = "en-GB"; recog.interimResults = false; recog.maxAlternatives = 1; recog.continuous = false;
+  recog.onstart = () => { listening = true; micBtn.classList.add("listening"); micToast("● Listening… speak now."); };
+  recog.onresult = e => { const t = (e.results[0] && e.results[0][0] && e.results[0][0].transcript || "").trim(); if (t) ask(t); else micToast("I didn't catch that — tap 🎤 again."); };
+  recog.onend = () => { listening = false; micBtn.classList.remove("listening"); };
+  recog.onerror = (e) => {
+    listening = false; micBtn.classList.remove("listening");
+    const err = e && e.error;
+    micToast(err === "not-allowed" || err === "service-not-allowed" ? "Microphone blocked — allow mic access, then tap 🎤 again."
+      : err === "no-speech" ? "I didn't catch that — tap 🎤 again."
+      : err === "audio-capture" ? "No microphone found on this device."
+      : "Mic needs Chrome, Edge, or Safari.");
+  };
+} else if (micBtn){ micBtn.addEventListener("click", () => micToast("Voice input needs Chrome, Edge, or Safari — type instead.")); }
+if (recog && micBtn) micBtn.addEventListener("click", () => {
+  unlockTTS();
+  if (listening){ try { recog.stop(); } catch (_) {} return; }
+  if (hasTTS) speechSynthesis.cancel();
+  try { recog.start(); } catch (_) { micToast("Tap 🎤 once and wait for “Listening…”."); }
+});
 
 // warm up the layout so it opens settled
 for (let i = 0; i < 140; i++) simulate();
